@@ -1,0 +1,40 @@
+
+
+/*Local Nav Bar and Related Styling*/
+
+    .city411Brand {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 26px;
+    }
+
+/*Local Styles Used on Welcome Screen*/
+
+    .myHeroImageWelcome {
+        background-image: url("https://eastwood.nyc3.cdn.digitaloceanspaces.com/divisions/iStock-1019413572_web.jpg");
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+
+    .myOpacityBoxWelcome {
+        background-color: rgba(255, 255, 255, 0);
+    }
+
+    .myOpacityInputWelcome {
+        background-color: rgba(255, 251, 251, 0.527);
+        border: none;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .mySearchButtonWelcome {
+        margin-top: 10px;
+        margin-left: 10px;
+    }
+
+    .mySearchIconWelcome {
+        pointer-events: initial;
+        font-size: 26px;
+        padding-right: 10px;
+    }
