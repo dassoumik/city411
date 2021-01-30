@@ -1,10 +1,24 @@
 
-
 /*Global Classes*/
+    html, body{
+        padding: 0;
+        margin: 0;
+    }
+    html{
+        height: 100%;
+    }
+    body{
+        min-height: 100%;
+    }
 
     .city411Brand {
         font-family: 'Orbitron', sans-serif;
         font-size: 26px;
+    }
+
+    .city411TitleFont {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 24px;
     }
 
     .myBold {
@@ -45,6 +59,10 @@
 
 /*Dashboard Page Classes*/
   
+    .city411WeatherCardTitles {
+        
+        font-size: 20px;
+    }
     .mySearchIconDashboard {
         pointer-events: initial;
     }
