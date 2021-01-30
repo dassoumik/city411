@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" class = "has-navbar-fixed-top">
 
     <head>
 
@@ -40,10 +40,10 @@
         
     </head>
 
-    <body class = "has-navbar-fixed-top">
+    <body>
 
         <!--Navbar-->
-        <nav class="navbar has-background-primary-dark has-text-center is-fixed-top" role="navigation" aria-label="main navigation">
+        <nav class="navbar has-background-primary-dark is-fixed-top" role="navigation" aria-label="main navigation">
            <h1 class = "ml-4 has-text-center has-text-white py-4 city411Brand"><i class="fas fa-city"></i> City 411</h1>
         </nav>
 
@@ -55,7 +55,7 @@
                         <div class="field is-grouped">
                             <p class="control is-expanded has-icons-left">
                                 <input id = "searchedCityInputWelcome" class="input has-text-centered myOpacityInputWelcome" type="text" placeholder="Search A City">
-                                <button class = "icon is-left button is-ghost mySearchButtonWelcome">
+                                <button id = "searchedCityButtonWelcome" class = "icon is-left button is-ghost mySearchButtonWelcome">
                                     <i class="fas fa-search has-text-primary mySearchIconWelcome"></i>
                                 </button>
                             </p>

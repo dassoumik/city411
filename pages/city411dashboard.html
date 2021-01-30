@@ -3,6 +3,7 @@
 <html lang="en">
 
     <head>
+
         <!--Meta Tags-->
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -36,51 +37,64 @@
         >
         <!--Page Title-->
         <title>411 Dashboard</title>
+
     </head>
 
     <body>
 
         <!--Navbar-->
-        <nav class="navbar myNavStyle has-background-primary-dark mb-5 has-text-center" role="navigation" aria-label="main navigation">
-           <h1 class = "ml-4 has-text-center has-text-white py-4 city411Brand"><i class="fas fa-city"></i> City 411</h1>
+        <nav class="navbar level has-background-primary-dark mb-0" role="navigation" aria-label="main navigation">
+
+            <!--Brand in Navbar-->
+            <div class="navbar-brand">
+                <h1 class = "ml-4 has-text-center has-text-white py-4 city411Brand"><i class="fas fa-city"></i> City 411</h1>
+            </div>
+
+    
+            <!--Toggle Menu Favorites in Navbar-->
+            <div id="navbarBasicExample" class="navbar-menu  ml-3">
+                <div class="navbar-start ml-0">
+                    <div class="navbar-item has-dropdown is-left is-hoverable">
+                        <a class="navbar-link has-text-white">
+                            Favorites
+                        </a>
+                        <div id = "favoritesList"class="navbar-dropdown">
+                            <a class="navbar-item">
+                            City1
+                            </a>
+                            <a class="navbar-item">
+                            City2
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+             <!--Searchbar in Navbar-->
+            <div class="field level-left mb-0 mr-3">
+                <div class="control has-icons-left has-icons-right">
+                    <input id = "searchedCityInput" class="input" type="email" placeholder="Search A City!">
+                    <button class="icon is-right button is-ghost">
+                        <i class="fas fa-search has-text-primary mySearchIconDashboard"></i>
+                    </button>
+                </div>
+            </div>
+          
         </nav>
 
+
         <!--Main Container (without Nav)-->
-        <div class = "columns mx-3">
+        <div class = "columns pt-3 px-3">
 
             <!--Search Bar Vertical Side-->
-            <div class = "column is-2 has-background-primary-light	">
-
-                <!--This is the Search Bar-->
-                <div class="field has-addons">
-
-                    <div class="control">
-                      <input id = "searchedCityInput" class="input" type="text" placeholder="Search City">
-                    </div>
-
-                    <div class="control">
-                      <button id = "searchButtonDashboard" class="button is-info">
-                        <i class="fas fa-search"></i>
-                      </button>
-                    </div>
-
-                </div>
-
-                <!--This is the Recently Searched List-->
-
-                    <!--Recently Searched Header-->
-                    <h3 class = "mybold mb-2">Recently Searched</h3>
-
-                    <!--Container for Appending Recently Searched-->
-                    <div id = "recentSearchDiv">
-                        <div>append city..</div>
-                        <div>append city..</div>
-                    </div>
-                   
+            <div id="pinnedItemsColumn" class = "column is-2 mySearchColumnDashboard ml-3 has-text-primary pt-0">
+                <br>
+                 Holding For Pins or Favs?
+                <br>
             </div>
 
             <!--Main Area For Weather Cards-->
-            <div class = "column is-10 mr-3">
+            <div class = "column is-10 mr-3 mt-5">
 
                 <!--This is the Main Tile Container (Level 1 of 3 Required)-->
                 <div class="tile is-ancestor">
