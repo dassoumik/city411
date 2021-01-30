@@ -3,6 +3,7 @@
 <html lang="en">
 
     <head>
+
         <!--Meta Tags-->
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -36,116 +37,132 @@
         >
         <!--Page Title-->
         <title>411 Dashboard</title>
+
     </head>
 
-    <body>
+    <body class="myHeroImageWelcome">
 
-        <!--Navbar-->
-        <nav class="navbar myNavStyle has-background-primary-dark mb-5 has-text-center" role="navigation" aria-label="main navigation">
-           <h1 class = "ml-4 has-text-center has-text-white py-4 city411Brand"><i class="fas fa-city"></i> City 411</h1>
+        <!--NAVBAR-->
+        <nav class="navbar level has-background-grey-dark mb-0" role="navigation" aria-label="main navigation">
+
+            <!--Brand in Navbar-->
+            <div class="navbar-brand">
+                <h1 class = "ml-4 has-text-center has-text-white py-4 city411Brand"><i class="fas fa-city"></i> City 411</h1>
+            </div>
+
+            <!--Toggle Menu Favorites in Navbar-->
+            <div id="navbarBasicExample" class="navbar-menu  ml-3">
+                <div class="navbar-start ml-0">
+                    <div class="navbar-item has-dropdown is-left is-hoverable">
+                        <a class="navbar-link has-text-white">
+                            Favorite Cities
+                        </a>
+                        <div id = "favoriteCitiesList"class="navbar-dropdown">
+                            <a class="navbar-item">
+                            City1
+                            </a>
+                            <a class="navbar-item">
+                            City2
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+             <!--Searchbar in Navbar-->
+            <div class="field level-left mb-0 mr-4">
+                <div class="control has-icons-left has-icons-right">
+                    <input id = "searchedCityInput" class="input" type="email" placeholder="Search A City!">
+                    <button class="icon is-right button is-ghost">
+                        <i class="fas fa-search has-text-link mySearchIconDashboard"></i>
+                    </button>
+                </div>
+            </div>
+
         </nav>
 
-        <!--Main Container (without Nav)-->
-        <div class = "columns mx-3">
+        <!--(TILE LEVEL 1) MAIN TILES CONTAINER-->
+        <div class="tile is-ancestor mt-2 mx-1">
 
-            <!--Search Bar Vertical Side-->
-            <div class = "column is-2 has-background-primary-light	">
+            <!--(TILE LEVEL 2) CITY PINS CONTAINER-->
+            <div class="tile is-parent">
 
-                <!--This is the Search Bar-->
-                <div class="field has-addons">
-
-                    <div class="control">
-                      <input id = "searchedCityInput" class="input" type="text" placeholder="Search City">
+                <!--(TILE LEVEL 3) CITY PINS SUBCONTAINER-->
+                <div id = "cityPins" class="tile is-child px-2 has-background-grey-dark">
+                <h1 class="title has-text-centered has-text-white py-3 mt-2 mb-3">Pins</h1>
+                    
+                    <!--(TILE LEVEL 4) Dynamically inserted saved city elements-->
+                    <div class="tile px-2 py-2 mt-1 has-background-grey-lighter">  <!--If somethign messes up here add class is-child back..-->
+                        <h1 class="has-text-centered">Pinned Thing Name</h1>
                     </div>
 
-                    <div class="control">
-                      <button id = "searchButtonDashboard" class="button is-info">
-                        <i class="fas fa-search"></i>
-                      </button>
+                    <div class="tile px-2 py-2 mt-1 has-background-grey-lighter">  <!--If somethign messes up here add class is-child back..-->
+                        <h1 class="has-text-centered">Pinned Thing Name</h1>
+                    </div>
+
+                    <div class="tile px-2 py-2 mt-1 has-background-grey-lighter">  <!--If somethign messes up here add class is-child back..-->
+                        <h1 class="has-text-centered">Pinned Thing Name</h1>
+                    </div>
+
+                </div>
+                
+            </div>
+
+            <!--(TILE LEVEL 2) CITY INFO CONTAINER-->
+            <div class="tile is-parent is-10 is-vertical">
+
+                <!--(TILE LEVEL 3) WEATHER INFO CONTAINER-->
+                <div class = "tile is-parent is-horizontal px-0 py-0 mb-5">
+
+                    <!--(TILE LEVEL 4) Three Horizontally DIstributed Weather Tiles-->
+                    <div class="tile">
+                        <article id="weatherDivPast" class="tile is-child notification is-info">
+                            <p class="title has-text-centered city411WeatherCardTitles">Weather 1</p>
+                            <p class="subtitle">Top tile</p>
+                        </article>
+                    </div>
+
+                    <div class="tile mx-1"> <!--Gve an mx margin here to spread the row by 2-->
+                        <article id="weatherDivPresentclass" class="tile is-child notification is-info">
+                            <p class="title has-text-centered city411WeatherCardTitles">Weather 2</p>
+                            <p class="subtitle">Top tile</p>
+                        </article>
+                    </div>
+
+                    <div class="tile">
+                        <article id="weatherDivFuture" class="tile is-child notification is-info">
+                            <p class="title has-text-centered city411WeatherCardTitles">Weather 3</p>
+                            <p class="subtitle">Top tile</p>
+                        </article>
                     </div>
 
                 </div>
 
-                <!--This is the Recently Searched List-->
-
-                    <!--Recently Searched Header-->
-                    <h3 class = "mybold mb-2">Recently Searched</h3>
-
-                    <!--Container for Appending Recently Searched-->
-                    <div id = "recentSearchDiv">
-                        <div>append city..</div>
-                        <div>append city..</div>
-                    </div>
-                   
-            </div>
-
-            <!--Main Area For Weather Cards-->
-            <div class = "column is-10 mr-3">
-
-                <!--This is the Main Tile Container (Level 1 of 3 Required)-->
-                <div class="tile is-ancestor">
-
-                    <!--This is the Secondary Tile Container (Level 2 of 3 Required)-->
-                    <div class="tile is-vertical is-12">
-
-                        <!--This is the container tile for the three horizontal weather tiles (Level 3 of 3 Required)-->
-                        <div class="tile">
-
-                            <div  class="tile is-parent is-vertical is-4">
-                                <div id = "weatherDivPast" class="tile is-child box">
-                                    <h3 class = "mybold mb-2">weatherDivPast</h3>
-                                    <div>insert here..</div>
-                                    <div>insert here..</div>
-                                </div>
-                            </div>
-
-                            <div class="tile is-parent is-vertical">
-                                <div id = "weatherDivPresent" class="tile is-child box">
-                                    <h3 class = "mybold mb-2">weatherDivPresent</h3>
-                                    <div>insert here..</div>
-                                    <div>insert here..</div>
-                                </div>
-                            </div>
-
-                            <div class="tile is-parent is-vertical">
-                                <div id = "weatherDivFuture" class="tile is-child box">
-                                    <h3 class = "mybold mb-2">weatherDivFuture</h3>
-                                    <div>insert here..</div>
-                                    <div>insert here..</div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <!--This is the Container Tile for the Food and Other Tile (Level 3 of 3 Required)-->
-                        <div class="tile">
-
-                            <div class="tile is-parent is-vertical">
-                                <div id = "foodDiv" class="tile is-child box">
-                                    <h3 class = "mybold mb-2">foodDiv</h3>
-                                    <div>insert here..</div>
-                                    <div>insert here..</div>
-                                </div>
-                            </div>
-
-                            <div class="tile is-parent is-vertical">
-                                <div id = "otherDiv" class="tile is-child box">
-                                    <h3 class = "mybold mb-2">Other Div</h3>
-                                    <div>insert here..</div>
-                                    <div>insert here..</div>
-                                </div>
-                            </div>
-                       
-                        </div>
-
-                    </div>
-
+                <!--(TILE LEVEL 3) FOOD & OTHER-->
+                <div class="tile is-child">
+                    <article id="foodDiv" class="tile is-child notification is-danger">
+                        <p class="title has-text-centered">Food</p>
+                        <p class="subtitle">Top tile</p>
+                    </article>
                 </div>
 
+                <div class="tile is-child">
+                    <article class="tile is-child notification is-warning">
+                        <p class="title has-text-centered">"Entertainment"</p>
+                        <p class="subtitle">Top tile</p>
+                    </article>
+                </div>
+
+                <div class="tile is-child">
+                    <article class="tile is-child notification is-success">
+                        <p class="title has-text-centered">"Other if we want.."</p>
+                        <p class="subtitle">Top tile</p>
+                    </article>
+                </div>
+
+         
             </div>
-
-
-
+        
          <!--These are the script links-->
           
             <!--This is the link to luxon-->

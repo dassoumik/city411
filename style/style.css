@@ -1,13 +1,31 @@
 
-
-/*Local Nav Bar and Related Styling*/
+/*Global Classes*/
+    html, body{
+        padding: 0;
+        margin: 0;
+    }
+    html{
+        height: 100%;
+    }
+    body{
+        min-height: 100%;
+    }
 
     .city411Brand {
         font-family: 'Orbitron', sans-serif;
         font-size: 26px;
     }
 
-/*Local Styles Used on Welcome Screen*/
+    .city411TitleFont {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 24px;
+    }
+
+    .myBold {
+        font-weight: bold;
+    }
+
+/*Welcome Page Classes*/
 
     .myHeroImageWelcome {
         background-image: url("https://eastwood.nyc3.cdn.digitaloceanspaces.com/divisions/iStock-1019413572_web.jpg");
@@ -37,4 +55,22 @@
         pointer-events: initial;
         font-size: 26px;
         padding-right: 10px;
+    }
+
+/*Dashboard Page Classes*/
+  
+    .city411WeatherCardTitles {
+        
+        font-size: 20px;
+    }
+    .mySearchIconDashboard {
+        pointer-events: initial;
+    }
+
+    .mySearchColumnDashboard {
+        box-shadow: 5px 5px 5px grey; ;
+    }
+
+    .mySearchIconDashboard {
+        pointer-events: initial
     }
