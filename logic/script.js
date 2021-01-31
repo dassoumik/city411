@@ -52,27 +52,24 @@ function displayWeather(location) {
         getHistoricWeek();
         // getHistoricOneMonth();
 
-
-
         // Returns JSON object of a year ago, 1 week. 
         // The API KEY in this ajax call should be used for 
         function getHistoricWeek() {
             var queryURL = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/" + location + "/" + oneYearAgoFormatted + "/" + oneYearAgoWeekFormatted + "?unitGroup=us&key=Q5Z5S9QT8FD8UJKCGYBURUXX8&include=obs"
+            // Grab Data from JSON - Leave this line commented
             var response = JSON.parse(localStorage.getItem("historic-week"))
             console.log(response);
 
-
-            // Commenting out AJAX requesting while developing; uncomment logic before pushing to prod
+            // // Commenting out AJAX requesting while developing; uncomment logic before pushing to prod
             // $.ajax({
             //     url: queryURL,
             //     method: 'GET',
             // }).then(function (response) {
             //     console.log(response);
 
-            //     // Save the object in history to prevent from using query credits and running out
-            //     // localStorage.setItem('historic-week', JSON.stringify(response));
+            // Save the object in history to prevent from using query credits and running out
+            // localStorage.setItem('historic-week', JSON.stringify(response));
 
-            // Grab Data from JSON - Leave this line commented
             console.log("=========================");
             // City/state
             var address = response.resolvedAddress
@@ -80,6 +77,8 @@ function displayWeather(location) {
             var aDayRange = response.days
             console.log(address);
             console.log(aDayRange);
+
+            // Loop thru each Historic Week day...
             $.each(aDayRange, function (index, item) {
 
                 var historicDay = aDayRange[index].datetime;
@@ -88,34 +87,98 @@ function displayWeather(location) {
                 var historicDayHumidity = aDayRange[index].humidity;
                 var historicDayIcon = aDayRange[index].icon;
                 var historicDayPrecip = aDayRange[index].precip;
-                var historicDayTempmax = aDayRange[index].tempmax;
-                var historicDayTempmin = aDayRange[index].tempmin;
-                var historicDayWindspeed = aDayRange[index].windspeed;
+                var historicDaySnow = aDayRange[index].snow;
+                var historicDayTempmax = Math.round(aDayRange[index].tempmax);
+                var historicDayTempmin = Math.round(aDayRange[index].tempmin);
+                var historicDayWindspeed = Math.round(aDayRange[index].windspeed);
 
-                console.log(historicDay);
-                console.log(historicDayEpoch);
-                console.log(historicDayConditions);
-                console.log(historicDayHumidity);
-                console.log(historicDayIcon);
-                console.log(historicDayPrecip);
-                console.log(historicDayTempmax);
-                console.log(historicDayTempmin);
-                console.log(historicDayWindspeed);
-                console.log("=========================");
+                // // Logging the data - Will remove later
+                // console.log(historicDay);
+                // console.log(historicDayEpoch);
+                // console.log(historicDayConditions);
+                // console.log(historicDayHumidity);
+                // console.log(historicDayIcon);
+                // console.log(historicDayPrecip);
+                // console.log(historicDayTempmax);
+                // console.log(historicDayTempmin);
+                // console.log(historicDayWindspeed);
+                // console.log("=========================");
+                // console.log(dateTime.fromSeconds(historicDayEpoch).weekdayShort);
+
+                // Create elements with the data
+                // Create Div Day Card
+                var dayDiv = $("<div>").attr("id", "historic-day-div-" + index).attr("class", "historic-day-div");
+                var dayTitle = $("<p>").text(dateTime.fromSeconds(historicDayEpoch).weekdayShort);
+                var dayConditionsP = $("<p>").text(historicDayConditions);
+                var dayHighP = $("<p>").text("High: " + historicDayTempmax + "°F");
+                var dayLowP = $("<p>").text("Low: " + historicDayTempmin + "°F");
+                // var dayRain = $("<p>").text(historicDayPrecip);
+                var dayWind = $("<p>").text("Wind: " + historicDayWindspeed + " MPH");
+
+
+                // Append all elements to daydiv then to tile div
+                dayDiv.append(dayTitle, dayConditionsP, dayHighP, dayLowP, dayWind)
+                $("#historic-weather-week").append(dayDiv);
 
             });
 
 
-
-
-
-
-            // });
+            // }); // Uncomment this for prod
         }
 
 
         function getHistoricOneMonth() {
+            var queryURL = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/" + location + "/" + oneYearAgoFormatted + "/" + oneYearAgoWeekFormatted + "?unitGroup=us&key=Q5Z5S9QT8FD8UJKCGYBURUXX8&include=obs"
+            // Grab Data from JSON - Leave this line commented
+            var response = JSON.parse(localStorage.getItem("historic-week"))
+            console.log(response);
 
+            // // Commenting out AJAX requesting while developing; uncomment logic before pushing to prod
+            // $.ajax({
+            //     url: queryURL,
+            //     method: 'GET',
+            // }).then(function (response) {
+            //     console.log(response);
+
+            // Save the object in history to prevent from using query credits and running out
+            // localStorage.setItem('historic-week', JSON.stringify(response));
+
+            console.log("=========================");
+            // City/state
+            var address = response.resolvedAddress
+            // Array data
+            var aDayRange = response.days
+            console.log(address);
+            console.log(aDayRange);
+
+            // Loop thru each Historic Week day...
+            $.each(aDayRange, function (index, item) {
+                // Assign Variable
+            
+
+                // // Logging the data - Will remove later
+                // console.log("=========================");
+                // console.log(dateTime.fromSeconds(historicDayEpoch).weekdayShort);
+
+                // Create elements with the data
+                // Create Div Day Card
+                var dayDiv = $("<div>").attr("id", "historic-day-div-" + index).attr("class", "historic-day-div");
+                var dayTitle = $("<p>").text(dateTime.fromSeconds(historicDayEpoch).weekdayShort);
+                var dayConditionsP = $("<p>").text(historicDayConditions);
+                var dayHighP = $("<p>").text("High: " + historicDayTempmax + "°F");
+                var dayLowP = $("<p>").text("Low: " + historicDayTempmin + "°F");
+                // var dayRain = $("<p>").text(historicDayPrecip);
+                var dayWind = $("<p>").text("Wind: " + historicDayWindspeed + " MPH");
+
+
+                // Append all elements to daydiv then to tile div
+                dayDiv.append(dayTitle, dayConditionsP, dayHighP, dayLowP, dayWind)
+                $("#historic-weather-week").append(dayDiv);
+
+            });
+
+
+            // }); // Uncomment this for prod
         }
 
 

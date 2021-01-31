@@ -74,3 +74,10 @@
     .mySearchIconDashboard {
         pointer-events: initial
     }
+
+/* Weather Dashboard Classes */
+.historic-day-div {
+    /* background-color: #9AA6CC; */
+    border: solid teal 1px;
+    margin: 10px;
+}
