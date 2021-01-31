@@ -46,7 +46,7 @@ function displayWeather(location) {
         var oneYearAgoTwoMonthsEndFormatted = oneYearAgoTwoMonthsEnd.c.year + "-" + oneYearAgoTwoMonthsEnd.c.month + "-" + oneYearAgoTwoMonthsEnd.c.day;
 
         // Test Variables
-        console.log(oneYearAgoFormatted + "\n" + oneYearAgoWeekFormatted + "\n" + oneYearAgoMonthStartFormatted + "\n" + oneYearAgoMonthEndFormatted + "\n" + oneYearAgoTwoMonthsStartFormatted + "\n" + oneYearAgoTwoMonthsEndFormatted);
+        // console.log(oneYearAgoFormatted + "\n" + oneYearAgoWeekFormatted + "\n" + oneYearAgoMonthStartFormatted + "\n" + oneYearAgoMonthEndFormatted + "\n" + oneYearAgoTwoMonthsStartFormatted + "\n" + oneYearAgoTwoMonthsEndFormatted);
 
 
         getHistoricWeek();
@@ -73,8 +73,38 @@ function displayWeather(location) {
             //     // localStorage.setItem('historic-week', JSON.stringify(response));
 
             // Grab Data from JSON - Leave this line commented
-            
-            
+            console.log("=========================");
+            // City/state
+            var address = response.resolvedAddress
+            // Array data
+            var aDayRange = response.days
+            console.log(address);
+            console.log(aDayRange);
+            $.each(aDayRange, function (index, item) {
+
+                var historicDay = aDayRange[index].datetime;
+                var historicDayEpoch = aDayRange[index].datetimeEpoch;
+                var historicDayConditions = aDayRange[index].conditions;
+                var historicDayHumidity = aDayRange[index].humidity;
+                var historicDayIcon = aDayRange[index].icon;
+                var historicDayPrecip = aDayRange[index].precip;
+                var historicDayTempmax = aDayRange[index].tempmax;
+                var historicDayTempmin = aDayRange[index].tempmin;
+                var historicDayWindspeed = aDayRange[index].windspeed;
+
+                console.log(historicDay);
+                console.log(historicDayEpoch);
+                console.log(historicDayConditions);
+                console.log(historicDayHumidity);
+                console.log(historicDayIcon);
+                console.log(historicDayPrecip);
+                console.log(historicDayTempmax);
+                console.log(historicDayTempmin);
+                console.log(historicDayWindspeed);
+                console.log("=========================");
+
+            });
+
 
 
 
@@ -105,4 +135,4 @@ function displayWeather(location) {
 };
 
 // Event listener
-$("#searchButtonDashboard").click(searchButtonClicked);
+$("#searchButton").click(searchButtonClicked);

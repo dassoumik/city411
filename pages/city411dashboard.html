@@ -2,177 +2,169 @@
 
 <html lang="en">
 
-    <head>
+<head>
 
-        <!--Meta Tags-->
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> <!--To support API Calls Without HTTPS For OpenWeatherAPI-->
-        <!--Google Font Awesome CDN For Icons-->
-        <link
-        rel="stylesheet"
-        href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
-        crossorigin="anonymous"
-        />
-        <!--Google Fonts CDN-->
-        <link 
-        rel="preconnect" 
-        href="https://fonts.gstatic.com"
-        >
-        <link 
-        href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Orbitron:wght@595&display=swap" 
+    <!--Meta Tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <!--To support API Calls Without HTTPS For OpenWeatherAPI-->
+    <!--Google Font Awesome CDN For Icons-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
+    <!--Google Fonts CDN-->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Orbitron:wght@595&display=swap"
         rel="stylesheet">
-        <!--bulma CSS Framework CDN-->
-        <link 
-        rel="stylesheet" 
-        href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.2/css/bulma-rtl.css" 
-        integrity="sha512-ztKTLi7ZcKhQEdPl5fxkyI5cugKexJJ6kia13Jxygk5h/1XNGWpzu2GkqLmbgE/Fg9798tg++mbWvdiwyetFeg==" 
-        crossorigin="anonymous" 
-        />
-        <!--Our local CSS-->
-        <link
-        rel="stylesheet" 
-        href="../style/style.css"
-        >
-        <!--Page Title-->
-        <title>411 Dashboard</title>
+    <!--bulma CSS Framework CDN-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.2/css/bulma-rtl.css"
+        integrity="sha512-ztKTLi7ZcKhQEdPl5fxkyI5cugKexJJ6kia13Jxygk5h/1XNGWpzu2GkqLmbgE/Fg9798tg++mbWvdiwyetFeg=="
+        crossorigin="anonymous" />
+    <!--Our local CSS-->
+    <link rel="stylesheet" href="../style/style.css">
+    <!--Page Title-->
+    <title>411 Dashboard</title>
 
-    </head>
+</head>
 
-    <body class="myHeroImageWelcome">
+<body class="myHeroImageWelcome">
 
-        <!--NAVBAR-->
-        <nav class="navbar level has-background-grey-dark mb-0" role="navigation" aria-label="main navigation">
+    <!--NAVBAR-->
+    <nav class="navbar level has-background-grey-dark mb-0" role="navigation" aria-label="main navigation">
 
-            <!--Brand in Navbar-->
-            <div class="navbar-brand">
-                <h1 class = "ml-4 has-text-center has-text-white py-4 city411Brand"><i class="fas fa-city"></i> City 411</h1>
-            </div>
+        <!--Brand in Navbar-->
+        <div class="navbar-brand">
+            <h1 class="ml-4 has-text-center has-text-white py-4 city411Brand"><i class="fas fa-city"></i> City 411</h1>
+        </div>
 
-            <!--Toggle Menu Favorites in Navbar-->
-            <div id="navbarBasicExample" class="navbar-menu  ml-3">
-                <div class="navbar-start ml-0">
-                    <div class="navbar-item has-dropdown is-left is-hoverable">
-                        <a class="navbar-link has-text-white">
-                            Favorite Cities
-                        </a>
-                        <div id = "favoriteCitiesList"class="navbar-dropdown">
-                            <a class="navbar-item">
+        <!--Toggle Menu Favorites in Navbar-->
+        <div id="navbarBasicExample" class="navbar-menu  ml-3">
+            <div class="navbar-start ml-0">
+                <div class="navbar-item has-dropdown is-left is-hoverable">
+                    <a class="navbar-link has-text-white">
+                        Favorite Cities
+                    </a>
+                    <div id="favoriteCitiesList" class="navbar-dropdown">
+                        <a class="navbar-item">
                             City1
-                            </a>
-                            <a class="navbar-item">
+                        </a>
+                        <a class="navbar-item">
                             City2
-                            </a>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </div>
+        </div>
 
-             <!--Searchbar in Navbar-->
-            <div class="field level-left mb-0 mr-4">
-                <div class="control has-icons-left has-icons-right">
-                    <input id = "searchedCityInput" class="input" type="email" placeholder="Search A City!">
-                    <button class="icon is-right button is-ghost">
-                        <i class="fas fa-search has-text-link mySearchIconDashboard"></i>
-                    </button>
-                </div>
+        <!--Searchbar in Navbar-->
+        <div class="field level-left mb-0 mr-4">
+            <div class="control has-icons-left has-icons-right">
+                <input id="searchedCityInput" class="input" type="email" placeholder="Search A City!">
+                <button id="searchButton" class="icon is-right button is-ghost">
+                    <i class="fas fa-search has-text-link mySearchIconDashboard"></i>
+                </button>
             </div>
+        </div>
 
-        </nav>
+    </nav>
 
-        <!--(TILE LEVEL 1) MAIN TILES CONTAINER-->
-        <div class="tile is-ancestor mt-2 mx-1">
+    <!--(TILE LEVEL 1) MAIN TILES CONTAINER-->
+    <div class="tile is-ancestor mt-2 mx-1">
 
-            <!--(TILE LEVEL 2) CITY PINS CONTAINER-->
-            <div class="tile is-parent">
+        <!--(TILE LEVEL 2) CITY PINS CONTAINER-->
+        <div class="tile is-parent">
 
-                <!--(TILE LEVEL 3) CITY PINS SUBCONTAINER-->
-                <div id = "cityPins" class="tile is-child px-2 has-background-grey-dark">
+            <!--(TILE LEVEL 3) CITY PINS SUBCONTAINER-->
+            <div id="cityPins" class="tile is-child px-2 has-background-grey-dark">
                 <h1 class="title has-text-centered has-text-white py-3 mt-2 mb-3">Pins</h1>
-                    
-                    <!--(TILE LEVEL 4) Dynamically inserted saved city elements-->
-                    <div class="tile px-2 py-2 mt-1 has-background-grey-lighter">  <!--If somethign messes up here add class is-child back..-->
-                        <h1 class="has-text-centered">Pinned Thing Name</h1>
-                    </div>
 
-                    <div class="tile px-2 py-2 mt-1 has-background-grey-lighter">  <!--If somethign messes up here add class is-child back..-->
-                        <h1 class="has-text-centered">Pinned Thing Name</h1>
-                    </div>
-
-                    <div class="tile px-2 py-2 mt-1 has-background-grey-lighter">  <!--If somethign messes up here add class is-child back..-->
-                        <h1 class="has-text-centered">Pinned Thing Name</h1>
-                    </div>
-
+                <!--(TILE LEVEL 4) Dynamically inserted saved city elements-->
+                <div class="tile px-2 py-2 mt-1 has-background-grey-lighter">
+                    <!--If somethign messes up here add class is-child back..-->
+                    <h1 class="has-text-centered">Pinned Thing Name</h1>
                 </div>
-                
+
+                <div class="tile px-2 py-2 mt-1 has-background-grey-lighter">
+                    <!--If somethign messes up here add class is-child back..-->
+                    <h1 class="has-text-centered">Pinned Thing Name</h1>
+                </div>
+
+                <div class="tile px-2 py-2 mt-1 has-background-grey-lighter">
+                    <!--If somethign messes up here add class is-child back..-->
+                    <h1 class="has-text-centered">Pinned Thing Name</h1>
+                </div>
+
             </div>
 
-            <!--(TILE LEVEL 2) CITY INFO CONTAINER-->
-            <div class="tile is-parent is-10 is-vertical">
+        </div>
 
-                <!--(TILE LEVEL 3) WEATHER INFO CONTAINER-->
-                <div class = "tile is-parent is-horizontal px-0 py-0 mb-5">
+        <!--(TILE LEVEL 2) CITY INFO CONTAINER-->
+        <div class="tile is-parent is-10 is-vertical">
 
-                    <!--(TILE LEVEL 4) Three Horizontally DIstributed Weather Tiles-->
-                    <div class="tile">
-                        <article id="weatherDivPast" class="tile is-child notification is-info">
-                            <p class="title has-text-centered city411WeatherCardTitles">Weather 1</p>
-                            <p class="subtitle">Top tile</p>
-                        </article>
-                    </div>
+            <!--(TILE LEVEL 3) WEATHER INFO CONTAINER-->
+            <div class="tile is-parent is-horizontal px-0 py-0 mb-5">
 
-                    <div class="tile mx-1"> <!--Gve an mx margin here to spread the row by 2-->
-                        <article id="weatherDivPresentclass" class="tile is-child notification is-info">
-                            <p class="title has-text-centered city411WeatherCardTitles">Weather 2</p>
-                            <p class="subtitle">Top tile</p>
-                        </article>
-                    </div>
-
-                    <div class="tile">
-                        <article id="weatherDivFuture" class="tile is-child notification is-info">
-                            <p class="title has-text-centered city411WeatherCardTitles">Weather 3</p>
-                            <p class="subtitle">Top tile</p>
-                        </article>
-                    </div>
-
-                </div>
-
-                <!--(TILE LEVEL 3) FOOD & OTHER-->
-                <div class="tile is-child">
-                    <article id="foodDiv" class="tile is-child notification is-danger">
-                        <p class="title has-text-centered">Food</p>
+                <!--(TILE LEVEL 4) Three Horizontally DIstributed Weather Tiles-->
+                <div class="tile">
+                    <article id="weatherDivPast" class="tile is-child notification is-info">
+                        <p class="title has-text-centered city411WeatherCardTitles">Weather 1</p>
                         <p class="subtitle">Top tile</p>
                     </article>
                 </div>
 
-                <div class="tile is-child">
-                    <article class="tile is-child notification is-warning">
-                        <p class="title has-text-centered">"Entertainment"</p>
+                <div class="tile mx-1">
+                    <!--Gve an mx margin here to spread the row by 2-->
+                    <article id="weatherDivPresentclass" class="tile is-child notification is-info">
+                        <p class="title has-text-centered city411WeatherCardTitles">Weather 2</p>
                         <p class="subtitle">Top tile</p>
                     </article>
                 </div>
 
-                <div class="tile is-child">
-                    <article class="tile is-child notification is-success">
-                        <p class="title has-text-centered">"Other if we want.."</p>
+                <div class="tile">
+                    <article id="weatherDivFuture" class="tile is-child notification is-info">
+                        <p class="title has-text-centered city411WeatherCardTitles">Weather 3</p>
                         <p class="subtitle">Top tile</p>
                     </article>
                 </div>
 
-         
             </div>
-        
-         <!--These are the script links-->
-          
-            <!--This is the link to luxon-->
-            <script src="https://cdn.jsdelivr.net/npm/luxon@1.25.0/build/global/luxon.min.js"></script>
 
-            <!--This is the CDN to JQuery 3.5.1-->
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            <!--(TILE LEVEL 3) FOOD & OTHER-->
+            <div class="tile is-child">
+                <article id="foodDiv" class="tile is-child notification is-danger">
+                    <p class="title has-text-centered">Food</p>
+                    <p class="subtitle">Top tile</p>
+                </article>
+            </div>
 
-            <!--This is the link to our local javascript-->
-            <script src="../logic/script.js"></script>
+            <div class="tile is-child">
+                <article class="tile is-child notification is-warning">
+                    <p class="title has-text-centered">"Entertainment"</p>
+                    <p class="subtitle">Top tile</p>
+                </article>
+            </div>
 
-    </body>
+            <div class="tile is-child">
+                <article class="tile is-child notification is-success">
+                    <p class="title has-text-centered">"Other if we want.."</p>
+                    <p class="subtitle">Top tile</p>
+                </article>
+            </div>
+
+
+        </div>
+
+        <!--These are the script links-->
+
+        <!--This is the link to luxon-->
+        <script src="https://cdn.jsdelivr.net/npm/luxon@1.25.0/build/global/luxon.min.js"></script>
+
+        <!--This is the CDN to JQuery 3.5.1-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+        <!--This is the link to our local javascript-->
+        <script src="../logic/script.js"></script>
+
+</body>
+
 </html>
