@@ -84,26 +84,31 @@
         <!--(TILE LEVEL 1) MAIN TILES CONTAINER-->
         <div class="tile is-ancestor mt-2 mx-1">
 
-            <!--(TILE LEVEL 2) CITY PINS CONTAINER-->
-            <div class="tile is-parent">
+            <!--(TILE LEVEL 2) PINS PER CITY CONTAINER-->
+            <div class="tile is-parent is-vertical">
+               
 
                 <!--(TILE LEVEL 3) CITY PINS SUBCONTAINER-->
-                <div id = "cityPins" class="tile is-child px-2 has-background-grey-dark">
-                <h1 class="title has-text-centered has-text-white py-3 mt-2 mb-3">Pins</h1>
-                    
-                    <!--(TILE LEVEL 4) Dynamically inserted saved city elements-->
-                    <div class="tile px-2 py-2 mt-1 has-background-grey-lighter">  <!--If somethign messes up here add class is-child back..-->
-                        <h1 class="has-text-centered">Pinned Thing Name</h1>
+                <div class="tile is-parent is-vertical px-0 py-0 has-text-centered">
+                    <div class = "has-text-white is-size-4 mb-2 myBold">Pins</div>
+                    <!--(TILE LEVEL 4) Saved Pins-->
+                    <div class="tile is-parent is-vertical p-0  has-background-grey-dark mb-5">
+                        <div class = "box p-1 box mx-1 my-1 has-background-primary">
+                            <div class="myBold">Name of Pin</div>
+                            <div class="mb-2">Type (Event, Food)</div>
+                            <textarea class="textarea" placeholder="User Notes"></textarea>
+                        </div>  
+                        <div class = "box p-1 box mx-1 my-1 has-background-primary">
+                            <div class="myBold">Name of Pin</div>
+                            <div class="mb-2">Type (Event, Food)</div>
+                            <textarea class="textarea" placeholder="User Notes"></textarea>
+                        </div> 
+                        <div class = "box p-1 box mx-1 my-1 has-background-primary">
+                            <div class="myBold">Name of Pin</div>
+                            <div class="mb-2">Type (Event, Food)</div>
+                            <textarea class="textarea" placeholder="User Notes"></textarea>
+                        </div> 
                     </div>
-
-                    <div class="tile px-2 py-2 mt-1 has-background-grey-lighter">  <!--If somethign messes up here add class is-child back..-->
-                        <h1 class="has-text-centered">Pinned Thing Name</h1>
-                    </div>
-
-                    <div class="tile px-2 py-2 mt-1 has-background-grey-lighter">  <!--If somethign messes up here add class is-child back..-->
-                        <h1 class="has-text-centered">Pinned Thing Name</h1>
-                    </div>
-
                 </div>
                 
             </div>
@@ -112,14 +117,14 @@
             <div class="tile is-parent is-10 is-vertical">
 
                 <!--(TILE LEVEL 3) ALL WEATHER INFO CONTAINER-->
-                <div class = "tile is-parent is-horizontal px-0 py-0 mb-5">
+                <div class = "tile is-parent is-horizontal px-0 py-0">
 
                     <!--(TILE LEVEL 4) LEFT JUSTIFIED CURRENT AND FUTURE-->
                     <div class="tile is-parent is-vertical p-0">
 
                         <!--(TILE LEVEL 5) CURRENT WEATHER HEADER & PARENT TILE FOR CURRENT WEATHER INFO-->
                         <div class="tile is-parent is-vertical is-info px-0 pt-0 has-text-centered"> 
-                            <div class = "has-text-white is-size-4 mb-2">Weather Now</div>
+                            <div class = "has-text-white is-size-4 mb-2 myBold">Weather Now</div>
 
                             <!--TILE LEVEL 6) Icon and Info-->
                             <div class = "tile is-parent notification is-info p-1 has-text-centered">
@@ -139,7 +144,7 @@
 
                         <!--(TILE LEVEL 5) Weather Forecast-->
                         <div class="tile is-parent is-vertical has-text-centered p-0 is-size-6"> 
-                            <div class = "has-text-white is-size-4 mb-2">Weather Forecast</div>
+                            <div class = "has-text-white is-size-4 mb-2 myBold">Weather Forecast</div>
 
                             <!--(TILE LEVEL 6) Forecast Tiles-->
                             <div class= "tile is-parent is-horizontal notification is-info p-1 has-text-centered">
@@ -171,7 +176,7 @@
                     <div class="tile mx-1 is-parent is-vertical py-0 has-text-centered"> <!--Gve an mx margin here to spread the row by 2-->
 
                         <!--Historic Weather Title-->
-                        <div class = "has-text-white is-size-4 mb-2">Weather A Year Ago</div>
+                        <div class = "has-text-white is-size-4 mb-2 myBold">Weather A Year Ago</div>
                         
                         <!--Historic Weather Four Day-->
                         <div class= "tile is-parent is-horizontal notification is-info p-1 has-text-centered mb-0">
@@ -223,36 +228,60 @@
                             </div> 
                         </div>
                     </div>
-
-
                 </div>
 
-                <!--(TILE LEVEL 3) FOOD & OTHER-->
-                <div class="tile is-child">
-                    <article id="foodDiv" class="tile is-child notification is-danger">
-                        <p class="title has-text-centered">Food</p>
-                        <p class="subtitle">Top tile</p>
-                    </article>
-                </div>
+                <!--(TILE LEVEL 3) FOOD & ENTERTAINMENT CONTAINER TILE-->
+                <div class="tile is-parent is-horizontal px-0">
+                    
+                    <!--(TILE LEVEL 4) FOOD TILE-->
+                    <div class = "tile is-parent is-vertical mb-0 px-1 has-text-centered"> 
+                        <!--Food Header-->
+                        <div class = "has-text-white is-size-4 mb-2 myBold">Food</div>
+                        <!--Food Image and Descriptoin-->
+                        <div class = "tile is-child notification is-vertical is-danger p-1 py-3">
+                            <!--Image-->
+                            <img src="https://via.placeholder.com/300" alt="Placeholder image">
+                            <!--Descriptiont-->  
+                            <div class = "myBold">Food Type: <span class = "myRegular">Food Type</span></div>
+                            <div class = "myBold">Food Type: <span class = "myRegular">Food Type</span></div>
+                            <div class = "myBold">Food Type: <span class = "myRegular">Food Type</span></div>    
+                        </div>
+                    </div>
 
-                <div class="tile is-child">
-                    <article class="tile is-child notification is-warning">
-                        <p class="title has-text-centered">"Entertainment"</p>
-                        <p class="subtitle">Top tile</p>
-                    </article>
-                </div>
+                    <!--(TILE LEVEL 4) ENTERTAINMENT-->
+                    <div class = "tile is-parent is-vertical"> 
+                        <div class = "has-text-white is-size-4 mb-2 myBold has-text-centered">Entertainment</div>
 
-                <div class="tile is-child">
-                    <article class="tile is-child notification is-success">
-                        <p class="title has-text-centered">"Other if we want.."</p>
-                        <p class="subtitle">Top tile</p>
-                    </article>
-                </div>
+                        <!--Entertainment List-->
+                        <div class = "tile is-child notification is-vertical is-success p-1">
 
-         
+                            <div class="mb-3">
+                                <div class="myBold has-text-centered">Music</div>
+                                <hr class="my-2">
+                                <div class = "myBold">Event: <span class = "myRegular">Event title</span> <span class="myRegular">(Link)</span></div>
+                                <div class = "myBold">Event: <span class = "myRegular">Event title</span> <span class="myRegular">(Link)</span></div>
+                                <div class = "myBold">Event: <span class = "myRegular">Event title</span> <span class="myRegular">(Link)</span></div>
+                                <div class = "myBold">Event: <span class = "myRegular">Event title</span> <span class="myRegular">(Link)</span></div>
+                                <div class = "myBold">Event: <span class = "myRegular">Event title</span> <span class="myRegular">(Link)</span></div>  
+                            </div>
+
+                            <div>
+                                <div class="myBold has-text-centered">Sports</div>
+                                <hr class="my-2">
+                                <div class = "myBold">Event: <span class = "myRegular">Event title</span> <span class="myRegular">(Link)</span></div>
+                                <div class = "myBold">Event: <span class = "myRegular">Event title</span> <span class="myRegular">(Link)</span></div>
+                                <div class = "myBold">Event: <span class = "myRegular">Event title</span> <span class="myRegular">(Link)</span></div> 
+                                <div class = "myBold">Event: <span class = "myRegular">Event title</span> <span class="myRegular">(Link)</span></div>
+                                <div class = "myBold">Event: <span class = "myRegular">Event title</span> <span class="myRegular">(Link)</span></div>
+                            </div>
+                             
+                        </div>
+                    </div>
+                </div>
             </div>
+        </div>
         
-         <!--These are the script links-->
+        <!--These are the script links-->
           
             <!--This is the link to luxon-->
             <script src="https://cdn.jsdelivr.net/npm/luxon@1.25.0/build/global/luxon.min.js"></script>
