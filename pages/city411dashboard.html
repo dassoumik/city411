@@ -51,9 +51,9 @@
             </div>
 
             <!--Toggle Menu Favorites in Navbar-->
-            <div id="navbarBasicExample" class="navbar-menu  ml-3">
+            <div id="navbarBasicExample" class="navbar-menu ml-3">
                 <div class="navbar-start ml-0">
-                    <div class="navbar-item has-dropdown is-left is-hoverable">
+                    <div class="navbar-item has-dropdown is-hoverable">
                         <a class="navbar-link has-text-white">
                             Favorite Cities
                         </a>
@@ -108,33 +108,122 @@
                 
             </div>
 
-            <!--(TILE LEVEL 2) CITY INFO CONTAINER-->
+            <!--(TILE LEVEL 2) ALL CITY INFO CONTAINER-->
             <div class="tile is-parent is-10 is-vertical">
 
-                <!--(TILE LEVEL 3) WEATHER INFO CONTAINER-->
+                <!--(TILE LEVEL 3) ALL WEATHER INFO CONTAINER-->
                 <div class = "tile is-parent is-horizontal px-0 py-0 mb-5">
 
-                    <!--(TILE LEVEL 4) Three Horizontally DIstributed Weather Tiles-->
-                    <div class="tile">
-                        <article id="weatherDivPast" class="tile is-child notification is-info">
-                            <p class="title has-text-centered city411WeatherCardTitles">Weather 1</p>
-                            <p class="subtitle">Top tile</p>
-                        </article>
+                    <!--(TILE LEVEL 4) LEFT JUSTIFIED CURRENT AND FUTURE-->
+                    <div class="tile is-parent is-vertical p-0">
+
+                        <!--(TILE LEVEL 5) CURRENT WEATHER HEADER & PARENT TILE FOR CURRENT WEATHER INFO-->
+                        <div class="tile is-parent is-vertical is-info px-0 pt-0 has-text-centered"> 
+                            <div class = "has-text-white is-size-4 mb-2">Weather Now</div>
+
+                            <!--TILE LEVEL 6) Icon and Info-->
+                            <div class = "tile is-parent notification is-info p-1 has-text-centered">
+                                <!--Current Weather Icon-->
+                                <div class="tile is-child notification is-info p-1 has-text-centered">
+                                    <i class="fas fa-cloud my-5 is-size-2"></i><!--Need to figure out how to align center x and y-->
+                                </div>
+
+                                <!--Current Weather Info-->
+                                <div class="tile is-child is-vertical notification is-info p-1 py-3">
+                                    <div>Thing: <span>Value</span></div>
+                                    <div>Thing: <span>Value</span></div>
+                                    <div>Thing: <span>Value</span></div>
+                                </div> 
+                            </div>
+                        </div>
+
+                        <!--(TILE LEVEL 5) Weather Forecast-->
+                        <div class="tile is-parent is-vertical has-text-centered p-0 is-size-6"> 
+                            <div class = "has-text-white is-size-4 mb-2">Weather Forecast</div>
+
+                            <!--(TILE LEVEL 6) Forecast Tiles-->
+                            <div class= "tile is-parent is-horizontal notification is-info p-1 has-text-centered">
+                                <div class="tile is-child is-vertical notification is-info p-1">
+                                    <i class="fas fa-cloud my-5 is-size-4"></i>
+                                    <div>Thing: <span>Value</span></div>
+                                    <div>Thing: <span>Value</span></div>
+                                </div> 
+                                <div class="tile is-child is-vertical notification is-info p-1">
+                                    <i class="fas fa-cloud my-5 is-size-4"></i>
+                                    <div>Thing: <span>Value</span></div>
+                                    <div>Thing: <span>Value</span></div>
+                                </div> 
+                                <div class="tile is-child is-vertical notification is-info p-1">
+                                    <i class="fas fa-cloud my-5 is-size-4"></i>
+                                    <div>Thing: <span>Value</span></div>
+                                    <div>Thing: <span>Value</span></div>
+                                </div> 
+                                <div class="tile is-child is-vertical notification is-info p-1">
+                                    <i class="fas fa-cloud my-5 is-size-4"></i>
+                                    <div>Thing: <span>Value</span></div>
+                                    <div>Thing: <span>Value</span></div>
+                                </div> 
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="tile mx-1"> <!--Gve an mx margin here to spread the row by 2-->
-                        <article id="weatherDivPresentclass" class="tile is-child notification is-info">
-                            <p class="title has-text-centered city411WeatherCardTitles">Weather 2</p>
-                            <p class="subtitle">Top tile</p>
-                        </article>
+                    <!--Historic Large Tile-->
+                    <div class="tile mx-1 is-parent is-vertical py-0 has-text-centered"> <!--Gve an mx margin here to spread the row by 2-->
+
+                        <!--Historic Weather Title-->
+                        <div class = "has-text-white is-size-4 mb-2">Weather A Year Ago</div>
+                        
+                        <!--Historic Weather Four Day-->
+                        <div class= "tile is-parent is-horizontal notification is-info p-1 has-text-centered mb-0">
+                            <div class="tile is-child is-vertical notification is-info p-1">
+                                <div class = myBold>DATE</div>
+                                <i class="fas fa-cloud my-2 is-size-4"></i>
+                                <div>Thing: <span>Value</span></div>
+                                <div>Thing: <span>Value</span></div>
+                            </div> 
+                            <div class="tile is-child is-vertical notification is-info p-1">
+                                <div class = myBold>DATE</div>
+                                <i class="fas fa-cloud my-2 is-size-4"></i>
+                                <div>Thing: <span>Value</span></div>
+                                <div>Thing: <span>Value</span></div>
+                            </div> 
+                            <div class="tile is-child is-vertical notification is-info p-1">
+                                <div class = myBold>DATE</div>
+                                <i class="fas fa-cloud my-2 is-size-4"></i>
+                                <div>Thing: <span>Value</span></div>
+                                <div>Thing: <span>Value</span></div>
+                            </div> 
+                            <div class="tile is-child is-vertical notification is-info p-1">
+                                <div class = myBold>DATE</div>
+                                <i class="fas fa-cloud my-2 is-size-4"></i>
+                                <div>Thing: <span>Value</span></div>
+                                <div>Thing: <span>Value</span></div>
+                            </div> 
+                        </div>
+
+                        <!--Historic Weather Averages-->
+                        <div class= "tile is-parent is-horizontal notification is-info p-1 py-5 has-text-centered">
+                            <div class="tile is-child is-vertical notification is-info p-1">
+                                <div class="is-size-6 myBold">Current Month AVG</div>
+                                <div>Thing: <span>Value</span></div>
+                                <div>Thing: <span>Value</span></div>
+                                <div>Thing: <span>Value</span></div>
+                            </div> 
+                            <div class="tile is-child is-vertical notification is-info p-1">
+                                <div class="is-size-6 myBold">Next Month AVG</div>
+                                <div>Thing: <span>Value</span></div>
+                                <div>Thing: <span>Value</span></div>
+                                <div>Thing: <span>Value</span></div>
+                            </div> 
+                            <div class="tile is-child is-vertical notification is-info p-1">
+                                <div class="is-size-6 myBold">Next Month + 1 AVG</div>
+                                <div>Thing: <span>Value</span></div>
+                                <div>Thing: <span>Value</span></div>
+                                <div>Thing: <span>Value</span></div>
+                            </div> 
+                        </div>
                     </div>
 
-                    <div class="tile">
-                        <article id="weatherDivFuture" class="tile is-child notification is-info">
-                            <p class="title has-text-centered city411WeatherCardTitles">Weather 3</p>
-                            <p class="subtitle">Top tile</p>
-                        </article>
-                    </div>
 
                 </div>
 
