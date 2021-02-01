@@ -62,18 +62,17 @@ function displayWeather(location) {
                 console.log("getCurrentWeather(): AJAX Error");
             }
         }).then(function (response) {
-            console.log(response);
             // Grab global data
             lon = response.coord.lon; // for UV
             lat = response.coord.lat; //for UV
 
             // Grab the local Data
             var name = response.name;
-            var tempCurrent = response.main.temp;
-            var tempHi = response.main.temp_max;
-            var tempLo = response.main.temp_min;
+            var tempCurrent = Math.round(response.main.temp);
+            var tempHi = Math.round(response.main.temp_max);
+            var tempLo = Math.round(response.main.temp_min);
             var currentHumidity = response.main.humidity;
-            var currentWindSpeed = response.wind.speed;
+            var currentWindSpeed = Math.round(response.wind.speed);
             var descript = response.weather[0].description;
 
             var iconID = response.weather[0].icon;
@@ -83,6 +82,7 @@ function displayWeather(location) {
             var imgIcon = $("<img>").attr({ class: "fas fa-cloud my-5 is-size-1", id: "wicon", alt: "Weather Icon" }).attr("src", iconURL)
 
             // Create data elements
+            var divDate = $("<div>").text(localTime.weekdayLong + ", " + localTime.monthLong + " " + localTime.day + " " + localTime.year);
             var divCTemp = $("<div>").text(tempCurrent + "°F");
             var divHi = $("<div>").text("Hi: " + tempHi + "°F");
             var divLo = $("<div>").text("Lo: " + tempLo + "°F");
@@ -94,7 +94,7 @@ function displayWeather(location) {
             $("#weather-current-icon").empty();
             $("#weather-current-icon").append(imgIcon)
             $("#weather-current-data").empty();
-            $("#weather-current-data").append(divCTemp, divHi, divLo, divHumid, divWind, divDescript);
+            $("#weather-current-data").append(divDate, divCTemp, divHi, divLo, divHumid, divWind, divDescript);
 
 
 
