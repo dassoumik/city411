@@ -148,8 +148,10 @@ function displayWeather(location) {
             console.log(aDayRange);
 
             // Declare Dynamic Variable
-            var avgHi = "";
-            var avgLo = "";
+            var totalHi = 0;
+            var avgHi = 0;
+            var totalLo = 0;
+            var avgLo = 0;
             var aCond = [];
             var aConditionsConcat = [];
             var aConditionsUsed = [];
@@ -160,11 +162,8 @@ function displayWeather(location) {
             // Loop thru each Historic Week day...
             // Build the strings USED & CONCAT string
             $.each(aDayRange, function (index, item) {
-                avgHi + Math.round(item.tempmax);
-                avgLo + Math.round(item.tempmin);
-
-
-
+                totalHi = totalHi + parseInt(item.tempmax);
+                totalLo = totalLo + parseInt(item.tempmin);
 
 
                 // Get all current conditions, tally them up
@@ -196,9 +195,17 @@ function displayWeather(location) {
                 var re = new RegExp(aConditionsUsed[i], "g");
                 Obj[aConditionsUsed[i]] = sFinalConcat.match(re).length;
             }
+
+
+            // Final Values to display:
+            avgHi = Math.round((totalHi / aDayRange.length))
+            avgLo = Math.round((totalLo / aDayRange.length))
             console.log(Obj);
+            console.log(totalHi);
+            console.log(aDayRange.length);
             console.log(avgHi);
             console.log(avgLo);
+
 
 
             // }); // Uncomment this for prod
