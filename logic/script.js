@@ -1,15 +1,21 @@
 // Global Variables
-var dateTime = luxon.DateTime; //Grabbing base time object
-var localTime = dateTime.local(); //Get the current local time
+var dateTime = luxon.DateTime; //Base time object
+var localTime = dateTime.local(); //Local time
 
 // Define Functons
 function searchButtonClicked() {
     // If input has value grab value, else do nothing
     if ($("#searchedCityInput").val() !== "") {
         var input = $("#searchedCityInput").val();
+
+        // clear search box
+        $("#searchedCityInput").val("");
         displayWeather(input);
     }
 }
+
+// Event listener
+$("#searchButton").click(searchButtonClicked);
 
 // Display Weather which contains all the weather functions
 function displayWeather(location) {
@@ -27,8 +33,8 @@ function displayWeather(location) {
         var oneYearAgo = currentDate.minus({ year: 1 })
         var oneYearAgoFormatted = oneYearAgo.c.year + "-" + oneYearAgo.c.month + "-" + oneYearAgo.c.day;
 
-        // a year ago, 7 days ahead 
-        var oneYearAgoWeek = currentDate.minus({ year: 1 }).plus({ days: 7 });
+        // a year ago, 5 days 
+        var oneYearAgoWeek = currentDate.minus({ year: 1 }).plus({ days: 6 });
         var oneYearAgoWeekFormatted = oneYearAgoWeek.c.year + "-" + oneYearAgoWeek.c.month + "-" + oneYearAgoWeek.c.day;
 
         // a year ago, start date of next month
@@ -206,7 +212,7 @@ function displayWeather(location) {
         }
 
 
-    } // displayHistoric()
+    } // end displayHistoric()
 
     // Current Data
     function getCurrentWeather() {
@@ -222,8 +228,7 @@ function displayWeather(location) {
 
 };
 
-// Event listener
-$("#searchButton").click(searchButtonClicked);
+
 
 // Display Events (Ticketmaster Discover API)
 
