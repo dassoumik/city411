@@ -35,13 +35,16 @@ function callFunctions(input) {
     displayWeather(input);
 }
 
-
 // Display Weather which contains all the weather functions
 function displayWeather(location) {
+    // Get current local date
+    var currentDate = dateTime.local();
+    var currentDateISO = dateTime.local().toISODate();
+
 
     // Call All Weather Functions
     displayCurrentWeather();
-    // displayHistoric();
+    displayHistoric();
 
 
     // Current Data
