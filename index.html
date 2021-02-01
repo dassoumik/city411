@@ -1,82 +1,71 @@
 <!DOCTYPE html>
 
-<html lang="en" class = "has-navbar-fixed-top">
+<html lang="en" class="has-navbar-fixed-top">
 
-    <head>
+<head>
 
-        <!--Meta Tags-->
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> <!--To support API Calls Without HTTPS For OpenWeatherAPI-->
-        <!--Google Font Awesome CDN For Icons-->
-        <link
-        rel="stylesheet"
-        href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
-        crossorigin="anonymous"
-        />
-        <!--Google Fonts CDN For City411 Nav-->
-        <link 
-        rel="preconnect" 
-        href="https://fonts.gstatic.com"
-        >
-        <link 
-        href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Orbitron:wght@595&display=swap" 
+    <!--Meta Tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <!--To support API Calls Without HTTPS For OpenWeatherAPI-->
+    <!--Google Font Awesome CDN For Icons-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
+    <!--Google Fonts CDN For City411 Nav-->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Orbitron:wght@595&display=swap"
         rel="stylesheet">
-        <!--bulma CSS Framework CDN-->
-        <link 
-        rel="stylesheet" 
-        href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.2/css/bulma-rtl.css" 
-        integrity="sha512-ztKTLi7ZcKhQEdPl5fxkyI5cugKexJJ6kia13Jxygk5h/1XNGWpzu2GkqLmbgE/Fg9798tg++mbWvdiwyetFeg==" 
-        crossorigin="anonymous" 
-        />
-        <!--Our local CSS-->
-        <link
-        rel="stylesheet" 
-        href="./style/style.css"
-        >
-        <!--Page Title-->
-        <title>411 Welcome</title>
-        
-    </head>
+    <!--bulma CSS Framework CDN-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.2/css/bulma-rtl.css"
+        integrity="sha512-ztKTLi7ZcKhQEdPl5fxkyI5cugKexJJ6kia13Jxygk5h/1XNGWpzu2GkqLmbgE/Fg9798tg++mbWvdiwyetFeg=="
+        crossorigin="anonymous" />
+    <!--Our local CSS-->
+    <link rel="stylesheet" href="./style/style.css">
+    <!--Page Title-->
+    <title>411 Welcome</title>
 
-    <body>
+</head>
 
-        <!--Navbar-->
-        <nav class="navbar has-background-grey-dark is-fixed-top" role="navigation" aria-label="main navigation">
-           <h1 class = "ml-4 has-text-center has-text-white py-4 city411Brand"><i class="fas fa-city"></i> City 411</h1>
-        </nav>
+<body>
 
-        <!--Hero Container (Excluding NAV)-->
-        <div class="hero is-link is-fullheight-with-navbar">
-            <div class="hero-body has-text-centered myHeroImageWelcome">
-                <div class = "container">
-                    <div class = "box myOpacityBoxWelcome">
-                        <div class="field is-grouped">
-                            <p class="control is-expanded has-icons-left">
-                                <input id = "searchedCityInputWelcome" class="input has-text-centered myOpacityInputWelcome" type="text" placeholder="Search A City">
-                                <button id = "searchedCityButtonWelcome" class = "icon is-left button is-ghost mySearchButtonWelcome">
-                                    <i class="fas fa-search has-text-link mySearchIconWelcome"></i>
-                                </button>
-                            </p>
-                        </div>
+    <!--Navbar-->
+    <nav class="navbar has-background-grey-dark is-fixed-top" role="navigation" aria-label="main navigation">
+        <h1 class="ml-4 has-text-center has-text-white py-4 city411Brand"><i class="fas fa-city"></i> City 411</h1>
+    </nav>
+
+    <!--Hero Container (Excluding NAV)-->
+    <div class="hero is-link is-fullheight-with-navbar">
+        <div class="hero-body has-text-centered myHeroImageWelcome">
+            <div class="container">
+                <div class="box myOpacityBoxWelcome">
+                    <div class="field is-grouped">
+                        <p class="control is-expanded has-icons-left">
+                            <input id="searchedCityInputWelcome" class="input has-text-centered myOpacityInputWelcome"
+                                type="text" placeholder="Search A City">
+                            <button id="searchedCityButtonWelcome"
+                                class="icon is-left button is-ghost mySearchButtonWelcome">
+                                <i class="fas fa-search has-text-link mySearchIconWelcome"></i>
+                            </button>
+                        </p>
                     </div>
-                </div>           
-            </div>     
+                </div>
+            </div>
         </div>
+    </div>
 
 
-        <!--These are the script links-->
-          
-            <!--This is the link to luxon-->
-            <script src="https://cdn.jsdelivr.net/npm/luxon@1.25.0/build/global/luxon.min.js"></script>
+    <!--These are the script links-->
 
-            <!--This is the CDN to JQuery 3.5.1-->
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!--This is the link to luxon-->
+    <script src="https://cdn.jsdelivr.net/npm/luxon@1.25.0/build/global/luxon.min.js"></script>
 
-            <!--This is the link to our local javascript-->
-            <script src="./logic/script.js"></script>
+    <!--This is the CDN to JQuery 3.5.1-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-    </body>
-    
+    <!--This is the link to our local javascript-->
+    <script src="./logic/script.js"></script>
+
+</body>
+
 </html>
