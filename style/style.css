@@ -25,6 +25,10 @@
         font-weight: bold;
     }
 
+    .myRegular {
+        font-weight: normal;
+    }
+
 /*Welcome Page Classes*/
 
     .myHeroImageWelcome {
