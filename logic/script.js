@@ -69,7 +69,7 @@ function displayWeather(location) {
             var response = JSON.parse(localStorage.getItem("historic-week"))
             console.log(response);
 
-            // // Commenting out AJAX requesting while developing; uncomment logic before pushing to prod
+            // Commenting out AJAX requesting while developing; uncomment logic before pushing to prod
             // $.ajax({
             //     url: queryURL,
             //     method: 'GET',
@@ -120,10 +120,6 @@ function displayWeather(location) {
                 var dayLowDiv = $("<div>").text("Lo: " + historicDayTempmin + "°F");
                 var dayIconText = $("<div>").text(historicDayIcon);
 
-                // var dayConditionsP = $("<p>").text(historicDayConditions);
-                // var dayRain = $("<p>").text(historicDayPrecip);
-                // var dayWind = $("<p>").text("Wind: " + historicDayWindspeed + " MPH");
-
                 // Append all elements to daydiv then to tile div
                 dayDiv.append(dayTitle, dayIcon, dayHighDiv, dayLowDiv)
                 $("#historic-week-div").append(dayDiv);
@@ -157,9 +153,7 @@ function displayWeather(location) {
 
             // Declare Dynamic Variable
             var totalHi = 0;
-            var avgHi = 0;
             var totalLo = 0;
-            var avgLo = 0;
             var aCond = [];
             var aConditionsConcat = [];
             var aConditionsUsed = [];
@@ -188,25 +182,33 @@ function displayWeather(location) {
             // Grab file concat String
             let sFinalConcat = aConditionsConcat.join("");
 
-            // Log current data
-            console.log(aConditionsUsed);
-            console.log(sFinalConcat);
-
             // Get condtion tallies
             // Loop thru used array, .match to finalstring, write to Obj property & value
             for (let i = 0; i < aConditionsUsed.length; i++) {
                 var re = new RegExp(aConditionsUsed[i], "g");
                 Obj[aConditionsUsed[i]] = sFinalConcat.match(re).length;
             }
+            console.log(Obj);
+
+            // Push object into array and sort descending to grab first 
+            var sortable = [];
+            for (var condition in Obj) {
+                sortable.push([condition, Obj[condition]]);
+            }
+
+            sortable.sort(function (a, b) {
+                return b[1] - a[1];
+            });
+
 
             // Final Values to display:
-            avgHi = Math.round((totalHi / aDayRange.length));
-            avgLo = Math.round((totalLo / aDayRange.length));
-            console.log(Obj);
-            console.log(totalHi);
-            console.log(aDayRange.length);
-            console.log(avgHi);
-            console.log(avgLo);
+            var mostlyCondition = sortable[0][0]
+            var avgHi = Math.round((totalHi / aDayRange.length));
+            var avgLo = Math.round((totalLo / aDayRange.length));
+
+            console.log(sortable[0][0]);
+            console.log("AvgHi: " + avgHi);
+            console.log("AvgLo: " + avgLo);
 
 
 
