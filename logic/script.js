@@ -66,165 +66,166 @@ function displayWeather(location) {
 
             var queryURL = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/" + location + "/" + oneYearAgoFormatted + "/" + oneYearAgoWeekFormatted + "?unitGroup=us&key=" + key + "&include=obs"
             // Grab Data from JSON - Leave this line commented
-            // var response = JSON.parse(localStorage.getItem("historic-week"))
-            // console.log(response);
+            var response = JSON.parse(localStorage.getItem("historic-week"))
+            console.log(response);
 
             // Commenting out AJAX requesting while developing; uncomment logic before pushing to prod
-            $.ajax({
-                url: queryURL,
-                method: 'GET',
-            }).then(function (response) {
-                console.log(response);
+            // $.ajax({
+            //     url: queryURL,
+            //     method: 'GET',
+            // }).then(function (response) {
+            //     console.log(response);
 
-                // Save the object in history to prevent from using query credits and running out
-                // localStorage.setItem('historic-week', JSON.stringify(response));
+            // Save the object in history to prevent from using query credits and running out
+            // localStorage.setItem('historic-week', JSON.stringify(response));
 
-                // City/state
-                var address = response.resolvedAddress
+            // City/state
+            var address = response.resolvedAddress
 
-                // Array data
-                var aDayRange = response.days
+            // Array data
+            var aDayRange = response.days
 
-                // Loop thru each Historic Week day...
-                $.each(aDayRange, function (index, item) {
+            // Loop thru each Historic Week day...
+            $.each(aDayRange, function (index, item) {
 
-                    var historicDay = aDayRange[index].datetime;
-                    var historicDayEpoch = aDayRange[index].datetimeEpoch;
-                    var historicDayConditions = aDayRange[index].conditions;
-                    var historicDayHumidity = aDayRange[index].humidity;
-                    var historicDayIcon = aDayRange[index].icon;
-                    var historicDayPrecip = aDayRange[index].precip;
-                    var historicDaySnow = aDayRange[index].snow;
-                    var historicDayTempmax = Math.round(aDayRange[index].tempmax);
-                    var historicDayTempmin = Math.round(aDayRange[index].tempmin);
-                    var historicDayWindspeed = Math.round(aDayRange[index].windspeed);
+                var historicDay = aDayRange[index].datetime;
+                var historicDayEpoch = aDayRange[index].datetimeEpoch;
+                var historicDayConditions = aDayRange[index].conditions;
+                var historicDayHumidity = aDayRange[index].humidity;
+                var historicDayIcon = aDayRange[index].icon;
+                var historicDayPrecip = aDayRange[index].precip;
+                var historicDaySnow = aDayRange[index].snow;
+                var historicDayTempmax = Math.round(aDayRange[index].tempmax);
+                var historicDayTempmin = Math.round(aDayRange[index].tempmin);
+                var historicDayWindspeed = Math.round(aDayRange[index].windspeed);
 
-                    // Create elements with the data
-                    var dayDiv = $("<div>").attr("id", "historic-day-" + index).attr("class", "tile is-child is-vertical notification is-info p-1");
-                    var dayTitle = $("<div>").attr("class", "myBold").text(dateTime.fromSeconds(historicDayEpoch).weekdayShort);
+                // Create elements with the data
+                var dayDiv = $("<div>").attr("id", "historic-day-" + index).attr("class", "tile is-child is-vertical notification is-info p-1");
+                var dayTitle = $("<div>").attr("class", "myBold").text(dateTime.fromSeconds(historicDayEpoch).weekdayShort);
 
-                    // Create ICON element based on ICON TEXT variable from response
-                    if (historicDayIcon === "rain") { var dayIcon = $("<i>").attr("class", "fas fa-cloud-showers-heavy my-2 is-size-4"); }
-                    else if (historicDayIcon === "fog") { var dayIcon = $("<i>").attr("class", "fas fa-smog my-2 is-size-4"); }
-                    else if (historicDayIcon === "wind") { var dayIcon = $("<i>").attr("class", "fas fa-wind my-2 is-size-4"); }
-                    else if (historicDayIcon === "cloudy") { var dayIcon = $("<i>").attr("class", "fas fa-cloud my-2 is-size-4"); }
-                    else if (historicDayIcon === "partly-cloudy-day") { var dayIcon = $("<i>").attr("class", "fas fa-cloud-sun my-2 is-size-4"); }
-                    else if (historicDayIcon === "partly-cloudy-night") { var dayIcon = $("<i>").attr("class", "fas fa-cloud-moon my-2 is-size-4"); }
-                    else if (historicDayIcon === "clear-day") { var dayIcon = $("<i>").attr("class", "fas fa-sun my-2 is-size-4"); }
-                    else if (historicDayIcon === "clear-night") { var dayIcon = $("<i>").attr("class", "fas fa-moon my-2 is-size-4"); }
-                    else { var dayIcon = $("<i>").attr("class", "fas fa-question my-2 is-size-4"); }
+                // Create ICON element based on ICON TEXT variable from response
+                if (historicDayIcon === "rain") { var dayIcon = $("<i>").attr("class", "fas fa-cloud-showers-heavy my-2 is-size-4"); }
+                else if (historicDayIcon === "fog") { var dayIcon = $("<i>").attr("class", "fas fa-smog my-2 is-size-4"); }
+                else if (historicDayIcon === "wind") { var dayIcon = $("<i>").attr("class", "fas fa-wind my-2 is-size-4"); }
+                else if (historicDayIcon === "cloudy") { var dayIcon = $("<i>").attr("class", "fas fa-cloud my-2 is-size-4"); }
+                else if (historicDayIcon === "partly-cloudy-day") { var dayIcon = $("<i>").attr("class", "fas fa-cloud-sun my-2 is-size-4"); }
+                else if (historicDayIcon === "partly-cloudy-night") { var dayIcon = $("<i>").attr("class", "fas fa-cloud-moon my-2 is-size-4"); }
+                else if (historicDayIcon === "clear-day") { var dayIcon = $("<i>").attr("class", "fas fa-sun my-2 is-size-4"); }
+                else if (historicDayIcon === "clear-night") { var dayIcon = $("<i>").attr("class", "fas fa-moon my-2 is-size-4"); }
+                else { var dayIcon = $("<i>").attr("class", "fas fa-question my-2 is-size-4"); }
 
-                    var dayHighDiv = $("<div>").text("Hi: " + historicDayTempmax + "°F");
-                    var dayLowDiv = $("<div>").text("Lo: " + historicDayTempmin + "°F");
-                    var dayIconText = $("<div>").text(historicDayIcon);
+                var dayHighDiv = $("<div>").text("Hi: " + historicDayTempmax + "°F");
+                var dayLowDiv = $("<div>").text("Lo: " + historicDayTempmin + "°F");
+                var dayIconText = $("<div>").text(historicDayIcon);
 
-                    // Append all elements to daydiv then to tile div
-                    dayDiv.append(dayTitle, dayIcon, dayHighDiv, dayLowDiv)
-                    $("#historic-week-div").append(dayDiv);
+                // Append all elements to daydiv then to tile div
+                dayDiv.append(dayTitle, dayIcon, dayHighDiv, dayLowDiv)
+                $("#historic-week-div").append(dayDiv);
 
-                });
+            });
 
 
-            }); // Uncomment this for prod
+            // }); // Uncomment this for prod
         }
 
 
         function getHistoricCurrentMonth(month, key, start, end) {
             var queryURL = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/" + location + "/" + start + "/" + end + "?unitGroup=us&key=" + key + "&include=obs"
             // Grab Data from JSON - Leave this line commented
-            // var response = JSON.parse(localStorage.getItem(month));
-            // console.log(response);
+
+            var response = JSON.parse(localStorage.getItem(month));
+            console.log(response);
 
             // Commenting out AJAX requesting while developing; uncomment logic before pushing to prod
-            $.ajax({
-                url: queryURL,
-                method: 'GET',
-            }).then(function (response) {
-                console.log(response);
+            // $.ajax({
+            //     url: queryURL,
+            //     method: 'GET',
+            // }).then(function (response) {
+            //     console.log(response);
 
-                // Save the object in history to prevent from using query credits and running out
-                localStorage.setItem(month, JSON.stringify(response));
+            // Save the object in history to prevent from using query credits and running out
+            // localStorage.setItem(month, JSON.stringify(response));
 
-                // Array data / Outer Loop variables
-                var aDayRange = response.days
+            // Array data / Outer Loop variables
+            var aDayRange = response.days
 
 
-                // Declare Dynamic Variable
-                var totalHi = 0;
-                var totalLo = 0;
-                var aCond = [];
-                var aConditionsConcat = [];
-                var aConditionsUsed = [];
-                var Obj = {};
+            // Declare Dynamic Variable
+            var totalHi = 0;
+            var totalLo = 0;
+            var aCond = [];
+            var aConditionsConcat = [];
+            var aConditionsUsed = [];
+            var Obj = {};
 
-                // Loop thru each Historic Week day...
-                // Build the strings USED & CONCAT string
-                $.each(aDayRange, function (index, item) {
-                    totalHi = totalHi + parseInt(item.tempmax);
-                    totalLo = totalLo + parseInt(item.tempmin);
+            // Loop thru each Historic Week day...
+            // Build the strings USED & CONCAT string
+            $.each(aDayRange, function (index, item) {
+                totalHi = totalHi + parseInt(item.tempmax);
+                totalLo = totalLo + parseInt(item.tempmin);
 
-                    // Get all current conditions, tally them up
-                    var aCurrentConditions = aDayRange[index].conditions.split(",");
-                    // Build Used String
-                    for (let i = 0; i < aCurrentConditions.length; i++) {
-                        var currentCondition = (aCurrentConditions[i].trim(" ")).toLowerCase();
-                        if (aConditionsUsed.indexOf(currentCondition) === -1) {
-                            aConditionsUsed.push(currentCondition);
-                        }
-
-                        // Build Concat String (for latter count)
-                        aConditionsConcat.push(currentCondition);
+                // Get all current conditions, tally them up
+                var aCurrentConditions = aDayRange[index].conditions.split(",");
+                // Build Used String
+                for (let i = 0; i < aCurrentConditions.length; i++) {
+                    var currentCondition = (aCurrentConditions[i].trim(" ")).toLowerCase();
+                    if (aConditionsUsed.indexOf(currentCondition) === -1) {
+                        aConditionsUsed.push(currentCondition);
                     }
-                });
 
-                // Grab file concat String
-                let sFinalConcat = aConditionsConcat.join("");
-
-                // Get condtion tallies
-                // Loop thru used array, .match to finalstring, write to Obj property & value
-                for (let i = 0; i < aConditionsUsed.length; i++) {
-                    var re = new RegExp(aConditionsUsed[i], "g");
-                    Obj[aConditionsUsed[i]] = sFinalConcat.match(re).length;
+                    // Build Concat String (for latter count)
+                    aConditionsConcat.push(currentCondition);
                 }
-                console.log(Obj);
+            });
 
-                // Push object into array and sort descending to grab first 
-                var sortable = [];
-                for (var condition in Obj) {
-                    sortable.push([condition, Obj[condition]]);
-                }
-                sortable.sort(function (a, b) {
-                    return b[1] - a[1];
-                });
+            // Grab file concat String
+            let sFinalConcat = aConditionsConcat.join("");
 
+            // Get condtion tallies
+            // Loop thru used array, .match to finalstring, write to Obj property & value
+            for (let i = 0; i < aConditionsUsed.length; i++) {
+                var re = new RegExp(aConditionsUsed[i], "g");
+                Obj[aConditionsUsed[i]] = sFinalConcat.match(re).length;
+            }
+            console.log(Obj);
 
-                // Final Values to display:
-                var mostlyCondition = sortable[0][0];
-                var avgHi = Math.round((totalHi / aDayRange.length));
-                var avgLo = Math.round((totalLo / aDayRange.length));
-
-                console.log(sortable[0][0]);
-                console.log("AvgHi: " + avgHi);
-                console.log("AvgLo: " + avgLo);
-
-                // Clear previous Month Elements:
-                $("#" + month).empty();
-
-                // Create elements
-                if (month === "current") {
-                    var hcmTitleDiv = $("<div>").attr("class", "is-size-6 myBold").text(oneYearAgo.monthLong);
-                }
-                else if (month === "next") { var hcmTitleDiv = $("<div>").attr("class", "is-size-6 myBold").text(oneYearAgoTwoMonthsStart.monthLong); }
-                else if (month === "nextnext") { var hcmTitleDiv = $("<div>").attr("class", "is-size-6 myBold").text(oneYearAgo.monthLong); }
-                var mostlyCondDiv = $("<div>").text("Mostly " + mostlyCondition);
-                var avgHiDiv = $("<div>").text("Hi average - " + avgHi);
-                var avgLoDiv = $("<div>").text("Lo average - " + avgLo);
-
-                // Append the above elements
-                $("#" + month).append(hcmTitleDiv, mostlyCondDiv, avgHiDiv, avgLoDiv)
+            // Push object into array and sort descending to grab first 
+            var sortable = [];
+            for (var condition in Obj) {
+                sortable.push([condition, Obj[condition]]);
+            }
+            sortable.sort(function (a, b) {
+                return b[1] - a[1];
+            });
 
 
-            }); // Uncomment this for prod
+            // Final Values to display:
+            var mostlyCondition = sortable[0][0];
+            var avgHi = Math.round((totalHi / aDayRange.length));
+            var avgLo = Math.round((totalLo / aDayRange.length));
+
+            console.log(sortable[0][0]);
+            console.log("AvgHi: " + avgHi);
+            console.log("AvgLo: " + avgLo);
+
+            // Clear previous Month Elements:
+            $("#" + month).empty();
+
+            // Create elements
+            if (month === "current") {
+                var hcmTitleDiv = $("<div>").attr("class", "is-size-6 myBold").text(oneYearAgo.monthLong);
+            }
+            else if (month === "next") { var hcmTitleDiv = $("<div>").attr("class", "is-size-6 myBold").text(oneYearAgoTwoMonthsStart.monthLong); }
+            else if (month === "nextnext") { var hcmTitleDiv = $("<div>").attr("class", "is-size-6 myBold").text(oneYearAgo.monthLong); }
+            var mostlyCondDiv = $("<div>").text("Mostly " + mostlyCondition);
+            var avgHiDiv = $("<div>").text("Hi average - " + avgHi);
+            var avgLoDiv = $("<div>").text("Lo average - " + avgLo);
+
+            // Append the above elements
+            $("#" + month).append(hcmTitleDiv, mostlyCondDiv, avgHiDiv, avgLoDiv)
+
+
+            // }); // Uncomment this for prod
         }
 
 
@@ -246,16 +247,19 @@ function displayWeather(location) {
 
 
 
-// Display Events (Ticketmaster Discover API)
-
-// Notes and Info For Ticketmaster Discovery API (Open API- 5000 Calls Pery Day)
-// My ticketmaster Key: Tt06tcfEuZlIkXAxhlvZFSuqmv0EOmz0
-// ticketmaster Root URL: https://app.ticketmaster.com/discovery/v2/
-// NOTE - we could run searches for sports and music, have two side by side tiles under "entertainment parent"
-// NOTE - we should add a date filter somehow so it runs maybe like "Today-two weeks" or something
-
 // Get Local Events Function Using Trip Advisor
 function getLocalEvents() {
+
+    // Display Events (Ticketmaster Discover API)
+
+    // Notes and Info For Ticketmaster Discovery API (Open API- 5000 Calls Pery Day)
+    // My ticketmaster Key: Tt06tcfEuZlIkXAxhlvZFSuqmv0EOmz0
+    // ticketmaster Root URL: https://app.ticketmaster.com/discovery/v2/
+    // NOTE - we could run searches for sports and music, have two side by side tiles under "entertainment parent"
+    // NOTE - we should add a date filter somehow so it runs maybe like "Today-two weeks" or something
+
+
+
     console.log("getLocalEvents function invoked")
 
     // Trigger the function with button Click
