@@ -1,6 +1,8 @@
 // Global Variables
 var dateTime = luxon.DateTime; //Base time object
 var localTime = dateTime.local(); //Local time
+var lat;
+var lon;
 
 // Define Functons
 function searchButtonClicked() {
@@ -40,7 +42,9 @@ function displayWeather(location) {
     var currentDateISO = dateTime.local().toISODate();
 
     // Call All Weather Functions
-    displayHistoric();
+    getCurrentWeather();
+    // displayHistoric();
+
 
     // Current Data
     function getCurrentWeather() {
@@ -57,27 +61,36 @@ function displayWeather(location) {
             url: queryURL,
             method: "GET",
             error: function (err) {
-                $("#forecast-div").empty();
+                console.log("getCurrentWeather(): AJAX Error");
             }
         }).then(function (response) {
+            console.log(response);
+            // Grab global data
+            lon = response.coord.lon; // for UV
+            lat = response.coord.lat; //for UV
 
-            // Grab the data we need to display
+            // Grab the local Data
             var name = response.name;
-            var currentTemp = response.main.temp;
+            var tempCurrent = response.main.temp;
+            var tempHi = response.main.temp_max;
+            var tempLo = response.main.temp_min;
+
             var currentHumidity = response.main.humidity;
             var currentWindSpeed = response.wind.speed;
             var currentIcon = response.weather[0].icon;
-            var lon = response.coord.lon; // for UV
-            var lat = response.coord.lat; //for UV
 
             // Create Card
 
-
             // Create card elements
+            var divCTemp = $("<div>").text(tempCurrent + "°F");
+            var divHi = $("<div>").text("Hi: " + tempHi + "°F");
+            var divLo = $("<div>").text("Lo: " + tempLo + "°F");
 
             // Append final card to page
+            $("#weather-current-div").empty();
+            $("#weather-current-div").append(divCTemp, divHi, divLo);
 
-            // Grab Lon & lat values for index call
+
 
         });
     }
