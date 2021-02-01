@@ -49,7 +49,7 @@ function displayWeather(location) {
         // console.log(oneYearAgoFormatted + "\n" + oneYearAgoWeekFormatted + "\n" + oneYearAgoMonthStartFormatted + "\n" + oneYearAgoMonthEndFormatted + "\n" + oneYearAgoTwoMonthsStartFormatted + "\n" + oneYearAgoTwoMonthsEndFormatted);
 
 
-        // getHistoricWeek();
+        getHistoricWeek();
         getHistoricCurrentMonth()
 
         // Returns JSON object of a year ago, 1 week. 
@@ -157,14 +157,11 @@ function displayWeather(location) {
             var aConditionsUsed = [];
             var Obj = {};
 
-
-
             // Loop thru each Historic Week day...
             // Build the strings USED & CONCAT string
             $.each(aDayRange, function (index, item) {
                 totalHi = totalHi + parseInt(item.tempmax);
                 totalLo = totalLo + parseInt(item.tempmin);
-
 
                 // Get all current conditions, tally them up
                 var aCurrentConditions = aDayRange[index].conditions.split(",");
@@ -180,8 +177,6 @@ function displayWeather(location) {
                 }
             });
 
-
-
             // Grab file concat String
             let sFinalConcat = aConditionsConcat.join("")
 
@@ -195,7 +190,6 @@ function displayWeather(location) {
                 var re = new RegExp(aConditionsUsed[i], "g");
                 Obj[aConditionsUsed[i]] = sFinalConcat.match(re).length;
             }
-
 
             // Final Values to display:
             avgHi = Math.round((totalHi / aDayRange.length))
