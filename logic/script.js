@@ -12,10 +12,26 @@ function searchButtonClicked() {
         $("#searchedCityInput").val("");
 
         // Call functions here
-        displayWeather(input);
-
+        callFunctions(input)
     }
 }
+
+// Search Button Welcome Screen
+function searchButtonWelcomeClicked() {
+    // Clear search box
+    $("#searchedCityInputWelcome").val(" ");
+
+    // Go to data page
+    window.location.href = "./pages/city411dashboard.html";
+
+}
+
+// Call all functions here
+function callFunctions(input) {
+    // Call functions here
+    displayWeather(input);
+}
+
 
 // Display Weather which contains all the weather functions
 function displayWeather(location) {
@@ -295,6 +311,7 @@ function getLocalEvents() {
     });
 }
 
-
 // Event listener
 $("#searchButton").click(searchButtonClicked);
+$("#searchedCityButtonWelcome").click(searchButtonWelcomeClicked);
+
