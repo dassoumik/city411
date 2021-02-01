@@ -56,11 +56,14 @@ function displayWeather(location) {
 
 
         getHistoricWeek();
-        getHistoricCurrentMonth()
+        getHistoricCurrentMonth();
 
         // Returns JSON object of a year ago, 1 week. 
         // The API KEY in this ajax call should be used for 
         function getHistoricWeek() {
+            // Empty the div to make room for JS created HTML
+            $("#historic-week-div").empty(); 
+            
             var queryURL = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/" + location + "/" + oneYearAgoFormatted + "/" + oneYearAgoWeekFormatted + "?unitGroup=us&key=Q5Z5S9QT8FD8UJKCGYBURUXX8&include=obs"
             // Grab Data from JSON - Leave this line commented
             var response = JSON.parse(localStorage.getItem("historic-week"))
@@ -98,33 +101,20 @@ function displayWeather(location) {
                 var historicDayTempmin = Math.round(aDayRange[index].tempmin);
                 var historicDayWindspeed = Math.round(aDayRange[index].windspeed);
 
-                // // Logging the data - Will remove later
-                // console.log(historicDay);
-                // console.log(historicDayEpoch);
-                // console.log(historicDayConditions);
-                // console.log(historicDayHumidity);
-                // console.log(historicDayIcon);
-                // console.log(historicDayPrecip);
-                // console.log(historicDayTempmax);
-                // console.log(historicDayTempmin);
-                // console.log(historicDayWindspeed);
-                // console.log("=========================");
-                // console.log(dateTime.fromSeconds(historicDayEpoch).weekdayShort);
-
                 // Create elements with the data
-                // Create Div Day Card
-                var dayDiv = $("<div>").attr("id", "historic-day-div-" + index).attr("class", "historic-day-div");
-                var dayTitle = $("<p>").text(dateTime.fromSeconds(historicDayEpoch).weekdayShort);
-                var dayConditionsP = $("<p>").text(historicDayConditions);
-                var dayHighP = $("<p>").text("High: " + historicDayTempmax + "°F");
-                var dayLowP = $("<p>").text("Low: " + historicDayTempmin + "°F");
-                // var dayRain = $("<p>").text(historicDayPrecip);
-                var dayWind = $("<p>").text("Wind: " + historicDayWindspeed + " MPH");
+                var dayDiv = $("<div>").attr("id", "historic-day-" + index).attr("class", "tile is-child is-vertical notification is-info p-1");
+                var dayTitle = $("<div>").attr("class", "myBold").text(dateTime.fromSeconds(historicDayEpoch).weekdayShort);
+                var dayIcon = $("<i>").attr("class", "fas fa-cloud my-2 is-size-4");
+                var dayHighDiv = $("<div>").text("Hi: " + historicDayTempmax + "°F");
+                var dayLowDiv = $("<div>").text("Lo: " + historicDayTempmin + "°F");
 
+                // var dayConditionsP = $("<p>").text(historicDayConditions);
+                // var dayRain = $("<p>").text(historicDayPrecip);
+                // var dayWind = $("<p>").text("Wind: " + historicDayWindspeed + " MPH");
 
                 // Append all elements to daydiv then to tile div
-                dayDiv.append(dayTitle, dayConditionsP, dayHighP, dayLowP, dayWind)
-                $("#historic-weather-week").append(dayDiv);
+                dayDiv.append(dayTitle, dayIcon, dayHighDiv, dayLowDiv)
+                $("#historic-week-div").append(dayDiv);
 
             });
 
