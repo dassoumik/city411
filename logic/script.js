@@ -195,14 +195,13 @@ function displayWeather(location) {
             for (var condition in Obj) {
                 sortable.push([condition, Obj[condition]]);
             }
-
             sortable.sort(function (a, b) {
                 return b[1] - a[1];
             });
 
 
             // Final Values to display:
-            var mostlyCondition = sortable[0][0]
+            var mostlyCondition = sortable[0][0];
             var avgHi = Math.round((totalHi / aDayRange.length));
             var avgLo = Math.round((totalLo / aDayRange.length));
 
@@ -210,6 +209,13 @@ function displayWeather(location) {
             console.log("AvgHi: " + avgHi);
             console.log("AvgLo: " + avgLo);
 
+            // Create elements
+            var hcmTitleDiv = $("<div>").attr("class", "is-size-6 myBold").text(oneYearAgo.monthLong);
+            var mostlyCondDiv = $("<div>").text("Mostly " + mostlyCondition);
+            var avgHiDiv = $("<div>").text("Hi average - " + avgHi);
+            var avgLoDiv = $("<div>").text("Lo average - " + avgLo);
+            $("#historic-current-month").empty();
+            $("#historic-current-month").append(hcmTitleDiv, mostlyCondDiv, avgHiDiv, avgLoDiv)
 
 
             // }); // Uncomment this for prod
