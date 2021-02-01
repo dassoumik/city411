@@ -37,9 +37,6 @@ function callFunctions(input) {
 
 // Display Weather which contains all the weather functions
 function displayWeather(location) {
-    // Get current local date
-    var currentDate = dateTime.local();
-    var currentDateISO = dateTime.local().toISODate();
 
     // Call All Weather Functions
     getCurrentWeather();
@@ -77,18 +74,28 @@ function displayWeather(location) {
 
             var currentHumidity = response.main.humidity;
             var currentWindSpeed = response.wind.speed;
-            var currentIcon = response.weather[0].icon;
 
-            // Create Card
 
-            // Create card elements
+            var iconID = response.weather[0].icon;
+            var iconURL = "https://openweathermap.org/img/w/" + iconID + ".png";
+
+            // Create Icon Element
+            var imgIcon = $("<img>").attr({ class: "fas fa-cloud my-5 is-size-1", id: "wicon", alt: "Weather Icon" }).attr("src", iconURL)
+
+            // Create data elements
+
             var divCTemp = $("<div>").text(tempCurrent + "°F");
             var divHi = $("<div>").text("Hi: " + tempHi + "°F");
             var divLo = $("<div>").text("Lo: " + tempLo + "°F");
+            var divHumid = $("<div>").text("Humidity: " + currentHumidity + "%");
+            var divWind = $("<div>").text("Wind: " + currentWindSpeed + " MPH");
+
 
             // Append final card to page
-            $("#weather-current-div").empty();
-            $("#weather-current-div").append(divCTemp, divHi, divLo);
+            $("#weather-current-icon").empty();
+            $("#weather-current-icon").append(imgIcon)
+            $("#weather-current-data").empty();
+            $("#weather-current-data").append(divCTemp, divHi, divLo, divHumid, divWind);
 
 
 
