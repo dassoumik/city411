@@ -10,6 +10,8 @@ function searchButtonClicked() {
 
         // clear search box
         $("#searchedCityInput").val("");
+
+        // Call functions here
         displayWeather(input);
     }
 }
@@ -244,7 +246,6 @@ function displayWeather(location) {
 
 
 };
-
 
 
 // Get Local Events Function Using Trip Advisor
