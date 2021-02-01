@@ -14,7 +14,7 @@ function searchButtonClicked() {
         $("#searchedCityInput").val("");
 
         // Call functions here
-        callFunctions(input)
+        callFunctions(input);
     }
 }
 
@@ -39,12 +39,12 @@ function callFunctions(input) {
 function displayWeather(location) {
 
     // Call All Weather Functions
-    getCurrentWeather();
+    displayCurrentWeather();
     // displayHistoric();
 
 
     // Current Data
-    function getCurrentWeather() {
+    function displayCurrentWeather() {
         var units = "&units=imperial"
         var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + location + units + "&appid=653447e5538dcc45b8534eb1e5c601c3";
 
@@ -71,10 +71,9 @@ function displayWeather(location) {
             var tempCurrent = response.main.temp;
             var tempHi = response.main.temp_max;
             var tempLo = response.main.temp_min;
-
             var currentHumidity = response.main.humidity;
             var currentWindSpeed = response.wind.speed;
-
+            var descript = response.weather[0].description;
 
             var iconID = response.weather[0].icon;
             var iconURL = "https://openweathermap.org/img/w/" + iconID + ".png";
@@ -83,19 +82,18 @@ function displayWeather(location) {
             var imgIcon = $("<img>").attr({ class: "fas fa-cloud my-5 is-size-1", id: "wicon", alt: "Weather Icon" }).attr("src", iconURL)
 
             // Create data elements
-
             var divCTemp = $("<div>").text(tempCurrent + "°F");
             var divHi = $("<div>").text("Hi: " + tempHi + "°F");
             var divLo = $("<div>").text("Lo: " + tempLo + "°F");
             var divHumid = $("<div>").text("Humidity: " + currentHumidity + "%");
             var divWind = $("<div>").text("Wind: " + currentWindSpeed + " MPH");
-
+            var divDescript = $("<div>").text(descript);
 
             // Append final card to page
             $("#weather-current-icon").empty();
             $("#weather-current-icon").append(imgIcon)
             $("#weather-current-data").empty();
-            $("#weather-current-data").append(divCTemp, divHi, divLo, divHumid, divWind);
+            $("#weather-current-data").append(divCTemp, divHi, divLo, divHumid, divWind, divDescript);
 
 
 
