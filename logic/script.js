@@ -62,8 +62,8 @@ function displayWeather(location) {
         // The API KEY in this ajax call should be used for 
         function getHistoricWeek() {
             // Empty the div to make room for JS created HTML
-            $("#historic-week-div").empty(); 
-            
+            $("#historic-week-div").empty();
+
             var queryURL = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/" + location + "/" + oneYearAgoFormatted + "/" + oneYearAgoWeekFormatted + "?unitGroup=us&key=Q5Z5S9QT8FD8UJKCGYBURUXX8&include=obs"
             // Grab Data from JSON - Leave this line commented
             var response = JSON.parse(localStorage.getItem("historic-week"))
@@ -104,9 +104,21 @@ function displayWeather(location) {
                 // Create elements with the data
                 var dayDiv = $("<div>").attr("id", "historic-day-" + index).attr("class", "tile is-child is-vertical notification is-info p-1");
                 var dayTitle = $("<div>").attr("class", "myBold").text(dateTime.fromSeconds(historicDayEpoch).weekdayShort);
-                var dayIcon = $("<i>").attr("class", "fas fa-cloud my-2 is-size-4");
+
+                // Create ICON element based on ICON TEXT variable from response
+                if (historicDayIcon === "rain") { var dayIcon = $("<i>").attr("class", "fas fa-cloud-showers-heavy my-2 is-size-4"); }
+                else if (historicDayIcon === "fog") { var dayIcon = $("<i>").attr("class", "fas fa-smog my-2 is-size-4"); }
+                else if (historicDayIcon === "wind") { var dayIcon = $("<i>").attr("class", "fas fa-wind my-2 is-size-4"); }
+                else if (historicDayIcon === "cloudy") { var dayIcon = $("<i>").attr("class", "fas fa-cloud my-2 is-size-4"); }
+                else if (historicDayIcon === "partly-cloudy-day") { var dayIcon = $("<i>").attr("class", "fas fa-cloud-sun my-2 is-size-4"); }
+                else if (historicDayIcon === "partly-cloudy-night") { var dayIcon = $("<i>").attr("class", "fas fa-cloud-moon my-2 is-size-4"); }
+                else if (historicDayIcon === "clear-day") { var dayIcon = $("<i>").attr("class", "fas fa-sun my-2 is-size-4"); }
+                else if (historicDayIcon === "clear-night") { var dayIcon = $("<i>").attr("class", "fas fa-moon my-2 is-size-4"); }
+                else { var dayIcon = $("<i>").attr("class", "fas fa-question my-2 is-size-4"); }
+
                 var dayHighDiv = $("<div>").text("Hi: " + historicDayTempmax + "°F");
                 var dayLowDiv = $("<div>").text("Lo: " + historicDayTempmin + "°F");
+                var dayIconText = $("<div>").text(historicDayIcon);
 
                 // var dayConditionsP = $("<p>").text(historicDayConditions);
                 // var dayRain = $("<p>").text(historicDayPrecip);
@@ -174,7 +186,7 @@ function displayWeather(location) {
             });
 
             // Grab file concat String
-            let sFinalConcat = aConditionsConcat.join("")
+            let sFinalConcat = aConditionsConcat.join("");
 
             // Log current data
             console.log(aConditionsUsed);
@@ -188,8 +200,8 @@ function displayWeather(location) {
             }
 
             // Final Values to display:
-            avgHi = Math.round((totalHi / aDayRange.length))
-            avgLo = Math.round((totalLo / aDayRange.length))
+            avgHi = Math.round((totalHi / aDayRange.length));
+            avgLo = Math.round((totalLo / aDayRange.length));
             console.log(Obj);
             console.log(totalHi);
             console.log(aDayRange.length);
