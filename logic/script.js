@@ -5,7 +5,8 @@ var lat;
 var lon;
 
 // Define Functons
-function searchButtonClicked() {
+function searchButtonClicked(e) {
+    e.preventDefault();
     // If input has value grab value, else do nothing
     if ($("#searchedCityInput").val() !== "") {
         var input = $("#searchedCityInput").val();
