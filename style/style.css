@@ -78,3 +78,8 @@
     .mySearchIconDashboard {
         pointer-events: initial
     }
+
+/* Weather Dashboard Classes */
+    #historic-day-0 {
+        border: greenyellow solid 1px;
+    }
