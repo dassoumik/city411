@@ -44,7 +44,7 @@ function displayWeather(location) {
 
     // Call All Weather Functions
     displayCurrentWeather();
-    // displayHistoricWeather();
+    displayHistoricWeather();
 
 
     // Current Data
@@ -83,7 +83,7 @@ function displayWeather(location) {
             var iconURL = "https://openweathermap.org/img/w/" + iconID + ".png";
 
             // Create Icon Element
-            var imgIcon = $("<img>").attr({ class: "fas fa-cloud my-5 is-size-1", id: "wicon", alt: "Weather Icon" }).attr("src", iconURL).attr({ width: "100%", height: "100%" })
+            var imgIcon = $("<img>").attr({ class: "fas fa-cloud my-5 is-size-1", id: "wicon", alt: "Weather Icon" }).attr("src", iconURL).attr({ width: "50%", height: "50%" })
 
             // Create data elements
             var divDate = $("<div>").text(localTime.weekdayLong + ", " + localTime.monthLong + " " + localTime.day + " " + localTime.year);
@@ -101,17 +101,13 @@ function displayWeather(location) {
             $("#weather-current-data").empty();
             $("#weather-current-data").append(divDate, divCTemp, divHi, divLo, divHumid, divWind, divDescript);
 
-
-
         });
     }
-
-
 
     function displayForecastWeather(x, y) {
         // Example URL: api.openweathermap.org/data/2.5/forecast?q={city name}&appid={API key}
         var units = "&units=imperial"
-        var queryURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=current,minutely,hourly,alerts" + units + "&appid=653447e5538dcc45b8534eb1e5c601c3";
+        var queryURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + x + "&lon=" + y + "&exclude=current,minutely,hourly,alerts" + units + "&appid=653447e5538dcc45b8534eb1e5c601c3";
 
         $.ajax({
             url: queryURL,
@@ -120,8 +116,6 @@ function displayWeather(location) {
             $("#weather-forecast-div").empty();
 
             // Grab data
-            // var aForecastList = response.list;
-            console.log(response.daily);
             aDaily = response.daily
 
             for (let i = 1; i < aDaily.length; i++) {
@@ -138,11 +132,15 @@ function displayWeather(location) {
                 // Create Forecast Elements
                 var divDate = $("<div>").text(dayShort);
                 var divImg = $("<img>").attr("src", iconURL).attr("alt", "weather icon").attr({ width: "100px", height: "100px" });;
-                // var divTemp = $("<div>").text(Math.round(currentTemp) + " °F");
-                var divHi = $("<div>").text(Math.round(hi) + " °F");
-                var divLo = $("<div>").text(Math.round(lo) + " °F");
-                var l = $("<i>").attr("class", "fas fa-wind")
-                var divWind = $("<div>").text(" " + wind + "mph").prepend(l)
+
+                var iUp = $("<i>").attr("class", "fas fa-angle-up").css("color", "red")
+                var divHi = $("<div>").text(" " + Math.round(hi) + " °F").prepend(iUp);
+
+                var iDown = $("<i>").attr("class", "fas fa-angle-down").css("color", "blue")
+                var divLo = $("<div>").text(" " + Math.round(lo) + " °F").prepend(iDown);;
+
+                var iWind = $("<i>").attr("class", "fas fa-wind")
+                var divWind = $("<div>").text(" " + wind + "").prepend(iWind)
 
                 // Append elements to button
 
