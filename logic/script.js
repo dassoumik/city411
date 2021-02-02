@@ -26,7 +26,6 @@ function searchButtonWelcomeClicked() {
 
     // Go to data page
     window.location.href = "./pages/city411dashboard.html";
-
 }
 
 // Call all functions here
@@ -102,7 +101,6 @@ function displayWeather(location) {
             $("#weather-current-icon").append(imgIcon)
             $("#weather-current-data").empty();
             $("#weather-current-data").append(divDate, divCTemp);
-
         });
     }
 
