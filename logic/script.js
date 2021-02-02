@@ -44,7 +44,8 @@ function displayWeather(location) {
 
     // Call All Weather Functions
     displayCurrentWeather();
-    displayHistoric();
+    displayForecastWeather();
+    // displayHistoricWeather();
 
 
     // Current Data
@@ -104,8 +105,51 @@ function displayWeather(location) {
         });
     }
 
+    function displayForecastWeather() {
+        // Example URL: api.openweathermap.org/data/2.5/forecast?q={city name}&appid={API key}
+        var units = "&units=imperial"
+        var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + location + units + "&appid=653447e5538dcc45b8534eb1e5c601c3";
+
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+        }).then(function (response) {
+            $("#weather-forecast-div").empty();
+            // Grab data
+            var aForecastList = response.list;
+            console.log(aForecastList);
+
+            // Loop thru each forecast list up until 5
+            for (let i = 6; i < 40; i += 8) {
+
+                // Grab Data item
+                var currentObject = aForecastList[i];
+
+                // Get the date
+                var currentDate = (currentObject.dt * 1000);
+                var d = new Date(currentDate)
+                var dateString = (d.getMonth() + 1) + "/" + d.getDate();
+                var currentIconURL = "https://openweathermap.org/img/w/" + currentObject.weather[0].icon + ".png";
+                var currentTemp = currentObject.main.temp;
+                var currentHumidity = currentObject.main.humidity;
+
+                // Create Forecast Elements
+                var divDate = $("<div>").text(dateString);
+                var divImg = $("<img>").attr("src", currentIconURL);
+                var divTemp = $("<div>").text("Temperature: " + Math.round(currentTemp) + " °F");
+                var divHum = $("<div>").text("Humidity: " + currentHumidity + "%");
+
+                // Append elements to button
+                
+                var foreCastDayDiv = $("<div>").attr("class", "tile is-child is-vertical notification is-info p-1").append(divDate, divImg, divTemp, divHum);
+                $("#weather-forecast-div").append(foreCastDayDiv);
+
+            }
+        });
+    }
+
     // Historic Data
-    function displayHistoric() {
+    function displayHistoricWeather() {
         // Define the date ranges to use in query and create correct syntax string for query
         var oneYearAgo = currentDate.minus({ year: 1 })
         var oneYearAgoFormatted = oneYearAgo.c.year + "-" + oneYearAgo.c.month + "-" + oneYearAgo.c.day;
