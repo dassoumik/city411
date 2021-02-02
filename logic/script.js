@@ -1,9 +1,12 @@
 // Global Variables
 var dateTime = luxon.DateTime; //Base time object
 var localTime = dateTime.local(); //Local time
+var lat;
+var lon;
 
 // Define Functons
-function searchButtonClicked() {
+function searchButtonClicked(e) {
+    e.preventDefault();
     // If input has value grab value, else do nothing
     if ($("#searchedCityInput").val() !== "") {
         var input = $("#searchedCityInput").val();
@@ -12,7 +15,7 @@ function searchButtonClicked() {
         $("#searchedCityInput").val("");
 
         // Call functions here
-        callFunctions(input)
+        callFunctions(input);
     }
 }
 
@@ -32,18 +35,20 @@ function callFunctions(input) {
     displayWeather(input);
 }
 
-
 // Display Weather which contains all the weather functions
 function displayWeather(location) {
     // Get current local date
     var currentDate = dateTime.local();
     var currentDateISO = dateTime.local().toISODate();
 
+
     // Call All Weather Functions
+    displayCurrentWeather();
     displayHistoric();
 
+
     // Current Data
-    function getCurrentWeather() {
+    function displayCurrentWeather() {
         var units = "&units=imperial"
         var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + location + units + "&appid=653447e5538dcc45b8534eb1e5c601c3";
 
@@ -57,27 +62,44 @@ function displayWeather(location) {
             url: queryURL,
             method: "GET",
             error: function (err) {
-                $("#forecast-div").empty();
+                console.log("getCurrentWeather(): AJAX Error");
             }
         }).then(function (response) {
+            // Grab global data
+            lon = response.coord.lon; // for UV
+            lat = response.coord.lat; //for UV
 
-            // Grab the data we need to display
+            // Grab the local Data
             var name = response.name;
-            var currentTemp = response.main.temp;
+            var tempCurrent = Math.round(response.main.temp);
+            var tempHi = Math.round(response.main.temp_max);
+            var tempLo = Math.round(response.main.temp_min);
             var currentHumidity = response.main.humidity;
-            var currentWindSpeed = response.wind.speed;
-            var currentIcon = response.weather[0].icon;
-            var lon = response.coord.lon; // for UV
-            var lat = response.coord.lat; //for UV
+            var currentWindSpeed = Math.round(response.wind.speed);
+            var descript = response.weather[0].description;
 
-            // Create Card
+            var iconID = response.weather[0].icon;
+            var iconURL = "https://openweathermap.org/img/w/" + iconID + ".png";
 
+            // Create Icon Element
+            var imgIcon = $("<img>").attr({ class: "fas fa-cloud my-5 is-size-1", id: "wicon", alt: "Weather Icon" }).attr("src", iconURL)
 
-            // Create card elements
+            // Create data elements
+            var divDate = $("<div>").text(localTime.weekdayLong + ", " + localTime.monthLong + " " + localTime.day + " " + localTime.year);
+            var divCTemp = $("<div>").text(tempCurrent + "°F");
+            var divHi = $("<div>").text("Hi: " + tempHi + "°F");
+            var divLo = $("<div>").text("Lo: " + tempLo + "°F");
+            var divHumid = $("<div>").text("Humidity: " + currentHumidity + "%");
+            var divWind = $("<div>").text("Wind: " + currentWindSpeed + " MPH");
+            var divDescript = $("<div>").text(descript);
 
             // Append final card to page
+            $("#weather-current-icon").empty();
+            $("#weather-current-icon").append(imgIcon)
+            $("#weather-current-data").empty();
+            $("#weather-current-data").append(divDate, divCTemp, divHi, divLo, divHumid, divWind, divDescript);
 
-            // Grab Lon & lat values for index call
+
 
         });
     }
