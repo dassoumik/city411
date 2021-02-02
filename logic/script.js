@@ -26,7 +26,6 @@ function searchButtonWelcomeClicked() {
 
     // Go to data page
     window.location.href = "./pages/city411dashboard.html";
-
 }
 
 // Call all functions here
@@ -70,6 +69,8 @@ function displayWeather(location) {
             lat = response.coord.lat; //for UV
             displayForecastWeather(lat, lon);
 
+            console.log(response);
+
             // Grab the local Data
             var name = response.name;
             var tempCurrent = Math.round(response.main.temp);
@@ -99,8 +100,7 @@ function displayWeather(location) {
             $("#weather-current-icon").empty();
             $("#weather-current-icon").append(imgIcon)
             $("#weather-current-data").empty();
-            $("#weather-current-data").append(divDate, divCTemp, divHi, divLo, divHumid, divWind, divDescript);
-
+            $("#weather-current-data").append(divDate, divCTemp);
         });
     }
 
@@ -162,23 +162,31 @@ function displayWeather(location) {
         var oneYearAgoWeek = currentDate.minus({ year: 1 }).plus({ days: 6 });
         var oneYearAgoWeekFormatted = oneYearAgoWeek.c.year + "-" + oneYearAgoWeek.c.month + "-" + oneYearAgoWeek.c.day;
 
-        // a year ago, start date of next month
+        // a year ago, start date of current month
         var oneYearAgoMonthStart = currentDate.minus({ year: 1 }).startOf('month')
         var oneYearAgoMonthStartFormatted = oneYearAgoMonthStart.c.year + "-" + oneYearAgoMonthStart.c.month + "-" + oneYearAgoMonthStart.c.day;
-        // a year ago, end date of next month
+        // a year ago, end date of current month
         var oneYearAgoMonthEnd = currentDate.minus({ year: 1 }).endOf('month');
         var oneYearAgoMonthEndFormatted = oneYearAgoMonthEnd.c.year + "-" + oneYearAgoMonthEnd.c.month + "-" + oneYearAgoMonthEnd.c.day;
 
-        // a year ago, start date of next next month
+        // a year ago, start date of next  month
         var oneYearAgoTwoMonthsStart = currentDate.minus({ year: 1 }).plus({ month: 1 }).startOf('month');
         var oneYearAgoTwoMonthsStartFormatted = oneYearAgoTwoMonthsStart.c.year + "-" + oneYearAgoTwoMonthsStart.c.month + "-" + oneYearAgoTwoMonthsStart.c.day;
-        // a year ago, end date of next next month
+        // a year ago, end date of next  month
         var oneYearAgoTwoMonthsEnd = currentDate.minus({ year: 1 }).plus({ month: 1 }).endOf('month');
         var oneYearAgoTwoMonthsEndFormatted = oneYearAgoTwoMonthsEnd.c.year + "-" + oneYearAgoTwoMonthsEnd.c.month + "-" + oneYearAgoTwoMonthsEnd.c.day;
+
+        // a year ago, start date of next next month
+        var oneYearAgoThreeMonthsStart = currentDate.minus({ year: 1 }).plus({ month: 2 }).startOf('month');
+        var oneYearAgoThreeMonthsStartFormatted = oneYearAgoThreeMonthsStart.c.year + "-" + oneYearAgoThreeMonthsStart.c.month + "-" + oneYearAgoThreeMonthsStart.c.day;
+        // a year ago, end date of next next month
+        var oneYearAgoThreeMonthsEnd = currentDate.minus({ year: 1 }).plus({ month: 2 }).endOf('month');
+        var oneYearAgoThreeMonthsEndFormatted = oneYearAgoThreeMonthsEnd.c.year + "-" + oneYearAgoThreeMonthsEnd.c.month + "-" + oneYearAgoThreeMonthsEnd.c.day;
 
         getHistoricWeek("Q5Z5S9QT8FD8UJKCGYBURUXX8");
         getHistoricCurrentMonth("current", "347KV25P3E7B8XKZMTG2ETSNJ", oneYearAgoMonthStartFormatted, oneYearAgoMonthEndFormatted);
         getHistoricCurrentMonth("next", "EZAX7WB9Q7WQZZ6582Q64AVZH", oneYearAgoTwoMonthsStartFormatted, oneYearAgoTwoMonthsEndFormatted);
+        getHistoricCurrentMonth("nextnext", "G5RN7UPN529E5629TUL8M9DBW", oneYearAgoThreeMonthsStartFormatted, oneYearAgoThreeMonthsEndFormatted);
 
         // Returns JSON object of a year ago, 1 week. 
         function getHistoricWeek(key) {
