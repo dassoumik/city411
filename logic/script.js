@@ -44,7 +44,7 @@ function displayWeather(location) {
 
     // Call All Weather Functions
     displayCurrentWeather();
-    displayHistoric();
+    displayHistoricWeather();
 
 
     // Current Data
@@ -68,6 +68,7 @@ function displayWeather(location) {
             // Grab global data
             lon = response.coord.lon; // for UV
             lat = response.coord.lat; //for UV
+            displayForecastWeather(lat, lon);
 
             // Grab the local Data
             var name = response.name;
@@ -82,7 +83,7 @@ function displayWeather(location) {
             var iconURL = "https://openweathermap.org/img/w/" + iconID + ".png";
 
             // Create Icon Element
-            var imgIcon = $("<img>").attr({ class: "fas fa-cloud my-5 is-size-1", id: "wicon", alt: "Weather Icon" }).attr("src", iconURL)
+            var imgIcon = $("<img>").attr({ class: "fas fa-cloud my-5 is-size-1", id: "wicon", alt: "Weather Icon" }).attr("src", iconURL).attr({ width: "50%", height: "50%" })
 
             // Create data elements
             var divDate = $("<div>").text(localTime.weekdayLong + ", " + localTime.monthLong + " " + localTime.day + " " + localTime.year);
@@ -90,7 +91,8 @@ function displayWeather(location) {
             var divHi = $("<div>").text("Hi: " + tempHi + "°F");
             var divLo = $("<div>").text("Lo: " + tempLo + "°F");
             var divHumid = $("<div>").text("Humidity: " + currentHumidity + "%");
-            var divWind = $("<div>").text("Wind: " + currentWindSpeed + " MPH");
+            var i = $("<i>").attr("class", "fas fa-wind")
+            var divWind = $("<div>").text(" " + currentWindSpeed + "mph").prepend(i);
             var divDescript = $("<div>").text(descript);
 
             // Append final card to page
@@ -99,13 +101,59 @@ function displayWeather(location) {
             $("#weather-current-data").empty();
             $("#weather-current-data").append(divDate, divCTemp, divHi, divLo, divHumid, divWind, divDescript);
 
+        });
+    }
+
+    function displayForecastWeather(x, y) {
+        // Example URL: api.openweathermap.org/data/2.5/forecast?q={city name}&appid={API key}
+        var units = "&units=imperial"
+        var queryURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + x + "&lon=" + y + "&exclude=current,minutely,hourly,alerts" + units + "&appid=653447e5538dcc45b8534eb1e5c601c3";
+
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+        }).then(function (response) {
+            $("#weather-forecast-div").empty();
+
+            // Grab data
+            aDaily = response.daily
+
+            for (let i = 1; i < aDaily.length; i++) {
+
+                // Grab Data
+                var item = aDaily[i];
+                var dayShort = dateTime.fromSeconds(item.dt).weekdayShort;
+                var iconURL = "https://openweathermap.org/img/w/" + item.weather[0].icon + ".png";
+                var hi = Math.round(item.temp.max);
+                var lo = Math.round(item.temp.min);
+                var wind = Math.round(item.wind_speed)
+                var rainPop = Math.round(item.pop)
+
+                // Create Forecast Elements
+                var divDate = $("<div>").text(dayShort);
+                var divImg = $("<img>").attr("src", iconURL).attr("alt", "weather icon").attr({ width: "100px", height: "100px" });;
+
+                var iUp = $("<i>").attr("class", "fas fa-angle-up").css("color", "red")
+                var divHi = $("<div>").text(" " + Math.round(hi) + " °F").prepend(iUp);
+
+                var iDown = $("<i>").attr("class", "fas fa-angle-down").css("color", "blue")
+                var divLo = $("<div>").text(" " + Math.round(lo) + " °F").prepend(iDown);;
+
+                var iWind = $("<i>").attr("class", "fas fa-wind")
+                var divWind = $("<div>").text(" " + wind + "").prepend(iWind)
+
+                // Append elements to button
+
+                var foreCastDayDiv = $("<div>").attr("class", "tile is-child is-vertical notification is-info p-1").append(divDate, divImg, divHi, divLo, divWind);
+                $("#weather-forecast-div").append(foreCastDayDiv);
 
 
+            }
         });
     }
 
     // Historic Data
-    function displayHistoric() {
+    function displayHistoricWeather() {
         // Define the date ranges to use in query and create correct syntax string for query
         var oneYearAgo = currentDate.minus({ year: 1 })
         var oneYearAgoFormatted = oneYearAgo.c.year + "-" + oneYearAgo.c.month + "-" + oneYearAgo.c.day;
@@ -288,7 +336,7 @@ function displayWeather(location) {
         }
 
 
-    } // end displayHistoric()
+    }
 
 
 

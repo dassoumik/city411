@@ -58,12 +58,12 @@
 
         <!--Searchbar in Navbar-->
         <div class="field level-left mb-0 mr-4">
-            <div class="control has-icons-left has-icons-right">
+            <form class="control has-icons-left has-icons-right">
                 <input id="searchedCityInput" class="input" type="email" placeholder="Search A City!">
                 <button id="searchButton" class="icon is-right button is-ghost">
                     <i class="fas fa-search has-text-link mySearchIconDashboard"></i>
                 </button>
-            </div>
+            </form>
         </div>
 
     </nav>
@@ -116,13 +116,15 @@
                         <!--TILE LEVEL 6) Icon and Info-->
                         <div class="tile is-parent notification is-info p-1 has-text-centered">
                             <!--Current Weather Icon-->
-                            <div class="tile is-child notification is-info p-1 has-text-centered">
+                            <div id="weather-current-icon"
+                                class="tile is-child notification is-info p-1 has-text-centered">
                                 <i class="fas fa-cloud my-5 is-size-2"></i>
                                 <!--Need to figure out how to align center x and y-->
                             </div>
 
                             <!--Current Weather Info-->
-                            <div class="tile is-child is-vertical notification is-info p-1 py-3">
+                            <div id="weather-current-data"
+                                class="tile is-child is-vertical notification is-info p-1 py-3">
                                 <div>Thing: <span>Value</span></div>
                                 <div>Thing: <span>Value</span></div>
                                 <div>Thing: <span>Value</span></div>
@@ -135,7 +137,8 @@
                         <div class="has-text-white is-size-4 mb-2 myBold">Weather Forecast</div>
 
                         <!--(TILE LEVEL 6) Forecast Tiles-->
-                        <div class="tile is-parent is-horizontal notification is-info p-1 has-text-centered">
+                        <div id="weather-forecast-div"
+                            class="tile is-parent is-horizontal notification is-info p-1 has-text-centered">
                             <div class="tile is-child is-vertical notification is-info p-1">
                                 <i class="fas fa-cloud my-5 is-size-4"></i>
                                 <div>Thing: <span>Value</span></div>
