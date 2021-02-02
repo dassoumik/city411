@@ -29,9 +29,10 @@
         font-weight: normal;
     }
 
-/*Welcome Page Classes*/
+ 
+/*Dashboard Page Classes*/
 
-    .myHeroImageWelcome {
+    .myBackgroundImage {
         background-image: url("https://eastwood.nyc3.cdn.digitaloceanspaces.com/divisions/iStock-1019413572_web.jpg");
         background-size: cover;
         background-position: center center;
@@ -39,47 +40,50 @@
         background-attachment: fixed;
     }
 
-    .myOpacityBoxWelcome {
-        background-color: rgba(255, 255, 255, 0);
+    .myWelcomeCardBackground {
+        background-color: rgba(255, 255, 255, 0.815);
     }
 
-    .myOpacityInputWelcome {
-        background-color: rgba(255, 251, 251, 0.527);
-        border: none;
-        font-size: 24px;
-        font-weight: bold;
+    .myPinBackground {
+        background-color: #4a4a4a79;
     }
 
-    .mySearchButtonWelcome {
-        margin-top: 10px;
-        margin-left: 10px;
+    .myWeatherBackground {
+        background-color: #3298dcbe;
     }
 
-    .mySearchIconWelcome {
-        pointer-events: initial;
-        font-size: 26px;
-        padding-right: 10px;
+    .myPrimaryBackground {
+        background-color: #00d1b2c2;
     }
 
-/*Dashboard Page Classes*/
-  
+    .myPrimaryBackground2 {
+        background-color: #00d1b257;
+    }
+
+    .myWeatherTodayBackground {
+        background-image: url("https://webstockreview.net/images/clipart-png-rain-4.jpg");
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+
     .city411WeatherCardTitles {
-        
         font-size: 20px;
     }
+
     .mySearchIconDashboard {
         pointer-events: initial;
-    }
-
-    .mySearchColumnDashboard {
-        box-shadow: 5px 5px 5px grey; ;
-    }
-
-    .mySearchIconDashboard {
-        pointer-events: initial
     }
 
 /* Weather Dashboard Classes */
     #historic-day-0 {
         border: greenyellow solid 1px;
+    }
+
+/*Media Queries For Mobile Responsive Finish*/
+
+    @media only screen and (max-width: 768px) {
+      
+      
     }
