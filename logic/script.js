@@ -45,6 +45,7 @@ $(document).ready(function () {
         getLatLon(input);
         displayWeather(input);
         displayLocalEvents("music", input);
+        displayLocalEvents("sport", input);
     }
 
     // Get the latitude and longitude of the city searched
@@ -220,8 +221,6 @@ $(document).ready(function () {
                     var rainPop = Math.round(item.pop);
                     var iconId = item.weather[0].icon;
                     var descript = item.weather[0].description;
-                    console.log(iconId);
-                    console.log(descript);
 
                     var fontAwesomeId = getWeatherIcon(iconId, descript);
                     var iFACond = $("<i>").attr("class", fontAwesomeId + " my-2 is-size-2");
@@ -489,24 +488,13 @@ $(document).ready(function () {
 
     // Get Local Events Function Using Ticket Master
     function displayLocalEvents(type, city) {
-        //Working URL example to click and see response for Atlanta Music
-        var getLocalMusicEventsQueryURL = "https://app.ticketmaster.com/discovery/v2/events.json?city=Atlanta&keyword=music&apikey=Tt06tcfEuZlIkXAxhlvZFSuqmv0EOmz0"
 
-        //This URL is using a date filter in their format, specifying dates bewteen the two I did
-        var getLocalSportsEventsQueryURL = "https://app.ticketmaster.com/discovery/v2/events.json?city=Atlanta&keyword=sports&localStartDateTime=2021-02-01T14:00:00,2021-02-15T14:00:00&apikey=Tt06tcfEuZlIkXAxhlvZFSuqmv0EOmz0"
-        // Above, maybe we just run "today" and next 30 days for the date range at time of search? Could define these with the luxon stuff I guess...
-
-        var keyword = "&keyword=" + type
         var startDate = localTime.toISODate();
-        var startTime = localTime.toISO();
+        var startTime = localTime.toISO().split("T")[1].split(".")[0];
         var endDate = localTime.plus({ week: 2 }).toISODate();
-        var query = "https://app.ticketmaster.com/discovery/v2/events?apikey=3XcemfxRjBsVA2szubVBECOW6GJHcyol&keyword=" + type + "&locale=*&startDateTime=2021-02-03T13:18:00Z&endDateTime=2021-02-17T13:19:00Z&city=" + city
+        var endTime = "23:59:59"
+        var query = "https://app.ticketmaster.com/discovery/v2/events?apikey=3XcemfxRjBsVA2szubVBECOW6GJHcyol&keyword=" + type + "&locale=*&startDateTime=" + startDate + "T" + startTime + "Z&endDateTime=" + endDate + "T" + endTime + "Z&city=" + city
 
-        console.log(city);
-        console.log(startDate);
-        console.log(startTime);
-        console.log(endDate);
-        // Here is the snippet from the docs. I did not modify this at all so its not seetup to work for us yet
         $.ajax({
             type: "GET",
             url: query,
