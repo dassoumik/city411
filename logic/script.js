@@ -2,6 +2,8 @@ $(document).ready(function () {
     // Global Variables
     var dateTime = luxon.DateTime; //Base time object
     var localTime = dateTime.local(); //Local time
+    var city;
+    var state;
     var lat;
     var lon;
     var i = 0;
@@ -43,12 +45,9 @@ $(document).ready(function () {
     function callFunctions(input) {
         // Call functions here
         getLatLon(input);
-        displayWeather(input);
-        displayLocalEvents("music", input);
-        displayLocalEvents("sport", input);
     }
 
-    // Get the latitude and longitude of the city searched
+    // Get the GEOCity info of the city searched
     function getLatLon(cityName) {
         const settings = {
             "async": true,
@@ -62,10 +61,33 @@ $(document).ready(function () {
         };
 
         $.ajax(settings).done(function (response) {
-            latitude = response.data[0].latitude;
-            longitude = response.data[0].longitude;
-            displayFoodDataRated(latitude, longitude);
-            // displayFoodDataByCost(latitude, longitude);
+            console.log(response);
+            if (response.data.length > 0) {
+                // Set City Info
+                city = response.data[0].city
+                state = response.data[0].regionCode
+                latitude = response.data[0].latitude;
+                longitude = response.data[0].longitude;
+
+                // Display City & State
+                $("#currentCityName").text(city + ", " + state);
+                // Grab lat/lon coords of search
+
+                // Run Functions with City Info from GEO City
+                displayFoodDataRated(latitude, longitude);
+                // displayFoodDataByCost(latitude, longitude);
+                displayWeather(city);
+                displayLocalEvents("music", city);
+                displayLocalEvents("sport", city);
+            } else {
+                alert("City could not be found! Please try again...");
+            }
+
+
+
+
+
+
         });
     }
 
@@ -145,15 +167,12 @@ $(document).ready(function () {
 
         // Call All Weather Functions
         displayCurrentWeather();
-        displayHistoricWeather();
+        // displayHistoricWeather();
 
         // Current Data
         function displayCurrentWeather() {
             var units = "&units=imperial"
             var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + location + units + "&appid=653447e5538dcc45b8534eb1e5c601c3";
-
-            // Clear contents of searchbox
-            $("#search-value").val();
 
             $.ajax({
                 url: queryURL,
@@ -171,7 +190,7 @@ $(document).ready(function () {
 
                 // Grab the local Data
                 var cityOfficial = response.name;
-                $("#currentCityName").text(cityOfficial);
+
                 var tempCurrent = Math.round(response.main.temp);
                 var tempHi = Math.round(response.main.temp_max);
                 var tempLo = Math.round(response.main.temp_min);
@@ -499,7 +518,7 @@ $(document).ready(function () {
             async: true,
             dataType: "json",
             success: function (response) {
-                console.log(response);
+
                 // Get list of events
                 aEvents = response._embedded
 
@@ -520,7 +539,7 @@ $(document).ready(function () {
 
                     // Loop thru the events > create elements > append to approprite divs
                     for (let i = 0; (i < totalEvents && i < 5); i++) {
-                        console.log(aEvents.events[i]);
+
                         var thisEvent = aEvents.events[i];
 
                         // Grab data
