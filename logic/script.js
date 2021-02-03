@@ -44,6 +44,7 @@ $(document).ready(function () {
         // Call functions here
         getLatLon(input);
         displayWeather(input);
+        displayLocalEvents("music", input);
     }
 
     // Get the latitude and longitude of the city searched
@@ -144,7 +145,7 @@ $(document).ready(function () {
 
         // Call All Weather Functions
         displayCurrentWeather();
-        displayHistoricWeather();
+        // displayHistoricWeather();
 
 
         // Current Data
@@ -168,7 +169,6 @@ $(document).ready(function () {
 
                 // Call APIs that use lat/lon
                 displayForecastWeather(lat, lon);
-                displayLocalEvents(lat, lon);
 
                 // Grab the local Data
                 var cityOfficial = response.name;
@@ -179,11 +179,11 @@ $(document).ready(function () {
                 var currentHumidity = response.main.humidity;
                 var currentWindSpeed = Math.round(response.wind.speed);
                 var descript = response.weather[0].description;
-                console.log(response);
-                console.log(descript);
+
 
                 var iconId = response.weather[0].icon;
                 var fontAwesomeId = getWeatherIcon(iconId, descript);
+
 
                 // Update elements on page
                 $("#current-icon").attr("class", fontAwesomeId + " mt-2");
@@ -193,11 +193,6 @@ $(document).ready(function () {
 
             });
         }
-
-
-
-
-
         // display Forecast
         function displayForecastWeather(x, y) {
             // Example URL: api.openweathermap.org/data/2.5/forecast?q={city name}&appid={API key}
@@ -225,9 +220,9 @@ $(document).ready(function () {
                     var rainPop = Math.round(item.pop);
                     var iconId = item.weather[0].icon;
                     var descript = item.weather[0].description;
-
                     console.log(iconId);
                     console.log(descript);
+
                     var fontAwesomeId = getWeatherIcon(iconId, descript);
                     var iFACond = $("<i>").attr("class", fontAwesomeId + " my-2 is-size-2");
 
@@ -463,7 +458,7 @@ $(document).ready(function () {
             if (id === "02n") { return "fas fa-cloud-moon"; }
 
             // scattered clouds & broken clouds
-            if (id.match(/01/) || id.match(/04/)) { return "fas fa-cloud"; }
+            if (id.match(/03/) || id.match(/04/)) { return "fas fa-cloud"; }
 
             // shower rain
             if (id.match(/09/)) { return "fas fa-cloud-showers-heavy"; }
@@ -486,30 +481,14 @@ $(document).ready(function () {
                     case "fog":
                         return "fas fa-smog";
                     default:
-                        return "fas fa-smog"
+                        return "fas fa-smog";
                 }
             }
         }
-
-
     }
 
-
-    // Get Local Events Function Using Trip Advisor
-    function displayLocalEvents(x, y) {
-
-        // Display Events (Ticketmaster Discover API)
-
-        // Notes and Info For Ticketmaster Discovery API (Open API- 5000 Calls Pery Day)
-        // My ticketmaster Key: Tt06tcfEuZlIkXAxhlvZFSuqmv0EOmz0
-        // ticketmaster Root URL: https://app.ticketmaster.com/discovery/v2/
-        // NOTE - we could run searches for sports and music, have two side by side tiles under "entertainment parent"
-        // NOTE - we should add a date filter somehow so it runs maybe like "Today-two weeks" or something
-
-        // Trigger the function with button Click
-
-        // Define a query URL (Needs to be updated by taking keywords for city and date to generate query url- I put examples first using atlanta)
-
+    // Get Local Events Function Using Ticket Master
+    function displayLocalEvents(type, city) {
         //Working URL example to click and see response for Atlanta Music
         var getLocalMusicEventsQueryURL = "https://app.ticketmaster.com/discovery/v2/events.json?city=Atlanta&keyword=music&apikey=Tt06tcfEuZlIkXAxhlvZFSuqmv0EOmz0"
 
@@ -517,10 +496,20 @@ $(document).ready(function () {
         var getLocalSportsEventsQueryURL = "https://app.ticketmaster.com/discovery/v2/events.json?city=Atlanta&keyword=sports&localStartDateTime=2021-02-01T14:00:00,2021-02-15T14:00:00&apikey=Tt06tcfEuZlIkXAxhlvZFSuqmv0EOmz0"
         // Above, maybe we just run "today" and next 30 days for the date range at time of search? Could define these with the luxon stuff I guess...
 
+        var keyword = "&keyword=" + type
+        var startDate = localTime.toISODate();
+        var startTime = localTime.toISO();
+        var endDate = localTime.plus({ week: 2 }).toISODate();
+        var query = "https://app.ticketmaster.com/discovery/v2/events?apikey=3XcemfxRjBsVA2szubVBECOW6GJHcyol&keyword=" + type + "&locale=*&startDateTime=2021-02-03T13:18:00Z&endDateTime=2021-02-17T13:19:00Z&city=" + city
+
+        console.log(city);
+        console.log(startDate);
+        console.log(startTime);
+        console.log(endDate);
         // Here is the snippet from the docs. I did not modify this at all so its not seetup to work for us yet
         $.ajax({
             type: "GET",
-            url: "https://app.ticketmaster.com/discovery/v2/events?apikey=jLvBx02oVnKLrr40UQT6vTZePCKNUlqk&latlong=" + x + "," + y + "&locale=*",
+            url: query,
             async: true,
             dataType: "json",
             success: function (response) {
