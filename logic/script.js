@@ -143,11 +143,9 @@ $(document).ready(function () {
         var currentDate = dateTime.local();
         var currentDateISO = dateTime.local().toISODate();
 
-
         // Call All Weather Functions
         displayCurrentWeather();
-        // displayHistoricWeather();
-
+        displayHistoricWeather();
 
         // Current Data
         function displayCurrentWeather() {
@@ -486,7 +484,7 @@ $(document).ready(function () {
         }
     }
 
-    // Get Local Events 2 weeks
+    // Get Local Events 2 weeks; per type (music/sport)
     function displayLocalEvents(type, city) {
 
         var startDate = localTime.toISODate();
@@ -505,14 +503,42 @@ $(document).ready(function () {
                 // Get list of events
                 aEvents = response._embedded
 
+
                 // If there are events then do something.. else show message there are no upcoming events in the next 2 weeks
                 if (aEvents) {
-                    console.log(aEvents);
+
+                    var totalEvents = response.page.totalElements;
+                    var eventContainer = $("#" + type + "-div");
+                    $(eventContainer).empty();
+
+                    // Setup the parent music container
+                    var divTitle = $("<div>").attr("class", "myBold has-text-centered").text("Music");
+                    var hr = $("<hr>").attr("class", "my-2");
+
+                    // Append the Setup elements
+                    $(eventContainer).append(divTitle, hr);
+
+                    // Loop thru the events > create elements > append to approprite divs
+                    for (let i = 0; (i < totalEvents && i < 5); i++) {
+                        console.log(aEvents.events[i]);
+                        var thisEvent = aEvents.events[i];
+
+                        // Grab data
+                        var name = thisEvent.name;
+
+                        // Create the elements
+                        var divEvent = $("<div>").attr("class", "myBold is-size-6 py-1");
+                        var iPin = $("<i>").attr("class", "has-text-grey is-rounded fas fa-thumbtack btnPin");
+                        var urlEvent = thisEvent.url;
+                        var linkEvent = $("<a>").text(" " + name.slice(0, 60) + "...").attr({ href: urlEvent, target: "_blank", syle: "text-decoration: none;" });
+
+                        // Append the event elements
+                        divEvent.append(iPin, linkEvent);
+                        $(eventContainer).append(divEvent);
+                    }
                 } else {
                     console.log("No events listed at this time...");
                 }
-
-
 
             },
             error: function (xhr, status, err) {
