@@ -486,7 +486,7 @@ $(document).ready(function () {
         }
     }
 
-    // Get Local Events Function Using Ticket Master
+    // Get Local Events 2 weeks
     function displayLocalEvents(type, city) {
 
         var startDate = localTime.toISODate();
@@ -501,9 +501,19 @@ $(document).ready(function () {
             async: true,
             dataType: "json",
             success: function (response) {
-                // Parse the response.
                 console.log(response);
-                // Do other things.
+                // Get list of events
+                aEvents = response._embedded
+
+                // If there are events then do something.. else show message there are no upcoming events in the next 2 weeks
+                if (aEvents) {
+                    console.log(aEvents);
+                } else {
+                    console.log("No events listed at this time...");
+                }
+
+
+
             },
             error: function (xhr, status, err) {
                 // This time, we do not end up here!
