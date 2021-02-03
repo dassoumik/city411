@@ -64,10 +64,13 @@ function displayWeather(location) {
                 console.log("getCurrentWeather(): AJAX Error");
             }
         }).then(function (response) {
-            // Grab global data
+            // Grab location then call other functions based on location
             lon = response.coord.lon; // for UV
             lat = response.coord.lat; //for UV
+
+            // Call APIs that use lat/lon
             displayForecastWeather(lat, lon);
+            displayLocalEvents(lat, lon);
 
             console.log(response);
 
@@ -350,9 +353,8 @@ function displayWeather(location) {
 
 };
 
-
 // Get Local Events Function Using Trip Advisor
-function getLocalEvents() {
+function displayLocalEvents(x, y) {
 
     // Display Events (Ticketmaster Discover API)
 
@@ -376,11 +378,12 @@ function getLocalEvents() {
     // Here is the snippet from the docs. I did not modify this at all so its not seetup to work for us yet
     $.ajax({
         type: "GET",
-        url: "https://app.ticketmaster.com/discovery/v2/events.json?size=1&apikey=Tt06tcfEuZlIkXAxhlvZFSuqmv0EOmz0",
+        url: "https://app.ticketmaster.com/discovery/v2/events?apikey=jLvBx02oVnKLrr40UQT6vTZePCKNUlqk&latlong=" + x + "," + y + "&locale=*",
         async: true,
         dataType: "json",
-        success: function (json) {
+        success: function (response) {
             // Parse the response.
+            console.log(response);
             // Do other things.
         },
         error: function (xhr, status, err) {
