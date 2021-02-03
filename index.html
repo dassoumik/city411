@@ -28,7 +28,7 @@
 </head>
 
 <body class="myBackgroundImage">
-    
+
     <!--NAVBAR-->
     <nav class="navbar is-dark mb-0" role="navigation" aria-label="main navigation">
 
@@ -43,8 +43,10 @@
             <!--Navbar Start Items Container (Left)-->
             <div class="navbar-start ml-2 myBold">
                 <!--Current City Display-->
-                <div class = "navbar-item"> <!--TOGGLE-VISABILITY-->
-                    <div class = "has-text-white city411TitleFont is-size-4 has-text-weight-light"><i class="fas fa-chevron-right mr-3"></i><span id = "currentCityName">Atlanta</span></div>
+                <div class="navbar-item">
+                    <!--TOGGLE-VISABILITY-->
+                    <div class="has-text-white city411TitleFont is-size-4 has-text-weight-light"><i
+                            class="fas fa-chevron-right mr-3"></i><span id="currentCityName"></span></div>
                 </div>
             </div>
 
@@ -54,11 +56,11 @@
                 <!--Favorites Dropdown-->
                 <div class="navbar-item has-dropdown is-hoverable mr-3">
                     <a class="navbar-link">
-                      Favorites
+                        Favorites
                     </a>
                     <div class="navbar-dropdown is-right">
                         <a class="navbar-item">
-                           Favorite City
+                            Favorite City
                         </a>
                         <a class="navbar-item">
                             Favorite City
@@ -66,16 +68,18 @@
                         <a class="navbar-item has-text-danger myBold">
                             Clear
                         </a>
-                        
+
                     </div>
                 </div>
 
                 <!--Favorites Button-->
-                <div id= "navbarFavoritesButtonclass" class="navbar-item p-0 mr-3"> <!--TOGGLE-VISABILITY-->
+                <div id="navbarFavoritesButtonclass" class="navbar-item p-0 mr-3">
+                    <!--TOGGLE-VISABILITY-->
                     <div class="buttons">
-                      <button class="button is-small is-light"> 
-                        <span class = "icon is-small has-text-grey"><i class="fas fa-heart"></i></span> <!--Can change class to is-danger to make red after click (if favorited)-->
-                      </button>
+                        <button class="button is-small is-light">
+                            <span class="icon is-small has-text-grey"><i class="fas fa-heart"></i></span>
+                            <!--Can change class to is-danger to make red after click (if favorited)-->
+                        </button>
                     </div>
                 </div>
 
@@ -93,18 +97,19 @@
     </nav>
 
     <!--FIRST TIME ARRIVAL MESSAGE-->
-    <div class="hero is-fullheight-with-navbar is-hidden"> <!--TOGGLE-VISABILITY-->
+    <div class="hero is-fullheight-with-navbar is-hidden">
+        <!--TOGGLE-VISABILITY-->
         <div class="hero-body myHeroImageWelcome">
             <div class="container">
                 <div class="card m-5 has-text-centered myWelcomeCardBackground">
                     <header class="card-header">
-                      <p class="card-header-title is-centered is-size-4">
-                        Welcome to City 411!
-                      </p>
+                        <p class="card-header-title is-centered is-size-4">
+                            Welcome to City 411!
+                        </p>
                     </header>
                     <div class="card-content">
                         <div class="content is-size-5">
-                            Going somewhere? Lets get the 411. Search a city to get started. 
+                            Going somewhere? Lets get the 411. Search a city to get started.
                         </div>
                     </div>
                 </div>
@@ -114,11 +119,11 @@
 
 
     <!--(TILE LEVEL 1) MAIN TILES CONTAINER-->
-    <div class="tile is-ancestor mt-2 mx-1"> 
+    <div class="tile is-ancestor mt-2 mx-1">
 
         <!--(TILE LEVEL 2) PINS PER CITY CONTAINER-->
         <div class="tile is-parent is-vertical">
-        
+
             <!--(TILE LEVEL 3) CITY PINS SUBCONTAINER-->
             <div class="tile is-parent is-vertical px-0 py-0 has-text-centered">
                 <div class="has-text-white is-size-4 mb-2 myBold">Pins</div>
@@ -139,11 +144,11 @@
                         <div class="myBold">Name of Pin</div>
                         <div class="mb-2">Type (Event, Food)</div>
                         <textarea class="textarea" placeholder="User Notes"></textarea>
-                    </div >
+                    </div>
 
                     <!--Clear Pins Button-->
                     <button class="button is-danger m-3">Clear</button>
-                    
+
                 </div>
             </div>
         </div>
@@ -166,14 +171,16 @@
 
                             <!--Current Weather Icon-->
                             <div class="tile is-child  p-1 has-text-centered">
-                                <i id = "current-icon" class="fas fa-cloud-sun mt-2" style="font-size: 100px;"></i>
+                                <i id="current-icon" class="fas fa-cloud-sun mt-2" style="font-size: 100px;"></i>
                             </div>
 
                             <!--Current Weather Info-->
                             <div class="tile is-child is-vertical p-1 py-3">
-                                <div class= "is-size-1 mb-2"> <i class="fas fa-temperature-high"></i><span id = "current-temp"> 43 </span></div>
-                                <div id = "current-additional" class = "has-text-centered">
-                                    <span><i class="fas fa-wind"></i> NN</span> | <span><i class="fas fa-wind"></i> NN</span> | <span><i class="fas fa-wind"></i> NN</span>
+                                <div class="is-size-1 mb-2"> <i class="fas fa-temperature-high"></i><span
+                                        id="current-temp"> 43 </span></div>
+                                <div id="current-additional" class="has-text-centered">
+                                    <i class="fas fa-wind"></i> <span id="current-wind">--</span> | <i
+                                        class="fas fa-tint"> </i><span id="current-humidity"> --</span>
                                 </div>
                             </div>
 
@@ -186,53 +193,63 @@
                         <div class="has-text-white is-size-4 mb-2 myBold">Weather Forecast</div>
 
                         <!--(TILE LEVEL 6) Forecast Tiles-->
-                        <div class="tile is-parent is-horizontal myWeatherBackground has-text-white p-1 has-text-centered">
+                        <div id="weather-forecast"
+                            class="tile is-parent is-horizontal myWeatherBackground has-text-white p-1 has-text-centered">
                             <div class="tile is-child is-vertical p-1">
-                                <div class = "myBold">Date</div>
+                                <div class="myBold">Date</div>
                                 <i class="fas fa-cloud my-2 is-size-2"></i>
                                 <div class="mb-1">
-                                    <span><i class="fas fa-arrow-up"></i></i> NN</span> | <span><i class="fas fa-arrow-down"></i></i> NN</span>
+                                    <i class="fas fa-arrow-up"></i>
+                                    <span> --</span>
+                                    |
+                                    <i class="fas fa-arrow-down">
+                                    </i><span> --</span>
                                 </div>
-                                <div> <i class="fas fa-wind"></i><span> 15 MPH</span></div>
+                                <i class="fas fa-wind"></i>
+                                <span> -- MPH</span>
                             </div>
                             <div class="tile is-child is-vertical p-1">
-                                <div class = "myBold">Date</div>
+                                <div class="myBold">Date</div>
                                 <i class="fas fa-cloud my-2 is-size-2"></i>
                                 <div class="mb-1">
-                                    <span><i class="fas fa-arrow-up"></i></i> NN</span> | <span><i class="fas fa-arrow-down"></i></i> NN</span>
+                                    <i class="fas fa-arrow-up"></i><span> --</span> | <span><i
+                                            class="fas fa-arrow-down"></i></i> --</span>
                                 </div>
-                                <div> <i class="fas fa-wind"></i><span> 15 MPH</span></div>
+                                <div> <i class="fas fa-wind"></i><span> -- MPH</span></div>
                             </div>
                             <div class="tile is-child is-vertical p-1">
-                                <div class = "myBold">Date</div>
+                                <div class="myBold">Date</div>
                                 <i class="fas fa-cloud my-2 is-size-2"></i>
                                 <div class="mb-1">
-                                    <span><i class="fas fa-arrow-up"></i></i> NN</span> | <span><i class="fas fa-arrow-down"></i></i> NN</span>
+                                    <span><i class="fas fa-arrow-up"></i></i> --</span> | <span><i
+                                            class="fas fa-arrow-down"></i></i> --</span>
                                 </div>
-                                <div> <i class="fas fa-wind"></i><span> 15 MPH</span></div>
+                                <div> <i class="fas fa-wind"></i><span> -- MPH</span></div>
                             </div>
                             <div class="tile is-child is-vertical p-1">
-                                <div class = "myBold">Date</div>
+                                <div class="myBold">Date</div>
                                 <i class="fas fa-cloud my-2 is-size-2"></i>
                                 <div class="mb-1">
-                                    <span><i class="fas fa-arrow-up"></i></i> NN</span> | <span><i class="fas fa-arrow-down"></i></i> NN</span>
+                                    <span><i class="fas fa-arrow-up"></i></i> --</span> | <span><i
+                                            class="fas fa-arrow-down"></i></i> --</span>
                                 </div>
-                                <div> <i class="fas fa-wind"></i><span> 15 MPH</span></div>
+                                <div> <i class="fas fa-wind"></i><span> -- MPH</span></div>
                             </div>
                             <div class="tile is-child is-vertical p-1">
-                                <div class = "myBold">Date</div>
+                                <div class="myBold">Date</div>
                                 <i class="fas fa-cloud my-2 is-size-2"></i>
                                 <div class="mb-1">
-                                    <span><i class="fas fa-arrow-up"></i></i> NN</span> | <span><i class="fas fa-arrow-down"></i></i> NN</span>
+                                    <span><i class="fas fa-arrow-up"></i></i> --</span> | <span><i
+                                            class="fas fa-arrow-down"></i></i> --</span>
                                 </div>
-                                <div> <i class="fas fa-wind"></i><span> 15 MPH</span></div>
+                                <div> <i class="fas fa-wind"></i><span> -- MPH</span></div>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!--Historic Large Tile-->
-                <div id = "historicLargeTile" class="tile mx-1 is-parent is-vertical py-0 has-text-centered">
+                <div id="historicLargeTile" class="tile mx-1 is-parent is-vertical py-0 has-text-centered">
 
                     <!--Historic Weather Title-->
                     <div class="has-text-white is-size-4 mb-2 myBold">Weather A Year Ago</div>
@@ -246,7 +263,7 @@
                             <div class="mb-1">
                                 <span><i class="fas fa-arrow-up"></i></i> NN</span>
                                 <br>
-                                <span><i class="fas fa-arrow-down"></i> NN</span>  
+                                <span><i class="fas fa-arrow-down"></i> NN</span>
                             </div>
                         </div>
                         <div class="tile is-child is-vertical p-1">
@@ -255,7 +272,7 @@
                             <div class="mb-1">
                                 <span><i class="fas fa-arrow-up"></i></i> NN</span>
                                 <br>
-                                <span><i class="fas fa-arrow-down"></i> NN</span>  
+                                <span><i class="fas fa-arrow-down"></i> NN</span>
                             </div>
                         </div>
                         <div class="tile is-child is-vertical p-1">
@@ -264,7 +281,7 @@
                             <div class="mb-1">
                                 <span><i class="fas fa-arrow-up"></i></i> NN</span>
                                 <br>
-                                <span><i class="fas fa-arrow-down"></i> NN</span>  
+                                <span><i class="fas fa-arrow-down"></i> NN</span>
                             </div>
                         </div>
                         <div class="tile is-child is-vertical p-1">
@@ -273,7 +290,7 @@
                             <div class="mb-1">
                                 <span><i class="fas fa-arrow-up"></i></i> NN</span>
                                 <br>
-                                <span><i class="fas fa-arrow-down"></i> NN</span>  
+                                <span><i class="fas fa-arrow-down"></i> NN</span>
                             </div>
                         </div>
                         <div class="tile is-child is-vertical p-1">
@@ -282,7 +299,7 @@
                             <div class="mb-1">
                                 <span><i class="fas fa-arrow-up"></i></i> NN</span>
                                 <br>
-                                <span><i class="fas fa-arrow-down"></i> NN</span>  
+                                <span><i class="fas fa-arrow-down"></i> NN</span>
                             </div>
                         </div>
                         <div class="tile is-child is-vertical p-1">
@@ -291,7 +308,7 @@
                             <div class="mb-1">
                                 <span><i class="fas fa-arrow-up"></i></i> NN</span>
                                 <br>
-                                <span><i class="fas fa-arrow-down"></i> NN</span>  
+                                <span><i class="fas fa-arrow-down"></i> NN</span>
                             </div>
                         </div>
                         <div class="tile is-child is-vertical p-1">
@@ -300,20 +317,21 @@
                             <div class="mb-1">
                                 <span><i class="fas fa-arrow-up"></i></i> NN</span>
                                 <br>
-                                <span><i class="fas fa-arrow-down"></i> NN</span>  
+                                <span><i class="fas fa-arrow-down"></i> NN</span>
                             </div>
                         </div>
                     </div>
 
                     <!--Historic Weather Averages-->
-                    <div id="historic-months" class="tile is-parent is-horizontal myWeatherBackground p-1 py-5 has-text-centered has-text-white">
+                    <div id="historic-months"
+                        class="tile is-parent is-horizontal myWeatherBackground p-1 py-5 has-text-centered has-text-white">
                         <div id="current" class="tile is-child is-vertical p-1">
                             <div class="is-size-5 myBold mb-1 mt-3">Current Month AVG</div>
-                            <div class = "mb-1">Mostly Rain</div>
+                            <div class="mb-1">Mostly Rain</div>
                             <div class="">
                                 <span><i class="fas fa-arrow-up"></i></i> NN</span>
                                 <br>
-                                <span><i class="fas fa-arrow-down"></i> NN</span>  
+                                <span><i class="fas fa-arrow-down"></i> NN</span>
                             </div>
                         </div>
                         <div id="next" class="tile is-child is-vertical p-1">
@@ -322,7 +340,7 @@
                             <div class="mb-1">
                                 <span><i class="fas fa-arrow-up"></i></i> NN</span>
                                 <br>
-                                <span><i class="fas fa-arrow-down"></i> NN</span>  
+                                <span><i class="fas fa-arrow-down"></i> NN</span>
                             </div>
                         </div>
                         <div id="nextnext" class="tile is-child is-vertical p-1">
@@ -331,7 +349,7 @@
                             <div class="mb-1">
                                 <span><i class="fas fa-arrow-up"></i></i> NN</span>
                                 <br>
-                                <span><i class="fas fa-arrow-down"></i> NN</span>  
+                                <span><i class="fas fa-arrow-down"></i> NN</span>
                             </div>
                         </div>
                     </div>
@@ -351,7 +369,8 @@
                         <!-- Restaurant Name -->
                         <div class="myBold"><span class="myRegular caption-name">Food Type</span></div>
                         <!--Image-->
-                        <img class="food-image" src="https://via.placeholder.com/200" alt="Placeholder image" class="mb-2">
+                        <img class="food-image" src="https://via.placeholder.com/200" alt="Placeholder image"
+                            class="mb-2">
 
                         <!--Description-->
                         <div class="myBold"><span class="myRegular caption-cuisines">Food Type</span></div>
@@ -359,12 +378,12 @@
                         <div class="myBold"><span class="myRegular caption-locality">Locality</span></div>
 
                         <!--Pin Button-->
-                        <button class="button is-small is-light has-text-right mt-2"> 
-                            <span class = "has-text-grey is-rounded"><i class="fas fa-thumbtack"></i></span>
+                        <button class="button is-small is-light has-text-right mt-2">
+                            <span class="has-text-grey is-rounded"><i class="fas fa-thumbtack"></i></span>
                         </button>
-                     
+
                     </div>
-                    
+
                 </div>
 
                 <!--(TILE LEVEL 4) ENTERTAINMENT-->
@@ -375,64 +394,65 @@
                     <div class="tile is-child is-vertical myPrimaryBackground has-text-white p-3">
 
                         <!--Music-->
-                        <div class="mb-3">
+                        <div id="music-div" class="mb-3">
                             <div class="myBold has-text-centered">Music</div>
                             <hr class="my-2">
                             <div class="myBold is-size-6 py-1">
-                                <button class="button is-small is-light has-text-right mr-1"> 
-                                    <span class = "has-text-grey is-rounded"><i class="fas fa-thumbtack"></i></span>
-                                </button>
-                                <span>Event: </span>
-                                <span class="myRegular">Event title</span> 
-                                <span class="myRegular">(Link)</span>  
+                                <i class="has-text-grey is-rounded fas fa-thumbtack btn"></i>
+
+                                <a class="myRegular">Sunova at The Music Room</a>
                             </div>
                             <div class="myBold is-size-6 py-1">
-                                <button class="button is-small is-light has-text-right mr-1"> 
-                                    <span class = "has-text-grey is-rounded"><i class="fas fa-thumbtack"></i></span>
-                                </button>
-                                <span>Event: </span>
-                                <span class="myRegular">Event title</span> 
-                                <span class="myRegular">(Link)</span>  
+                                <i class="has-text-grey is-rounded fas fa-thumbtack btn"></i>
+
+                                <a class="myRegular">Sunova at The Music Room</a>
                             </div>
                             <div class="myBold is-size-6 py-1">
-                                <button class="button is-small is-light has-text-right mr-1"> 
-                                    <span class = "has-text-grey is-rounded"><i class="fas fa-thumbtack"></i></span>
-                                </button>
-                                <span>Event: </span>
-                                <span class="myRegular">Event title</span> 
-                                <span class="myRegular">(Link)</span>  
+                                <i class="has-text-grey is-rounded fas fa-thumbtack btn"></i>
+
+                                <a class="myRegular">Sunova at The Music Room</a>
+                            </div>
+                            <div class="myBold is-size-6 py-1">
+                                <i class="has-text-grey is-rounded fas fa-thumbtack btn"></i>
+
+                                <a class="myRegular">Sunova at The Music Room</a>
+                            </div>
+                            <div class="myBold is-size-6 py-1">
+                                <i class="has-text-grey is-rounded fas fa-thumbtack btn"></i>
+
+                                <a class="myRegular">Sunova at The Music Room</a>
                             </div>
                         </div>
 
                         <!--Sports-->
-                        <div>
+                        <div id="sport-div" class="mb-3">
                             <div class="myBold has-text-centered">Sports</div>
                             <hr class="my-2">
                             <div class="myBold is-size-6 py-1">
-                                <button class="button is-small is-light has-text-right mr-1"> 
-                                    <span class = "has-text-grey is-rounded"><i class="fas fa-thumbtack"></i></span>
-                                </button>
-                                <span>Event: </span>
-                                <span class="myRegular">Event title</span> 
-                                <span class="myRegular">(Link)</span>  
+                                <i class="has-text-grey is-rounded fas fa-thumbtack btn"></i>
+
+                                <a class="myRegular">Sunova at The Music Room</a>
                             </div>
                             <div class="myBold is-size-6 py-1">
-                                <button class="button is-small is-light has-text-right mr-1"> 
-                                    <span class = "has-text-grey is-rounded"><i class="fas fa-thumbtack"></i></span>
-                                </button>
-                                <span>Event: </span>
-                                <span class="myRegular">Event title</span> 
-                                <span class="myRegular">(Link)</span>  
+                                <i class="has-text-grey is-rounded fas fa-thumbtack btn"></i>
+
+                                <a class="myRegular">Sunova at The Music Room</a>
                             </div>
                             <div class="myBold is-size-6 py-1">
-                                <button class="button is-small is-light has-text-right mr-1"> 
-                                    <span class = "has-text-grey is-rounded"><i class="fas fa-thumbtack"></i></span>
-                                </button>
-                                <span>Event: </span>
-                                <span class="myRegular">Event title</span> 
-                                <span class="myRegular">(Link)</span>  
+                                <i class="has-text-grey is-rounded fas fa-thumbtack btn"></i>
+
+                                <a class="myRegular">Sunova at The Music Room</a>
                             </div>
-                        </div>
+                            <div class="myBold is-size-6 py-1">
+                                <i class="has-text-grey is-rounded fas fa-thumbtack btn"></i>
+
+                                <a class="myRegular">Sunova at The Music Room</a>
+                            </div>
+                            <div class="myBold is-size-6 py-1">
+                                <i class="has-text-grey is-rounded fas fa-thumbtack btn"></i>
+
+                                <a class="myRegular">Sunova at The Music Room</a>
+                            </div>
                     </div>
                 </div>
             </div>
@@ -444,17 +464,17 @@
 
     <!--These are the script links-->
 
-        <!--This is the link to luxon-->
-        <script src="https://cdn.jsdelivr.net/npm/luxon@1.25.0/build/global/luxon.min.js"></script>
+    <!--This is the link to luxon-->
+    <script src="https://cdn.jsdelivr.net/npm/luxon@1.25.0/build/global/luxon.min.js"></script>
 
-        <!--This is the CDN to JQuery 3.5.1-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!--This is the CDN to JQuery 3.5.1-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-        <!--This is the link to our local javascript-->
-        <script src="./logic/script.js"></script>
+    <!--This is the link to our local javascript-->
+    <script src="./logic/script.js"></script>
 
-        <!--This is the link to our local UI Script-->
-        <script src="./logic/uiEffects.js"></script>
+    <!--This is the link to our local UI Script-->
+    <script src="./logic/uiEffects.js"></script>
 
 </body>
 
