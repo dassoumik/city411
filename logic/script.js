@@ -88,7 +88,7 @@ function displayWeather(location) {
             $("#current-temp").text(" " + tempCurrent + " ");
             $("#current-wind").text(" " + currentWindSpeed);
             $("#current-humidity").text(" " + currentHumidity);
-            
+
         });
     }
 
@@ -101,12 +101,12 @@ function displayWeather(location) {
             url: queryURL,
             method: "GET"
         }).then(function (response) {
-            $("#weather-forecast-div").empty();
+            $("#weather-forecast").empty();
 
             // Grab data
             aDaily = response.daily
 
-            for (let i = 1; i < aDaily.length; i++) {
+            for (let i = 1; i < 6; i++) {
 
                 // Grab Data
                 var item = aDaily[i];
@@ -118,23 +118,25 @@ function displayWeather(location) {
                 var rainPop = Math.round(item.pop)
 
                 // Create Forecast Elements
-                var divDate = $("<div>").text(dayShort);
-                var divImg = $("<i>").attr("class", "fas fa-cloud my-2 is-size-2")
-                var iUp = $("<i>").attr("class", "fas fa-angle-up").css("color", "red")
+                var divDay = $("<div>").attr("class", "tile is-child is-vertical p-1")
+                var divDate = $("<div>").attr("class", "myBold").text(dayShort);
+                var iFACond = $("<i>").attr("class", "fas fa-cloud my-2 is-size-2");
 
-                var divHiLo = $("");
+                var divHiLo = $("<div>").attr("class", "mb-1").text(" | ");
+                var iUp = $("<i>").attr("class", "fas fa-arrow-up");
+                var sUp = $("<span>").text(" " + hi);
 
+                var iDn = $("<i>").attr("class", "fas fa-arrow-down");
+                var sDn = $("<span>").text(" " + lo);
 
-                var iDown = $("<i>").attr("class", "fas fa-angle-down").css("color", "blue")
-                var divLo = $("<div>").text(" " + Math.round(lo) + " °F").prepend(iDown);;
+                var iWd = $("<i>").attr("class", "fas fa-wind");
+                var sWd = $("<span>").text(" " + wind + " MPH");
 
-                var iWind = $("<i>").attr("class", "fas fa-wind")
-                var divWind = $("<div>").text(" " + wind + "").prepend(iWind)
+                // Append all the things
+                divHiLo.prepend(sUp).prepend(iUp).append(iDn).append(sDn);
+                divDay.append(divDate, iFACond, divHiLo, iWd, sWd);
 
-                // Append elements to button
-
-                var foreCastDayDiv = $("<div>").attr("class", "tile is-child is-vertical p-1").append(divDate, divImg, divHi, divLo, divWind);
-                $("#weather-forecast-div").append(foreCastDayDiv);
+                $("#weather-forecast").append(divDay);
 
 
             }
