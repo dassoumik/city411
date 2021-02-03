@@ -41,22 +41,11 @@
         <div class="navbar-menu level">
 
             <!--Navbar Start Items Container (Left)-->
-            <div class="navbar-start ml-5 myBold">
-
-                <!--Favorites Button-->
-                <div id= "navbarFavoritesButtonclass" class="navbar-item p-0"> <!--TOGGLE-VISABILITY-->
-                    <div class="buttons">
-                      <button class="button is-small is-light"> 
-                        <span class = "icon is-small has-text-grey"><i class="fas fa-heart"></i></span> <!--Can change class to is-danger to make red after click (if favorited)-->
-                      </button>
-                    </div>
-                </div>
-
+            <div class="navbar-start ml-2 myBold">
                 <!--Current City Display-->
                 <div class = "navbar-item"> <!--TOGGLE-VISABILITY-->
-                    <div id = "currentCity" class = "has-text-white">CurrentCity</div>
+                    <div class = "has-text-white city411TitleFont is-size-4 has-text-weight-light"><i class="fas fa-chevron-right mr-3"></i><span id = "currentCityName">Atlanta</span></div>
                 </div>
-
             </div>
 
             <!--Navbar End Container (Right)-->
@@ -80,7 +69,16 @@
                         
                     </div>
                 </div>
-                
+
+                <!--Favorites Button-->
+                <div id= "navbarFavoritesButtonclass" class="navbar-item p-0 mr-3"> <!--TOGGLE-VISABILITY-->
+                    <div class="buttons">
+                      <button class="button is-small is-light"> 
+                        <span class = "icon is-small has-text-grey"><i class="fas fa-heart"></i></span> <!--Can change class to is-danger to make red after click (if favorited)-->
+                      </button>
+                    </div>
+                </div>
+
                 <!--Searchbar in Navbar-->
                 <div class="field level-left mb-0 mr-4">
                     <form class="control has-icons-left has-icons-right">
@@ -116,11 +114,11 @@
 
 
     <!--(TILE LEVEL 1) MAIN TILES CONTAINER-->
-    <div class="tile is-ancestor mt-2 mx-1"> <!--TOGGLE-VISABILITY-->
+    <div class="tile is-ancestor mt-2 mx-1"> 
 
         <!--(TILE LEVEL 2) PINS PER CITY CONTAINER-->
         <div class="tile is-parent is-vertical">
-
+        
             <!--(TILE LEVEL 3) CITY PINS SUBCONTAINER-->
             <div class="tile is-parent is-vertical px-0 py-0 has-text-centered">
                 <div class="has-text-white is-size-4 mb-2 myBold">Pins</div>
@@ -142,12 +140,12 @@
                         <div class="mb-2">Type (Event, Food)</div>
                         <textarea class="textarea" placeholder="User Notes"></textarea>
                     </div >
-                    
+
+                    <!--Clear Pins Button-->
                     <button class="button is-danger m-3">Clear</button>
                     
                 </div>
             </div>
-
         </div>
 
         <!--(TILE LEVEL 2) ALL CITY INFO CONTAINER-->
