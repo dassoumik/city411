@@ -55,9 +55,6 @@ function displayWeather(location) {
         // Clear contents of searchbox
         $("#search-value").val();
 
-        // Clear contents of today div
-        $("#today").empty();
-
         $.ajax({
             url: queryURL,
             method: "GET",
@@ -73,7 +70,7 @@ function displayWeather(location) {
             displayForecastWeather(lat, lon);
             displayLocalEvents(lat, lon);
 
-            // console.log(response);
+            console.log(response);
 
             // Grab the local Data
             var cityOfficial = response.name;
@@ -88,24 +85,13 @@ function displayWeather(location) {
             var iconID = response.weather[0].icon;
             var iconURL = "https://openweathermap.org/img/w/" + iconID + ".png";
 
-            // Create Icon Element
-            var imgIcon = $("<img>").attr({ class: "fas fa-cloud my-5 is-size-1", id: "wicon", alt: "Weather Icon" }).attr("src", iconURL).attr({ width: "50%", height: "50%" })
+            // Update elements on page
+            $("#current-temp").text(" " + tempCurrent + " ");
+            $("#current-wind").text(" " + currentWindSpeed)
+            $("#current-humidity").text(" " + currentHumidity)
 
-            // Create data elements
-            var divDate = $("<div>").text(localTime.weekdayLong + ", " + localTime.monthLong + " " + localTime.day + " " + localTime.year);
-            var divCTemp = $("<div>").text(tempCurrent + "°F");
-            var divHi = $("<div>").text("Hi: " + tempHi + "°F");
-            var divLo = $("<div>").text("Lo: " + tempLo + "°F");
-            var divHumid = $("<div>").text("Humidity: " + currentHumidity + "%");
-            var i = $("<i>").attr("class", "fas fa-wind")
-            var divWind = $("<div>").text(" " + currentWindSpeed + "mph").prepend(i);
-            var divDescript = $("<div>").text(descript);
 
-            // Append final card to page
-            $("#weather-current-icon").empty();
-            $("#weather-current-icon").append(imgIcon)
-            $("#weather-current-data").empty();
-            $("#weather-current-data").append(divDate, divCTemp);
+
         });
     }
 
