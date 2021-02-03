@@ -44,7 +44,7 @@ function displayWeather(location) {
 
     // Call All Weather Functions
     displayCurrentWeather();
-    displayHistoricWeather();
+    // displayHistoricWeather();
 
 
     // Current Data
@@ -70,11 +70,9 @@ function displayWeather(location) {
             displayForecastWeather(lat, lon);
             displayLocalEvents(lat, lon);
 
-            // console.log(response);
-
             // Grab the local Data
             var cityOfficial = response.name;
-            $("#currentCity").text(cityOfficial);
+            $("#currentCityName").text(cityOfficial);
             console.log(cityOfficial);
             var tempCurrent = Math.round(response.main.temp);
             var tempHi = Math.round(response.main.temp_max);
@@ -90,9 +88,7 @@ function displayWeather(location) {
             $("#current-temp").text(" " + tempCurrent + " ");
             $("#current-wind").text(" " + currentWindSpeed);
             $("#current-humidity").text(" " + currentHumidity);
-
-
-
+            
         });
     }
 
