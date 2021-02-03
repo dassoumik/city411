@@ -44,7 +44,7 @@ function displayWeather(location) {
 
     // Call All Weather Functions
     displayCurrentWeather();
-    // displayHistoricWeather();
+    displayHistoricWeather();
 
 
     // Current Data
@@ -70,10 +70,11 @@ function displayWeather(location) {
             displayForecastWeather(lat, lon);
             displayLocalEvents(lat, lon);
 
-            console.log(response);
+            // console.log(response);
 
             // Grab the local Data
             var cityOfficial = response.name;
+            $("#currentCity").text(cityOfficial);
             console.log(cityOfficial);
             var tempCurrent = Math.round(response.main.temp);
             var tempHi = Math.round(response.main.temp_max);
@@ -87,8 +88,8 @@ function displayWeather(location) {
 
             // Update elements on page
             $("#current-temp").text(" " + tempCurrent + " ");
-            $("#current-wind").text(" " + currentWindSpeed)
-            $("#current-humidity").text(" " + currentHumidity)
+            $("#current-wind").text(" " + currentWindSpeed);
+            $("#current-humidity").text(" " + currentHumidity);
 
 
 
@@ -126,7 +127,7 @@ function displayWeather(location) {
                 var iUp = $("<i>").attr("class", "fas fa-angle-up").css("color", "red")
 
                 var divHiLo = $("");
-                
+
 
                 var iDown = $("<i>").attr("class", "fas fa-angle-down").css("color", "blue")
                 var divLo = $("<div>").text(" " + Math.round(lo) + " °F").prepend(iDown);;
@@ -323,7 +324,7 @@ function displayWeather(location) {
                     var hcmTitleDiv = $("<div>").attr("class", "is-size-6 myBold").text(oneYearAgo.monthLong);
                 }
                 else if (month === "next") { var hcmTitleDiv = $("<div>").attr("class", "is-size-6 myBold").text(oneYearAgoTwoMonthsStart.monthLong); }
-                else if (month === "nextnext") { var hcmTitleDiv = $("<div>").attr("class", "is-size-6 myBold").text(oneYearAgo.monthLong); }
+                else if (month === "nextnext") { var hcmTitleDiv = $("<div>").attr("class", "is-size-6 myBold").text(oneYearAgoThreeMonthsStart.monthLong); }
                 var mostlyCondDiv = $("<div>").text("Mostly " + mostlyCondition);
                 var avgHiDiv = $("<div>").text("Hi average - " + avgHi);
                 var avgLoDiv = $("<div>").text("Lo average - " + avgLo);
