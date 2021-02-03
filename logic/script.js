@@ -3,6 +3,7 @@ var dateTime = luxon.DateTime; //Base time object
 var localTime = dateTime.local(); //Local time
 var lat;
 var lon;
+var cityOfficial;
 
 // Define Functons
 function searchButtonClicked(e) {
@@ -43,7 +44,7 @@ function displayWeather(location) {
 
     // Call All Weather Functions
     displayCurrentWeather();
-    displayHistoricWeather();
+    // displayHistoricWeather();
 
 
     // Current Data
@@ -72,10 +73,11 @@ function displayWeather(location) {
             displayForecastWeather(lat, lon);
             displayLocalEvents(lat, lon);
 
-            console.log(response);
+            // console.log(response);
 
             // Grab the local Data
-            var name = response.name;
+            var cityOfficial = response.name;
+            console.log(cityOfficial);
             var tempCurrent = Math.round(response.main.temp);
             var tempHi = Math.round(response.main.temp_max);
             var tempLo = Math.round(response.main.temp_min);
