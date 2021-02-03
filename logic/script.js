@@ -1,9 +1,12 @@
 // Global Variables
 var dateTime = luxon.DateTime; //Base time object
 var localTime = dateTime.local(); //Local time
+var lat;
+var lon;
 
 // Define Functons
-function searchButtonClicked() {
+function searchButtonClicked(e) {
+    e.preventDefault();
     // If input has value grab value, else do nothing
     if ($("#searchedCityInput").val() !== "") {
         var input = $("#searchedCityInput").val();
@@ -12,7 +15,7 @@ function searchButtonClicked() {
         $("#searchedCityInput").val("");
 
         // Call functions here
-        callFunctions(input)
+        callFunctions(input);
     }
 }
 
@@ -23,7 +26,6 @@ function searchButtonWelcomeClicked() {
 
     // Go to data page
     window.location.href = "./pages/city411dashboard.html";
-
 }
 
 // Call all functions here
@@ -32,18 +34,20 @@ function callFunctions(input) {
     displayWeather(input);
 }
 
-
 // Display Weather which contains all the weather functions
 function displayWeather(location) {
     // Get current local date
     var currentDate = dateTime.local();
     var currentDateISO = dateTime.local().toISODate();
 
+
     // Call All Weather Functions
-     displayHistoric();
+    displayCurrentWeather();
+    displayHistoricWeather();
+
 
     // Current Data
-    function getCurrentWeather() {
+    function displayCurrentWeather() {
         var units = "&units=imperial"
         var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + location + units + "&appid=653447e5538dcc45b8534eb1e5c601c3";
 
@@ -57,33 +61,99 @@ function displayWeather(location) {
             url: queryURL,
             method: "GET",
             error: function (err) {
-                $("#forecast-div").empty();
+                console.log("getCurrentWeather(): AJAX Error");
             }
         }).then(function (response) {
+            // Grab global data
+            lon = response.coord.lon; // for UV
+            lat = response.coord.lat; //for UV
+            displayForecastWeather(lat, lon);
 
-            // Grab the data we need to display
+            console.log(response);
+
+            // Grab the local Data
             var name = response.name;
-            var currentTemp = response.main.temp;
+            var tempCurrent = Math.round(response.main.temp);
+            var tempHi = Math.round(response.main.temp_max);
+            var tempLo = Math.round(response.main.temp_min);
             var currentHumidity = response.main.humidity;
-            var currentWindSpeed = response.wind.speed;
-            var currentIcon = response.weather[0].icon;
-            var lon = response.coord.lon; // for UV
-            var lat = response.coord.lat; //for UV
+            var currentWindSpeed = Math.round(response.wind.speed);
+            var descript = response.weather[0].description;
 
-            // Create Card
+            var iconID = response.weather[0].icon;
+            var iconURL = "https://openweathermap.org/img/w/" + iconID + ".png";
 
+            // Create Icon Element
+            var imgIcon = $("<img>").attr({ class: "fas fa-cloud my-5 is-size-1", id: "wicon", alt: "Weather Icon" }).attr("src", iconURL).attr({ width: "50%", height: "50%" })
 
-            // Create card elements
+            // Create data elements
+            var divDate = $("<div>").text(localTime.weekdayLong + ", " + localTime.monthLong + " " + localTime.day + " " + localTime.year);
+            var divCTemp = $("<div>").text(tempCurrent + "°F");
+            var divHi = $("<div>").text("Hi: " + tempHi + "°F");
+            var divLo = $("<div>").text("Lo: " + tempLo + "°F");
+            var divHumid = $("<div>").text("Humidity: " + currentHumidity + "%");
+            var i = $("<i>").attr("class", "fas fa-wind")
+            var divWind = $("<div>").text(" " + currentWindSpeed + "mph").prepend(i);
+            var divDescript = $("<div>").text(descript);
 
             // Append final card to page
+            $("#weather-current-icon").empty();
+            $("#weather-current-icon").append(imgIcon)
+            $("#weather-current-data").empty();
+            $("#weather-current-data").append(divDate, divCTemp);
+        });
+    }
 
-            // Grab Lon & lat values for index call
+    function displayForecastWeather(x, y) {
+        // Example URL: api.openweathermap.org/data/2.5/forecast?q={city name}&appid={API key}
+        var units = "&units=imperial"
+        var queryURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + x + "&lon=" + y + "&exclude=current,minutely,hourly,alerts" + units + "&appid=653447e5538dcc45b8534eb1e5c601c3";
 
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+        }).then(function (response) {
+            $("#weather-forecast-div").empty();
+
+            // Grab data
+            aDaily = response.daily
+
+            for (let i = 1; i < aDaily.length; i++) {
+
+                // Grab Data
+                var item = aDaily[i];
+                var dayShort = dateTime.fromSeconds(item.dt).weekdayShort;
+                var iconURL = "https://openweathermap.org/img/w/" + item.weather[0].icon + ".png";
+                var hi = Math.round(item.temp.max);
+                var lo = Math.round(item.temp.min);
+                var wind = Math.round(item.wind_speed)
+                var rainPop = Math.round(item.pop)
+
+                // Create Forecast Elements
+                var divDate = $("<div>").text(dayShort);
+                var divImg = $("<img>").attr("src", iconURL).attr("alt", "weather icon").attr({ width: "100px", height: "100px" });;
+
+                var iUp = $("<i>").attr("class", "fas fa-angle-up").css("color", "red")
+                var divHi = $("<div>").text(" " + Math.round(hi) + " °F").prepend(iUp);
+
+                var iDown = $("<i>").attr("class", "fas fa-angle-down").css("color", "blue")
+                var divLo = $("<div>").text(" " + Math.round(lo) + " °F").prepend(iDown);;
+
+                var iWind = $("<i>").attr("class", "fas fa-wind")
+                var divWind = $("<div>").text(" " + wind + "").prepend(iWind)
+
+                // Append elements to button
+
+                var foreCastDayDiv = $("<div>").attr("class", "tile is-child is-vertical notification is-info p-1").append(divDate, divImg, divHi, divLo, divWind);
+                $("#weather-forecast-div").append(foreCastDayDiv);
+
+
+            }
         });
     }
 
     // Historic Data
-    function displayHistoric() {
+    function displayHistoricWeather() {
         // Define the date ranges to use in query and create correct syntax string for query
         var oneYearAgo = currentDate.minus({ year: 1 })
         var oneYearAgoFormatted = oneYearAgo.c.year + "-" + oneYearAgo.c.month + "-" + oneYearAgo.c.day;
@@ -92,23 +162,31 @@ function displayWeather(location) {
         var oneYearAgoWeek = currentDate.minus({ year: 1 }).plus({ days: 6 });
         var oneYearAgoWeekFormatted = oneYearAgoWeek.c.year + "-" + oneYearAgoWeek.c.month + "-" + oneYearAgoWeek.c.day;
 
-        // a year ago, start date of next month
+        // a year ago, start date of current month
         var oneYearAgoMonthStart = currentDate.minus({ year: 1 }).startOf('month')
         var oneYearAgoMonthStartFormatted = oneYearAgoMonthStart.c.year + "-" + oneYearAgoMonthStart.c.month + "-" + oneYearAgoMonthStart.c.day;
-        // a year ago, end date of next month
+        // a year ago, end date of current month
         var oneYearAgoMonthEnd = currentDate.minus({ year: 1 }).endOf('month');
         var oneYearAgoMonthEndFormatted = oneYearAgoMonthEnd.c.year + "-" + oneYearAgoMonthEnd.c.month + "-" + oneYearAgoMonthEnd.c.day;
 
-        // a year ago, start date of next next month
+        // a year ago, start date of next  month
         var oneYearAgoTwoMonthsStart = currentDate.minus({ year: 1 }).plus({ month: 1 }).startOf('month');
         var oneYearAgoTwoMonthsStartFormatted = oneYearAgoTwoMonthsStart.c.year + "-" + oneYearAgoTwoMonthsStart.c.month + "-" + oneYearAgoTwoMonthsStart.c.day;
-        // a year ago, end date of next next month
+        // a year ago, end date of next  month
         var oneYearAgoTwoMonthsEnd = currentDate.minus({ year: 1 }).plus({ month: 1 }).endOf('month');
         var oneYearAgoTwoMonthsEndFormatted = oneYearAgoTwoMonthsEnd.c.year + "-" + oneYearAgoTwoMonthsEnd.c.month + "-" + oneYearAgoTwoMonthsEnd.c.day;
+
+        // a year ago, start date of next next month
+        var oneYearAgoThreeMonthsStart = currentDate.minus({ year: 1 }).plus({ month: 2 }).startOf('month');
+        var oneYearAgoThreeMonthsStartFormatted = oneYearAgoThreeMonthsStart.c.year + "-" + oneYearAgoThreeMonthsStart.c.month + "-" + oneYearAgoThreeMonthsStart.c.day;
+        // a year ago, end date of next next month
+        var oneYearAgoThreeMonthsEnd = currentDate.minus({ year: 1 }).plus({ month: 2 }).endOf('month');
+        var oneYearAgoThreeMonthsEndFormatted = oneYearAgoThreeMonthsEnd.c.year + "-" + oneYearAgoThreeMonthsEnd.c.month + "-" + oneYearAgoThreeMonthsEnd.c.day;
 
         getHistoricWeek("Q5Z5S9QT8FD8UJKCGYBURUXX8");
         getHistoricCurrentMonth("current", "347KV25P3E7B8XKZMTG2ETSNJ", oneYearAgoMonthStartFormatted, oneYearAgoMonthEndFormatted);
         getHistoricCurrentMonth("next", "EZAX7WB9Q7WQZZ6582Q64AVZH", oneYearAgoTwoMonthsStartFormatted, oneYearAgoTwoMonthsEndFormatted);
+        getHistoricCurrentMonth("nextnext", "G5RN7UPN529E5629TUL8M9DBW", oneYearAgoThreeMonthsStartFormatted, oneYearAgoThreeMonthsEndFormatted);
 
         // Returns JSON object of a year ago, 1 week. 
         function getHistoricWeek(key) {
@@ -266,7 +344,7 @@ function displayWeather(location) {
         }
 
 
-    } // end displayHistoric()
+    }
 
 
 

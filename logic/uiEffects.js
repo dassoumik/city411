@@ -4,8 +4,7 @@
 
     // Menu collapses in hamburger on smaller viewports
 
-// Media Query to Remove Clases ON Viewport Change
-    
+// Media Query to Remove or add certain classes ON Viewport Change
     
     // This evens out the weather tiles on mobile phones and tablets
         if (matchMedia) {
@@ -15,6 +14,7 @@
             makeMobile(mobileBreakPoint);
         }
 
+        // Note that if you play with responsive behavior, you have to refresh to make effect (fine in real life I think
         function makeMobile(mobileBreakPoint) {
             if (mobileBreakPoint.matches) {
                 console.log("making for mobile");
