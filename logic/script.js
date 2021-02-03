@@ -122,10 +122,11 @@ function displayWeather(location) {
 
                 // Create Forecast Elements
                 var divDate = $("<div>").text(dayShort);
-                var divImg = $("<img>").attr("src", iconURL).attr("alt", "weather icon").attr({ width: "100px", height: "100px" });;
-
+                var divImg = $("<i>").attr("class", "fas fa-cloud my-2 is-size-2")
                 var iUp = $("<i>").attr("class", "fas fa-angle-up").css("color", "red")
-                var divHi = $("<div>").text(" " + Math.round(hi) + " °F").prepend(iUp);
+
+                var divHiLo = $("");
+                
 
                 var iDown = $("<i>").attr("class", "fas fa-angle-down").css("color", "blue")
                 var divLo = $("<div>").text(" " + Math.round(lo) + " °F").prepend(iDown);;
@@ -135,7 +136,7 @@ function displayWeather(location) {
 
                 // Append elements to button
 
-                var foreCastDayDiv = $("<div>").attr("class", "tile is-child is-vertical notification is-info p-1").append(divDate, divImg, divHi, divLo, divWind);
+                var foreCastDayDiv = $("<div>").attr("class", "tile is-child is-vertical p-1").append(divDate, divImg, divHi, divLo, divWind);
                 $("#weather-forecast-div").append(foreCastDayDiv);
 
 
