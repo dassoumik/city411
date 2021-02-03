@@ -48,11 +48,11 @@ $(document).ready(function () {
     }
 
     // Get the GEOCity info of the city searched
-    function getLatLon(cityName) {
+    function getLatLon(search_input) {
         const settings = {
             "async": true,
             "crossDomain": true,
-            "url": "https://wft-geo-db.p.rapidapi.com/v1/geo/cities?limit=4&countryIds=US&namePrefix=" + cityName,
+            "url": "https://wft-geo-db.p.rapidapi.com/v1/geo/cities?limit=4&countryIds=US&namePrefix=" + search_input,
             "method": "GET",
             "headers": {
                 "x-rapidapi-key": "7b75ab40bfmsh25f0646a556efbfp1ff8a3jsn2e13b2c6e160",
@@ -62,7 +62,12 @@ $(document).ready(function () {
 
         $.ajax(settings).done(function (response) {
             console.log(response);
+            // If the search returns city data... then call the API's else alert the user
             if (response.data.length > 0) {
+                // Show/Hide Appropriate containers
+                $("#container-welcome").attr("class", "hero is-fullheight-with-navbar is-hidden")
+                $("#container-tiles").attr("class", "tile is-ancestor mt-2 mx-1")
+
                 // Set City Info
                 city = response.data[0].city
                 state = response.data[0].regionCode
