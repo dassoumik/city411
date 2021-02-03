@@ -512,7 +512,7 @@ $(document).ready(function () {
                     $(eventContainer).empty();
 
                     // Setup the parent music container
-                    var divTitle = $("<div>").attr("class", "myBold has-text-centered").text("Music");
+                    var divTitle = $("<div>").attr("class", "myBold has-text-centered").text(type.charAt(0).toUpperCase() + type.slice(1));
                     var hr = $("<hr>").attr("class", "my-2");
 
                     // Append the Setup elements
