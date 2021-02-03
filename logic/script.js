@@ -226,7 +226,7 @@ function displayWeather(location) {
                     var historicDayWindspeed = Math.round(aDayRange[index].windspeed);
 
                     // Create elements with the data
-                    var dayDiv = $("<div>").attr("id", "historic-day-" + index).attr("class", "tile is-child is-vertical notification is-info p-1");
+                    var dayDiv = $("<div>").attr("id", "historic-day-" + index).attr("class", "tile is-child is-vertical p-1");
                     var dayTitle = $("<div>").attr("class", "myBold").text(dateTime.fromSeconds(historicDayEpoch).weekdayShort);
 
                     // Create ICON element based on ICON TEXT variable from response
