@@ -1,8 +1,17 @@
+$(document).ready(function() {
 // Global Variables
 var dateTime = luxon.DateTime; //Base time object
 var localTime = dateTime.local(); //Local time
 var lat;
 var lon;
+var i=0;
+var address;
+var phoneNumbers;
+var searchClicked;
+var timeInterval;
+var latitude;
+var longitude;
+var apiZomato = "af93c63cd1563820706beeacaa127e33";
 
 // Define Functons
 function searchButtonClicked(e) {
@@ -10,6 +19,8 @@ function searchButtonClicked(e) {
     // If input has value grab value, else do nothing
     if ($("#searchedCityInput").val() !== "") {
         var input = $("#searchedCityInput").val();
+        clearInterval(timeInterval);
+        searchClicked = true;
 
         // clear search box
         $("#searchedCityInput").val("");
@@ -31,7 +42,99 @@ function searchButtonWelcomeClicked() {
 // Call all functions here
 function callFunctions(input) {
     // Call functions here
+    getLatLon(input);
     displayWeather(input);
+}
+
+// Get the latitude and longitude of the city searched
+
+
+function getLatLon(cityName) {
+    const settings = {
+      "async": true,
+      "crossDomain": true,
+      "url": "https://wft-geo-db.p.rapidapi.com/v1/geo/cities?limit=4&countryIds=US&namePrefix="+cityName,
+      "method": "GET",
+      "headers": {
+        "x-rapidapi-key": "7b75ab40bfmsh25f0646a556efbfp1ff8a3jsn2e13b2c6e160",
+        "x-rapidapi-host": "wft-geo-db.p.rapidapi.com"
+      }
+    };
+    
+    $.ajax(settings).done(function (response) {
+     latitude = response.data[0].latitude;
+     longitude = response.data[0].longitude;
+     displayFoodDataRated(latitude, longitude);
+    // displayFoodDataByCost(latitude, longitude);
+    });
+  }
+  
+// Initiate API call to zomato
+function displayFoodDataRated(latitude, longitude) {
+
+    var urlZomato = "https://developers.zomato.com/api/v2.1/search?cuisines=1,5,25,27,40,100,161,227" + "&lon=" + longitude + "&lat=" + latitude + "&count=20&sort=rating";
+  
+    $.ajax({
+    method: "GET",
+    crossDomain: true,
+    url: urlZomato,
+    dataType: "json",
+    async: true,
+    headers: {
+        "user-key": apiZomato
+    }, 
+    success: function(data) {
+        parseZomatoData(data);
+    }, 
+    error: function() {
+        infoContent = "<div>Sorry, data is not coming through. Refresh and try again.</div>";
+        $(".food").empty();
+        $(".food").append(infoContent);
+    }
+  });//end of $.ajax call
+  }// end of API call to zomato
+  
+// Display Rated Food Data
+function  parseZomatoData(data) {
+    if (searchClicked) {
+        i = 0;
+        searchClicked = false;
+        $(".card-select .caption-name").text("");  
+        $(".card-select .caption-cuisines").text("");
+        $(".card-select .caption-avg-cost").text("");
+        $(".card-select .caption-locality").text("");
+        $(".card-select .food-image").attr("src", "https://via.placeholder.com/200");
+    } 
+    if (data.restaurants[i].restaurant.thumb == "") {
+       $(".card-select .food-image").attr("src", "https://via.placeholder.com/200");
+    } else {
+      $(".card-select .food-image").attr("src", data.restaurants[i].restaurant.thumb);
+    }
+    $(".card-select .caption-name").text(data.restaurants[i].restaurant.name);  
+    $(".card-select .caption-cuisines").text(data.restaurants[i].restaurant.cuisines);
+    $(".card-select .caption-avg-cost").text("$ "+data.restaurants[i].restaurant.average_cost_for_two+" (2 persons)");
+    $(".card-select .caption-locality").text(data.restaurants[i].restaurant.location.locality);
+    address = data.restaurants[i].restaurant.location.address;
+    phoneNumbers = data.restaurants[i].restaurant.phone_numbers;            
+    timeInterval = setInterval(function(){
+        if (i<20) {
+            i++;
+        } 
+        if (i>19) {
+            i= i-i;
+        }
+        if (data.restaurants[i].restaurant.thumb == "") {
+            $(".card-select .food-image").attr("src", "https://via.placeholder.com/200");
+        } else {
+                $(".card-select .food-image").attr("src", data.restaurants[i].restaurant.thumb);
+        }
+        $(".card-select .caption-name").text(data.restaurants[i].restaurant.name);  
+        $(".card-select .caption-cuisines").text(data.restaurants[i].restaurant.cuisines);
+        $(".card-select .caption-avg-cost").text("$ "+data.restaurants[i].restaurant.average_cost_for_two+" (2 persons)");
+        $(".card-select .caption-locality").text(data.restaurants[i].restaurant.location.locality);
+        address = data.restaurants[i].restaurant.location.address;
+        phoneNumbers = data.restaurants[i].restaurant.phone_numbers;            
+    }, 5000);
 }
 
 // Display Weather which contains all the weather functions
@@ -393,3 +496,4 @@ function getLocalEvents() {
 $("#searchButton").click(searchButtonClicked);
 $("#searchedCityButtonWelcome").click(searchButtonWelcomeClicked);
 
+});
