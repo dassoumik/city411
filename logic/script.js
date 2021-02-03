@@ -40,7 +40,7 @@ function displayWeather(location) {
     var currentDateISO = dateTime.local().toISODate();
 
     // Call All Weather Functions
-   // displayHistoric();
+     displayHistoric();
 
     // Current Data
     function getCurrentWeather() {
