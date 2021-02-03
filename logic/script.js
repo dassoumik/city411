@@ -44,7 +44,7 @@ function displayWeather(location) {
 
     // Call All Weather Functions
     displayCurrentWeather();
-    // displayHistoricWeather();
+    displayHistoricWeather();
 
 
     // Current Data
@@ -73,18 +73,20 @@ function displayWeather(location) {
             // Grab the local Data
             var cityOfficial = response.name;
             $("#currentCityName").text(cityOfficial);
-            console.log(cityOfficial);
             var tempCurrent = Math.round(response.main.temp);
             var tempHi = Math.round(response.main.temp_max);
             var tempLo = Math.round(response.main.temp_min);
             var currentHumidity = response.main.humidity;
             var currentWindSpeed = Math.round(response.wind.speed);
             var descript = response.weather[0].description;
+            console.log(response);
+            console.log(descript);
 
-            var iconID = response.weather[0].icon;
-            var iconURL = "https://openweathermap.org/img/w/" + iconID + ".png";
+            var iconId = response.weather[0].icon;
+            var fontAwesomeId = getWeatherIcon(iconId, descript);
 
             // Update elements on page
+            $("#current-icon").attr("class", fontAwesomeId + " mt-2");
             $("#current-temp").text(" " + tempCurrent + " ");
             $("#current-wind").text(" " + currentWindSpeed);
             $("#current-humidity").text(" " + currentHumidity);
@@ -92,254 +94,305 @@ function displayWeather(location) {
         });
     }
 
-    function displayForecastWeather(x, y) {
-        // Example URL: api.openweathermap.org/data/2.5/forecast?q={city name}&appid={API key}
-        var units = "&units=imperial"
-        var queryURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + x + "&lon=" + y + "&exclude=current,minutely,hourly,alerts" + units + "&appid=653447e5538dcc45b8534eb1e5c601c3";
+
+}
+
+    // Takes in the ICON ID String and returns the appropriate font-awesome icon to match
+    function getWeatherIcon(id, cond) {
+        // If the icon is for daytime, return day icon, else return night icon
+
+        // Clear sky
+        if (id === "01d") { return "fas fa-sun"; }
+        if (id === "01n") { return "fas fa-moon"; }
+
+        // few clouds
+        if (id === "02d") { return "fas fa-cloud-sun"; }
+        if (id === "02n") { return "fas fa-cloud-moon"; }
+
+        // scattered clouds & broken clouds
+        if (id.match(/01/) || id.match(/04/)) { return "fas fa-cloud"; }
+
+        // shower rain
+        if (id.match(/09/)) { return "fas fa-cloud-showers-heavy"; }
+
+        // Rain
+        if (id.match(/10d/)) { return "fas fa-cloud-sun-rain"; }
+        if (id.match(/10n/)) { return "fas fa-cloud-moon-rain"; }
+
+        // Thunderstorm
+        if (id.match(/11/)) { return "fas fa-bolt"; }
+
+        // Snow
+        if (id.match(/50/)) { return "fas fa-snowflake"; }
+
+        // Other
+        if (id.match(/50/)) {
+            switch (cond) {
+                case "mist":
+                    return "fas fa-smog";
+                case "fog":
+                    return "fas fa-smog";
+                default:
+                    return "fas fa-smog"
+            }
+        }
+    }
+function displayForecastWeather(x, y) {
+    // Example URL: api.openweathermap.org/data/2.5/forecast?q={city name}&appid={API key}
+    var units = "&units=imperial"
+    var queryURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + x + "&lon=" + y + "&exclude=current,minutely,hourly,alerts" + units + "&appid=653447e5538dcc45b8534eb1e5c601c3";
+
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    }).then(function (response) {
+        $("#weather-forecast").empty();
+
+        // Grab data
+        aDaily = response.daily;
+
+        for (let i = 1; i < 6; i++) {
+
+            // Grab Data
+            var item = aDaily[i];
+            var dayShort = dateTime.fromSeconds(item.dt).weekdayShort;
+
+            var hi = Math.round(item.temp.max);
+            var lo = Math.round(item.temp.min);
+            var wind = Math.round(item.wind_speed);
+            var rainPop = Math.round(item.pop);
+            var iconId = item.weather[0].icon;
+            var descript = item.weather[0].description;
+
+            console.log(iconId);
+            console.log(descript);
+            var fontAwesomeId = getWeatherIcon(iconId, descript);
+            var iFACond = $("<i>").attr("class", fontAwesomeId + " my-2 is-size-2");
+
+            // Create Forecast Elements
+            var divDay = $("<div>").attr("class", "tile is-child is-vertical p-1")
+            var divDate = $("<div>").attr("class", "myBold").text(dayShort);
+
+
+
+            var divHiLo = $("<div>").attr("class", "mb-1").text(" | ");
+            var iUp = $("<i>").attr("class", "fas fa-arrow-up");
+            var sUp = $("<span>").text(" " + hi);
+
+            var iDn = $("<i>").attr("class", "fas fa-arrow-down");
+            var sDn = $("<span>").text(" " + lo);
+
+            var iWd = $("<i>").attr("class", "fas fa-wind");
+            var sWd = $("<span>").text(" " + wind + " MPH");
+
+            // Append all the things
+            divHiLo.prepend(sUp).prepend(iUp).append(iDn).append(sDn);
+            divDay.append(divDate, iFACond, divHiLo, iWd, sWd);
+
+            $("#weather-forecast").append(divDay);
+
+
+        }
+    });
+}
+
+// Historic Data
+function displayHistoricWeather() {
+    // Define the date ranges to use in query and create correct syntax string for query
+    var oneYearAgo = currentDate.minus({ year: 1 })
+    var oneYearAgoFormatted = oneYearAgo.c.year + "-" + oneYearAgo.c.month + "-" + oneYearAgo.c.day;
+
+    // a year ago, 5 days 
+    var oneYearAgoWeek = currentDate.minus({ year: 1 }).plus({ days: 6 });
+    var oneYearAgoWeekFormatted = oneYearAgoWeek.c.year + "-" + oneYearAgoWeek.c.month + "-" + oneYearAgoWeek.c.day;
+
+    // a year ago, start date of current month
+    var oneYearAgoMonthStart = currentDate.minus({ year: 1 }).startOf('month')
+    var oneYearAgoMonthStartFormatted = oneYearAgoMonthStart.c.year + "-" + oneYearAgoMonthStart.c.month + "-" + oneYearAgoMonthStart.c.day;
+    // a year ago, end date of current month
+    var oneYearAgoMonthEnd = currentDate.minus({ year: 1 }).endOf('month');
+    var oneYearAgoMonthEndFormatted = oneYearAgoMonthEnd.c.year + "-" + oneYearAgoMonthEnd.c.month + "-" + oneYearAgoMonthEnd.c.day;
+
+    // a year ago, start date of next  month
+    var oneYearAgoTwoMonthsStart = currentDate.minus({ year: 1 }).plus({ month: 1 }).startOf('month');
+    var oneYearAgoTwoMonthsStartFormatted = oneYearAgoTwoMonthsStart.c.year + "-" + oneYearAgoTwoMonthsStart.c.month + "-" + oneYearAgoTwoMonthsStart.c.day;
+    // a year ago, end date of next  month
+    var oneYearAgoTwoMonthsEnd = currentDate.minus({ year: 1 }).plus({ month: 1 }).endOf('month');
+    var oneYearAgoTwoMonthsEndFormatted = oneYearAgoTwoMonthsEnd.c.year + "-" + oneYearAgoTwoMonthsEnd.c.month + "-" + oneYearAgoTwoMonthsEnd.c.day;
+
+    // a year ago, start date of next next month
+    var oneYearAgoThreeMonthsStart = currentDate.minus({ year: 1 }).plus({ month: 2 }).startOf('month');
+    var oneYearAgoThreeMonthsStartFormatted = oneYearAgoThreeMonthsStart.c.year + "-" + oneYearAgoThreeMonthsStart.c.month + "-" + oneYearAgoThreeMonthsStart.c.day;
+    // a year ago, end date of next next month
+    var oneYearAgoThreeMonthsEnd = currentDate.minus({ year: 1 }).plus({ month: 2 }).endOf('month');
+    var oneYearAgoThreeMonthsEndFormatted = oneYearAgoThreeMonthsEnd.c.year + "-" + oneYearAgoThreeMonthsEnd.c.month + "-" + oneYearAgoThreeMonthsEnd.c.day;
+
+    getHistoricWeek("Q5Z5S9QT8FD8UJKCGYBURUXX8");
+    getHistoricCurrentMonth("current", "347KV25P3E7B8XKZMTG2ETSNJ", oneYearAgoMonthStartFormatted, oneYearAgoMonthEndFormatted);
+    getHistoricCurrentMonth("next", "EZAX7WB9Q7WQZZ6582Q64AVZH", oneYearAgoTwoMonthsStartFormatted, oneYearAgoTwoMonthsEndFormatted);
+    getHistoricCurrentMonth("nextnext", "G5RN7UPN529E5629TUL8M9DBW", oneYearAgoThreeMonthsStartFormatted, oneYearAgoThreeMonthsEndFormatted);
+
+    // Returns JSON object of a year ago, 1 week. 
+    function getHistoricWeek(key) {
+        // Empty the div to make room for JS created HTML
+        $("#historic-week-div").empty();
+
+        var queryURL = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/" + location + "/" + oneYearAgoFormatted + "/" + oneYearAgoWeekFormatted + "?unitGroup=us&key=" + key + "&include=obs"
+        // var response = JSON.parse(localStorage.getItem("historic-week")) // [TESTING] Uncoming this line for testing 
 
         $.ajax({
             url: queryURL,
-            method: "GET"
+            method: 'GET',
         }).then(function (response) {
-            $("#weather-forecast").empty();
+            // localStorage.setItem('historic-week', JSON.stringify(response)); // [TESTING] Uncomment this line for testing
 
-            // Grab data
-            aDaily = response.daily
+            // City/state
+            var address = response.resolvedAddress
 
-            for (let i = 1; i < 6; i++) {
+            // Array data
+            var aDayRange = response.days
 
-                // Grab Data
-                var item = aDaily[i];
-                var dayShort = dateTime.fromSeconds(item.dt).weekdayShort;
-                var iconURL = "https://openweathermap.org/img/w/" + item.weather[0].icon + ".png";
-                var hi = Math.round(item.temp.max);
-                var lo = Math.round(item.temp.min);
-                var wind = Math.round(item.wind_speed)
-                var rainPop = Math.round(item.pop)
+            // Loop thru each Historic Week day...
+            $.each(aDayRange, function (index, item) {
 
-                // Create Forecast Elements
-                var divDay = $("<div>").attr("class", "tile is-child is-vertical p-1")
-                var divDate = $("<div>").attr("class", "myBold").text(dayShort);
-                var iFACond = $("<i>").attr("class", "fas fa-cloud my-2 is-size-2");
+                var historicDay = aDayRange[index].datetime;
+                var historicDayEpoch = aDayRange[index].datetimeEpoch;
+                var historicDayConditions = aDayRange[index].conditions;
+                var historicDayHumidity = aDayRange[index].humidity;
+                var historicDayIcon = aDayRange[index].icon;
+                var historicDayPrecip = aDayRange[index].precip;
+                var historicDaySnow = aDayRange[index].snow;
+                var historicDayTempmax = Math.round(aDayRange[index].tempmax);
+                var historicDayTempmin = Math.round(aDayRange[index].tempmin);
+                var historicDayWindspeed = Math.round(aDayRange[index].windspeed);
 
-                var divHiLo = $("<div>").attr("class", "mb-1").text(" | ");
-                var iUp = $("<i>").attr("class", "fas fa-arrow-up");
-                var sUp = $("<span>").text(" " + hi);
+                // Create elements with the data
+                var dayDiv = $("<div>").attr("id", "historic-day-" + index).attr("class", "tile is-child is-vertical p-1");
+                var dayTitle = $("<div>").attr("class", "myBold").text(dateTime.fromSeconds(historicDayEpoch).weekdayShort);
 
-                var iDn = $("<i>").attr("class", "fas fa-arrow-down");
-                var sDn = $("<span>").text(" " + lo);
+                // Create ICON element based on ICON TEXT variable from response
+                if (historicDayIcon === "rain") { var dayIcon = $("<i>").attr("class", "fas fa-cloud-showers-heavy my-2 is-size-4"); }
+                else if (historicDayIcon === "fog") { var dayIcon = $("<i>").attr("class", "fas fa-smog my-2 is-size-4"); }
+                else if (historicDayIcon === "wind") { var dayIcon = $("<i>").attr("class", "fas fa-wind my-2 is-size-4"); }
+                else if (historicDayIcon === "cloudy") { var dayIcon = $("<i>").attr("class", "fas fa-cloud my-2 is-size-4"); }
+                else if (historicDayIcon === "partly-cloudy-day") { var dayIcon = $("<i>").attr("class", "fas fa-cloud-sun my-2 is-size-4"); }
+                else if (historicDayIcon === "partly-cloudy-night") { var dayIcon = $("<i>").attr("class", "fas fa-cloud-moon my-2 is-size-4"); }
+                else if (historicDayIcon === "clear-day") { var dayIcon = $("<i>").attr("class", "fas fa-sun my-2 is-size-4"); }
+                else if (historicDayIcon === "clear-night") { var dayIcon = $("<i>").attr("class", "fas fa-moon my-2 is-size-4"); }
+                else { var dayIcon = $("<i>").attr("class", "fas fa-question my-2 is-size-4"); }
 
-                var iWd = $("<i>").attr("class", "fas fa-wind");
-                var sWd = $("<span>").text(" " + wind + " MPH");
+                var dayHighDiv = $("<div>").text("Hi: " + historicDayTempmax + "°F");
+                var dayLowDiv = $("<div>").text("Lo: " + historicDayTempmin + "°F");
+                var dayIconText = $("<div>").text(historicDayIcon);
 
-                // Append all the things
-                divHiLo.prepend(sUp).prepend(iUp).append(iDn).append(sDn);
-                divDay.append(divDate, iFACond, divHiLo, iWd, sWd);
+                // Append all elements to daydiv then to tile div
+                dayDiv.append(dayTitle, dayIcon, dayHighDiv, dayLowDiv)
+                $("#historic-week-div").append(dayDiv);
 
-                $("#weather-forecast").append(divDay);
+            });
 
 
-            }
-        });
+        }); //[TESTING] Comment this line for testing
     }
 
-    // Historic Data
-    function displayHistoricWeather() {
-        // Define the date ranges to use in query and create correct syntax string for query
-        var oneYearAgo = currentDate.minus({ year: 1 })
-        var oneYearAgoFormatted = oneYearAgo.c.year + "-" + oneYearAgo.c.month + "-" + oneYearAgo.c.day;
 
-        // a year ago, 5 days 
-        var oneYearAgoWeek = currentDate.minus({ year: 1 }).plus({ days: 6 });
-        var oneYearAgoWeekFormatted = oneYearAgoWeek.c.year + "-" + oneYearAgoWeek.c.month + "-" + oneYearAgoWeek.c.day;
+    function getHistoricCurrentMonth(month, key, start, end) {
+        var queryURL = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/" + location + "/" + start + "/" + end + "?unitGroup=us&key=" + key + "&include=obs"
+        // Grab Data from JSON - Leave this line commented
 
-        // a year ago, start date of current month
-        var oneYearAgoMonthStart = currentDate.minus({ year: 1 }).startOf('month')
-        var oneYearAgoMonthStartFormatted = oneYearAgoMonthStart.c.year + "-" + oneYearAgoMonthStart.c.month + "-" + oneYearAgoMonthStart.c.day;
-        // a year ago, end date of current month
-        var oneYearAgoMonthEnd = currentDate.minus({ year: 1 }).endOf('month');
-        var oneYearAgoMonthEndFormatted = oneYearAgoMonthEnd.c.year + "-" + oneYearAgoMonthEnd.c.month + "-" + oneYearAgoMonthEnd.c.day;
+        // var response = JSON.parse(localStorage.getItem(month)); [TESTING] Uncomment for testing
 
-        // a year ago, start date of next  month
-        var oneYearAgoTwoMonthsStart = currentDate.minus({ year: 1 }).plus({ month: 1 }).startOf('month');
-        var oneYearAgoTwoMonthsStartFormatted = oneYearAgoTwoMonthsStart.c.year + "-" + oneYearAgoTwoMonthsStart.c.month + "-" + oneYearAgoTwoMonthsStart.c.day;
-        // a year ago, end date of next  month
-        var oneYearAgoTwoMonthsEnd = currentDate.minus({ year: 1 }).plus({ month: 1 }).endOf('month');
-        var oneYearAgoTwoMonthsEndFormatted = oneYearAgoTwoMonthsEnd.c.year + "-" + oneYearAgoTwoMonthsEnd.c.month + "-" + oneYearAgoTwoMonthsEnd.c.day;
+        // [TESTING] Comment .AJAX -> .THEN for testing
+        $.ajax({
+            url: queryURL,
+            method: 'GET',
+        }).then(function (response) {
 
-        // a year ago, start date of next next month
-        var oneYearAgoThreeMonthsStart = currentDate.minus({ year: 1 }).plus({ month: 2 }).startOf('month');
-        var oneYearAgoThreeMonthsStartFormatted = oneYearAgoThreeMonthsStart.c.year + "-" + oneYearAgoThreeMonthsStart.c.month + "-" + oneYearAgoThreeMonthsStart.c.day;
-        // a year ago, end date of next next month
-        var oneYearAgoThreeMonthsEnd = currentDate.minus({ year: 1 }).plus({ month: 2 }).endOf('month');
-        var oneYearAgoThreeMonthsEndFormatted = oneYearAgoThreeMonthsEnd.c.year + "-" + oneYearAgoThreeMonthsEnd.c.month + "-" + oneYearAgoThreeMonthsEnd.c.day;
+            // localStorage.setItem(month, JSON.stringify(response)); // [TESTING] Uncomment for testing
 
-        getHistoricWeek("Q5Z5S9QT8FD8UJKCGYBURUXX8");
-        getHistoricCurrentMonth("current", "347KV25P3E7B8XKZMTG2ETSNJ", oneYearAgoMonthStartFormatted, oneYearAgoMonthEndFormatted);
-        getHistoricCurrentMonth("next", "EZAX7WB9Q7WQZZ6582Q64AVZH", oneYearAgoTwoMonthsStartFormatted, oneYearAgoTwoMonthsEndFormatted);
-        getHistoricCurrentMonth("nextnext", "G5RN7UPN529E5629TUL8M9DBW", oneYearAgoThreeMonthsStartFormatted, oneYearAgoThreeMonthsEndFormatted);
+            // Array data / Outer Loop variables
+            var aDayRange = response.days
 
-        // Returns JSON object of a year ago, 1 week. 
-        function getHistoricWeek(key) {
-            // Empty the div to make room for JS created HTML
-            $("#historic-week-div").empty();
+            // Declare Dynamic Variable
+            var totalHi = 0;
+            var totalLo = 0;
+            var aCond = [];
+            var aConditionsConcat = [];
+            var aConditionsUsed = [];
+            var Obj = {};
 
-            var queryURL = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/" + location + "/" + oneYearAgoFormatted + "/" + oneYearAgoWeekFormatted + "?unitGroup=us&key=" + key + "&include=obs"
-            // var response = JSON.parse(localStorage.getItem("historic-week")) // [TESTING] Uncoming this line for testing 
+            // Loop thru each Historic Week day...
+            // Build the strings USED & CONCAT string
+            $.each(aDayRange, function (index, item) {
+                totalHi = totalHi + parseInt(item.tempmax);
+                totalLo = totalLo + parseInt(item.tempmin);
 
-            $.ajax({
-                url: queryURL,
-                method: 'GET',
-            }).then(function (response) {
-                // localStorage.setItem('historic-week', JSON.stringify(response)); // [TESTING] Uncomment this line for testing
-
-                // City/state
-                var address = response.resolvedAddress
-
-                // Array data
-                var aDayRange = response.days
-
-                // Loop thru each Historic Week day...
-                $.each(aDayRange, function (index, item) {
-
-                    var historicDay = aDayRange[index].datetime;
-                    var historicDayEpoch = aDayRange[index].datetimeEpoch;
-                    var historicDayConditions = aDayRange[index].conditions;
-                    var historicDayHumidity = aDayRange[index].humidity;
-                    var historicDayIcon = aDayRange[index].icon;
-                    var historicDayPrecip = aDayRange[index].precip;
-                    var historicDaySnow = aDayRange[index].snow;
-                    var historicDayTempmax = Math.round(aDayRange[index].tempmax);
-                    var historicDayTempmin = Math.round(aDayRange[index].tempmin);
-                    var historicDayWindspeed = Math.round(aDayRange[index].windspeed);
-
-                    // Create elements with the data
-                    var dayDiv = $("<div>").attr("id", "historic-day-" + index).attr("class", "tile is-child is-vertical p-1");
-                    var dayTitle = $("<div>").attr("class", "myBold").text(dateTime.fromSeconds(historicDayEpoch).weekdayShort);
-
-                    // Create ICON element based on ICON TEXT variable from response
-                    if (historicDayIcon === "rain") { var dayIcon = $("<i>").attr("class", "fas fa-cloud-showers-heavy my-2 is-size-4"); }
-                    else if (historicDayIcon === "fog") { var dayIcon = $("<i>").attr("class", "fas fa-smog my-2 is-size-4"); }
-                    else if (historicDayIcon === "wind") { var dayIcon = $("<i>").attr("class", "fas fa-wind my-2 is-size-4"); }
-                    else if (historicDayIcon === "cloudy") { var dayIcon = $("<i>").attr("class", "fas fa-cloud my-2 is-size-4"); }
-                    else if (historicDayIcon === "partly-cloudy-day") { var dayIcon = $("<i>").attr("class", "fas fa-cloud-sun my-2 is-size-4"); }
-                    else if (historicDayIcon === "partly-cloudy-night") { var dayIcon = $("<i>").attr("class", "fas fa-cloud-moon my-2 is-size-4"); }
-                    else if (historicDayIcon === "clear-day") { var dayIcon = $("<i>").attr("class", "fas fa-sun my-2 is-size-4"); }
-                    else if (historicDayIcon === "clear-night") { var dayIcon = $("<i>").attr("class", "fas fa-moon my-2 is-size-4"); }
-                    else { var dayIcon = $("<i>").attr("class", "fas fa-question my-2 is-size-4"); }
-
-                    var dayHighDiv = $("<div>").text("Hi: " + historicDayTempmax + "°F");
-                    var dayLowDiv = $("<div>").text("Lo: " + historicDayTempmin + "°F");
-                    var dayIconText = $("<div>").text(historicDayIcon);
-
-                    // Append all elements to daydiv then to tile div
-                    dayDiv.append(dayTitle, dayIcon, dayHighDiv, dayLowDiv)
-                    $("#historic-week-div").append(dayDiv);
-
-                });
-
-
-            }); //[TESTING] Comment this line for testing
-        }
-
-
-        function getHistoricCurrentMonth(month, key, start, end) {
-            var queryURL = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/" + location + "/" + start + "/" + end + "?unitGroup=us&key=" + key + "&include=obs"
-            // Grab Data from JSON - Leave this line commented
-
-            // var response = JSON.parse(localStorage.getItem(month)); [TESTING] Uncomment for testing
-
-            // [TESTING] Comment .AJAX -> .THEN for testing
-            $.ajax({
-                url: queryURL,
-                method: 'GET',
-            }).then(function (response) {
-
-                // localStorage.setItem(month, JSON.stringify(response)); // [TESTING] Uncomment for testing
-
-                // Array data / Outer Loop variables
-                var aDayRange = response.days
-
-                // Declare Dynamic Variable
-                var totalHi = 0;
-                var totalLo = 0;
-                var aCond = [];
-                var aConditionsConcat = [];
-                var aConditionsUsed = [];
-                var Obj = {};
-
-                // Loop thru each Historic Week day...
-                // Build the strings USED & CONCAT string
-                $.each(aDayRange, function (index, item) {
-                    totalHi = totalHi + parseInt(item.tempmax);
-                    totalLo = totalLo + parseInt(item.tempmin);
-
-                    // Get all current conditions, tally them up
-                    var aCurrentConditions = aDayRange[index].conditions.split(",");
-                    // Build Used String
-                    for (let i = 0; i < aCurrentConditions.length; i++) {
-                        var currentCondition = (aCurrentConditions[i].trim(" ")).toLowerCase();
-                        if (aConditionsUsed.indexOf(currentCondition) === -1) {
-                            aConditionsUsed.push(currentCondition);
-                        }
-
-                        // Build Concat String (for latter count)
-                        aConditionsConcat.push(currentCondition);
+                // Get all current conditions, tally them up
+                var aCurrentConditions = aDayRange[index].conditions.split(",");
+                // Build Used String
+                for (let i = 0; i < aCurrentConditions.length; i++) {
+                    var currentCondition = (aCurrentConditions[i].trim(" ")).toLowerCase();
+                    if (aConditionsUsed.indexOf(currentCondition) === -1) {
+                        aConditionsUsed.push(currentCondition);
                     }
-                });
 
-                // Grab file concat String
-                let sFinalConcat = aConditionsConcat.join("");
-
-                // Get condtion tallies
-                // Loop thru used array, .match to finalstring, write to Obj property & value
-                for (let i = 0; i < aConditionsUsed.length; i++) {
-                    var re = new RegExp(aConditionsUsed[i], "g");
-                    Obj[aConditionsUsed[i]] = sFinalConcat.match(re).length;
+                    // Build Concat String (for latter count)
+                    aConditionsConcat.push(currentCondition);
                 }
+            });
+
+            // Grab file concat String
+            let sFinalConcat = aConditionsConcat.join("");
+
+            // Get condtion tallies
+            // Loop thru used array, .match to finalstring, write to Obj property & value
+            for (let i = 0; i < aConditionsUsed.length; i++) {
+                var re = new RegExp(aConditionsUsed[i], "g");
+                Obj[aConditionsUsed[i]] = sFinalConcat.match(re).length;
+            }
 
 
-                // Push object into array and sort descending to grab first 
-                var sortable = [];
-                for (var condition in Obj) {
-                    sortable.push([condition, Obj[condition]]);
-                }
-                sortable.sort(function (a, b) {
-                    return b[1] - a[1];
-                });
+            // Push object into array and sort descending to grab first 
+            var sortable = [];
+            for (var condition in Obj) {
+                sortable.push([condition, Obj[condition]]);
+            }
+            sortable.sort(function (a, b) {
+                return b[1] - a[1];
+            });
 
 
-                // Final Values to display:
-                var mostlyCondition = sortable[0][0];
-                var avgHi = Math.round((totalHi / aDayRange.length));
-                var avgLo = Math.round((totalLo / aDayRange.length));
+            // Final Values to display:
+            var mostlyCondition = sortable[0][0];
+            var avgHi = Math.round((totalHi / aDayRange.length));
+            var avgLo = Math.round((totalLo / aDayRange.length));
 
-                // Clear previous Month Elements:
-                $("#" + month).empty();
+            // Clear previous Month Elements:
+            $("#" + month).empty();
 
-                // Create elements
-                if (month === "current") {
-                    var hcmTitleDiv = $("<div>").attr("class", "is-size-6 myBold").text(oneYearAgo.monthLong);
-                }
-                else if (month === "next") { var hcmTitleDiv = $("<div>").attr("class", "is-size-6 myBold").text(oneYearAgoTwoMonthsStart.monthLong); }
-                else if (month === "nextnext") { var hcmTitleDiv = $("<div>").attr("class", "is-size-6 myBold").text(oneYearAgoThreeMonthsStart.monthLong); }
-                var mostlyCondDiv = $("<div>").text("Mostly " + mostlyCondition);
-                var avgHiDiv = $("<div>").text("Hi average - " + avgHi);
-                var avgLoDiv = $("<div>").text("Lo average - " + avgLo);
+            // Create elements
+            if (month === "current") {
+                var hcmTitleDiv = $("<div>").attr("class", "is-size-6 myBold").text(oneYearAgo.monthLong);
+            }
+            else if (month === "next") { var hcmTitleDiv = $("<div>").attr("class", "is-size-6 myBold").text(oneYearAgoTwoMonthsStart.monthLong); }
+            else if (month === "nextnext") { var hcmTitleDiv = $("<div>").attr("class", "is-size-6 myBold").text(oneYearAgoThreeMonthsStart.monthLong); }
+            var mostlyCondDiv = $("<div>").text("Mostly " + mostlyCondition);
+            var avgHiDiv = $("<div>").text("Hi average - " + avgHi);
+            var avgLoDiv = $("<div>").text("Lo average - " + avgLo);
 
-                // Append the above elements
-                $("#" + month).append(hcmTitleDiv, mostlyCondDiv, avgHiDiv, avgLoDiv)
-
-
-            }); // Uncomment this for prod
-        }
+            // Append the above elements
+            $("#" + month).append(hcmTitleDiv, mostlyCondDiv, avgHiDiv, avgLoDiv)
 
 
+        }); // Uncomment this for prod
     }
 
 
+}
 
-};
+
+
+
 
 // Get Local Events Function Using Trip Advisor
 function displayLocalEvents(x, y) {
