@@ -93,7 +93,7 @@ $(document).ready(function () {
                 // Run Functions with City Info from GEO City
                 displayFoodDataRated(latitude, longitude);
                 displayFoodDataSortedPriceOrder(latitude, longitude);
-                displayWeather(city);
+                // displayWeather(city);
                 displayLocalEvents("music", city);
                 displayLocalEvents("sport", city);
             } else {
@@ -744,6 +744,36 @@ $(document).ready(function () {
         return false;
     }
 
+    function displayFoodPins() {
+        console.log("myPinClicked");
+        var newPin = $(".myPin").last().clone();
+        if ($(".myPin .pinName").first().text().trim() == "Name of Pin") {
+            $(".myPin").first().remove();
+        }
+        console.log(newPin);
+        // newPin.removeClass("display-none", "myPin");
+        $(".clear").removeClass("display-none");
+        newPin.addClass("foodPin");
+        $(".clear").before(newPin);
+        $(".pinName").last().text(resName);
+        $(".pinType").last().text("Food");
+        $(".foodPin .textarea").last().val("Address: " + resAddress + " Phone Numbers: " + resPhoneNumbers);
+    }
+
+    function displayFoodPinsTab2() {
+        var newPin = $(".myPin").last().clone();
+        if ($(".myPin .pinName").first().text().trim() == "Name of Pin") {
+            $(".myPin").first().remove();
+        }
+        // newPin.removeClass("display-none myPin");
+        // newPin.appendTo(".pinArea");
+        newPin.addClass("foodPin");
+        $(".clear").removeClass("display-none");
+        $(".clear").before(newPin);
+        $(".pinName").last().text(resNameTab2);
+        $(".pinType").last().text("Food");
+        $(".foodPin .textarea").last().val("Address: " + resAddressTab2 + " Phone Numbers: " + resPhoneNumbersTab2);
+    }
 
 
     // Event listener
@@ -751,5 +781,6 @@ $(document).ready(function () {
     $("#searchedCityButtonWelcome").click(searchButtonWelcomeClicked);
     $("#tab-1").on("click", ratingSortedDataDisplay);
     $("#tab-2").on("click", priceSortedDataDisplay);
-
+    $(".food-pin").on("click", displayFoodPins);
+    $(".food-pin-tab2").on("click", displayFoodPinsTab2);
 });
