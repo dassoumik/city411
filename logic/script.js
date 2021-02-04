@@ -277,7 +277,7 @@ $(document).ready(function () {
                 url: queryURL,
                 method: "GET",
                 error: function (err) {
-                    console.log("getCurrentWeather(): AJAX Error: "+err);
+                    console.log("getCurrentWeather(): AJAX Error: " + err);
                 }
             }).then(function (response) {
                 // Grab location then call other functions based on location
@@ -295,9 +295,11 @@ $(document).ready(function () {
                 var tempLo = Math.round(response.main.temp_min);
                 var currentHumidity = response.main.humidity;
                 var currentWindSpeed = Math.round(response.wind.speed);
+                
                 var descript = response.weather[0].description;
-
                 var iconId = response.weather[0].icon;
+
+                console.log(descript+" "+iconId);
                 var fontAwesomeId = getWeatherIcon(iconId, descript);
 
                 // Update elements on page
@@ -310,7 +312,6 @@ $(document).ready(function () {
         }
         // display Forecast
         function displayForecastWeather(x, y) {
-            // Example URL: api.openweathermap.org/data/2.5/forecast?q={city name}&appid={API key}
             var units = "&units=imperial"
             var queryURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + x + "&lon=" + y + "&exclude=current,minutely,hourly,alerts" + units + "&appid=653447e5538dcc45b8534eb1e5c601c3";
 
@@ -630,7 +631,7 @@ $(document).ready(function () {
             }
 
             // Snow
-            if (id.match(/50/)) {
+            if (id.match(/13/)) {
                 return "fas fa-snowflake";
             }
 
