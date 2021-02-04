@@ -79,10 +79,11 @@ $(document).ready(function () {
 
                 // Display City & State
                 $("#currentCityName").text(city + ", " + state);
-                // Grab lat/lon coords of search
+                colorFavoriteButton();
 
-                // Run Functions with City Info from GEO City
+                // Grab lat/lon coords of search
                 displayFoodDataRated(latitude, longitude);
+                // Run Functions with City Info from GEO City
                 // displayFoodDataByCost(latitude, longitude);
                 displayWeather(city);
                 displayLocalEvents("music", city);
@@ -577,15 +578,25 @@ $(document).ready(function () {
     // Event listener
     $("#searchButton").click(searchButtonClicked);
     $("#searchedCityButtonWelcome").click(searchButtonWelcomeClicked);
-    $("#favorite-button").click(saveFavorites);
+    $("#favorite-button").click(saveFavoritesClicked);
 
-    function colorFavoriteButton(e) {
-        e.preventDefault();
+    // Set the color of the Favorites button based on local storage
+    function colorFavoriteButton() {
         // Grab the text from current City Div
         var city = $("#currentCityName").text();
-    }
+        if (aFavorites.indexOf(city) !== -1) {
+            console.log("City EXISTS iN ARRAY");
+            $("#favorite-button").addClass("is-info");
+            $("#favorite-button").removeClass("is-light");
 
+        } else {
+            $("#favorite-button").addClass("is-light");
+            $("#favorite-button").removeClass("is-info");
+        }
+    }
+    // Display local storage in favorites tab
     function displayFavorites() {
+        console.log("Entered displayFavorites()");
         var listFavorites = $("#favorites-list");
         // Empty contents to rebuild list
         listFavorites.empty();
@@ -609,8 +620,8 @@ $(document).ready(function () {
             console.log("No storage");
         }
     }
-
-    function saveFavorites(e) {
+    // Save/Remove from local storage
+    function saveFavoritesClicked(e) {
         e.preventDefault();
         // Grab the text from current City Div
         var city = $("#currentCityName").text();
@@ -624,10 +635,14 @@ $(document).ready(function () {
 
                 aFavorites.push(city);
                 localStorage.setItem("favorites", JSON.stringify(aFavorites));
+            } else {
+                console.log("RAAR");
+                aFavorites = aFavorites.filter(item => item !== city)
+                localStorage.setItem("favorites", JSON.stringify(aFavorites));
+                console.log(aFavorites);
             }
-        } else {
-            console.log("RAAR");
         }
         displayFavorites();
+        colorFavoriteButton();
     }
 });
