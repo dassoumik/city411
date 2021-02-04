@@ -574,5 +574,37 @@ $(document).ready(function () {
     // Event listener
     $("#searchButton").click(searchButtonClicked);
     $("#searchedCityButtonWelcome").click(searchButtonWelcomeClicked);
+    $("#favorite-button").click(saveFavorites);
+
+
+    var aFavorites = [];
+    function displayFavorites() {
+        var listFavorites = $("#favorites-list");
+
+    }
+
+    function saveFavorites(e) {
+        e.preventDefault();
+        var city = $("#currentCityName").text();
+        // If a city has been searched then save.. else do not
+        if (city !== "") {
+
+            // Save to local storage
+            if (aFavorites.indexOf(city) === -1) {
+                // Set favorite to Array
+                aFavorites.push(city);
+                localStorage.setItem("favorites", JSON.stringify(aFavorites));
+            }
+
+            displayFavorites();
+
+
+
+        } else {
+            console.log("RAAR");
+        }
+
+    }
+
 
 });
