@@ -207,10 +207,8 @@ $(document).ready(function () {
                 var currentWindSpeed = Math.round(response.wind.speed);
                 var descript = response.weather[0].description;
 
-
                 var iconId = response.weather[0].icon;
                 var fontAwesomeId = getWeatherIcon(iconId, descript);
-
 
                 // Update elements on page
                 $("#current-icon").attr("class", fontAwesomeId + " mt-2");
@@ -255,8 +253,6 @@ $(document).ready(function () {
                     var divDay = $("<div>").attr("class", "tile is-child is-vertical p-1")
                     var divDate = $("<div>").attr("class", "myBold").text(dayShort);
 
-
-
                     var divHiLo = $("<div>").attr("class", "mb-1").text(" | ");
                     var iUp = $("<i>").attr("class", "fas fa-arrow-up");
                     var sUp = $("<span>").text(" " + hi);
@@ -272,8 +268,6 @@ $(document).ready(function () {
                     divDay.append(divDate, iFACond, divHiLo, iWd, sWd);
 
                     $("#weather-forecast").append(divDay);
-
-
                 }
             });
         }
