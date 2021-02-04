@@ -351,35 +351,71 @@
             </div>
 
             <!--(TILE LEVEL 3) FOOD & ENTERTAINMENT CONTAINER TILE-->
-            <div class="tile is-parent is-horizontal px-0">
+            <div class="tile is-parent is-horizontal m-0 px-0">
 
                 <!--(TILE LEVEL 4) FOOD TILE-->
-                <div class="tile is-parent is-vertical mb-0 px-1 has-text-centered food">
+                <div class="tile is-parent is-vertical m-0 has-text-centered food">
                     <!--Food Header-->
-                    <div class="has-text-white is-size-4 mb-2 myBold">Food</div>
+                    <div class="has-text-white is-size-4 m-0 myBold">Food</div>
 
                     <!--Food Image and Description-->
-                    <div class="tile is-child  is-vertical myPrimaryBackground has-text-white p-1 py-3 card-select">
-                        <!-- Restaurant Name -->
-                        <div class="myBold"><span class="myRegular caption-name">Food Type</span></div>
-                        <!--Image-->
-                        <img class="food-image" src="https://via.placeholder.com/200" alt="Placeholder image"
-                            class="mb-2">
+                    <div class="tile is-child  is-vertical  has-text-white pt-2 border-0 card-select tabs-with-content">
+                        <div class="tabs is-media tile is-child notification myPrimaryBackground border-0 is-vertical m-0 p-3 py-3">
+                            <div class="container">
+                                <ul>
+                                   <li id="active-type-1" class="is-active">
+                                    <a style="text-decoration: none;">
+                                        <span id="tab-1" class="has-text-white">Top Rated</span>
+                                    </a>
+                        
+                                   </li>
+                                   <li id="active-type-2">
+                                    <a style="text-decoration: none;">
+                                      <span id="tab-2" class="has-text-white">Sorted on Price</span>
+                                    </a>
+                                   </li>
+                                </ul>  
+                            <div id="rated" class="tile is-child card-select pl-3 backgroundInherit notification is-vertical text-black p-1">
 
-                        <!--Description-->
-                        <div class="myBold"><span class="myRegular caption-cuisines">Food Type</span></div>
-                        <div class="myBold"><span class="myRegular caption-avg-cost">Avg Cost</span></div>
-                        <div class="myBold"><span class="myRegular caption-locality">Locality</span></div>
+                                <!-- Restaurant Name -->
+                                <div class="myBold"><span class="myRegular caption-name">Food Type</span></div>
+                                <!--Image-->
+                                <img class="food-image" src="https://via.placeholder.com/200" alt="Placeholder image"
+                                    class="mb-2">
 
-                        <!--Pin Button-->
-                        <button class="button is-small is-light has-text-right mt-2">
-                            <span class="has-text-grey is-rounded"><i class="fas fa-thumbtack"></i></span>
-                        </button>
+                                <!--Description-->
+                                <div class="myBold"><span class="myRegular caption-cuisines">Food Type</span></div>
+                                <div class="myBold"><span class="myRegular caption-avg-cost">Avg Cost</span></div>
+                                <div class="myBold"><span class="myRegular caption-locality">Locality</span></div>
 
+                                <!--Pin Button-->
+                                <button class="button is-small is-light has-text-right mt-2">
+                                    <span class="has-text-grey is-rounded"><i class="fas fa-thumbtack"></i></span>
+                                </button>
+
+                            </div>
+                            <div id="price" class="tile is-child card-select-tab2 pl-3 backgroundInherit display-none notification is-vertical text-black p-1">
+
+                                <!-- Restaurant Name -->
+                                <div class="myBold"><span class="myRegular caption-name">Food Type</span></div>
+                                <!--Image-->
+                                <img class="food-image" src="https://via.placeholder.com/200" alt="Placeholder image" class="mb-2">
+
+                                <!--Description-->
+                                <div class="myBold"><span class="myRegular caption-cuisines">Food Type</span></div>
+                                <div class="myBold"><span class="myRegular caption-avg-cost">Avg Cost</span></div>
+                                <div class="myBold"><span class="myRegular caption-locality">Locality</span></div>
+
+                                <!--Pin Button-->
+                                <button class="button is-small is-light has-text-right food-pin-tab2 mt-2"> 
+                                    <span class = "has-text-grey is-rounded"><i class="fas fa-thumbtack"></i></span>
+                                </button>
+                            </div>                            
+                        </div>
                     </div>
-
                 </div>
-
+            </div>
+        <!-- </div>     -->
                 <!--(TILE LEVEL 4) ENTERTAINMENT-->
                 <div class="tile is-parent is-vertical">
                     <div class="has-text-white is-size-4 mb-2 myBold has-text-centered">Entertainment</div>
@@ -447,7 +483,7 @@
 
                                 <a class="myRegular">Sunova at The Music Room</a>
                             </div>
-                        </div>
+                      </div>
                     </div>
                 </div>
             </div>
