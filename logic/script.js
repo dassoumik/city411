@@ -89,13 +89,14 @@ $(document).ready(function () {
 
             // If the search returns city data... then call the API's else alert the user
             if (response.data.length > 0) {
-                // Show/Hide Appropriate containers
-                $("#container-welcome").attr("class", "hero is-fullheight-with-navbar is-hidden")
-                $("#container-tiles").attr("class", "tile is-ancestor mt-2 mx-1")
+                // Show/Hide Appropriate containers/elements upon search
+                $("#container-welcome").attr("class", "hero is-fullheight-with-navbar is-hidden");
+                $("#container-tiles").attr("class", "tile is-ancestor mt-2 mx-1");
+                $(".fa-chevron-right").removeClass("is-hidden");
 
                 // Set City Info
-                city = response.data[0].city
-                state = response.data[0].regionCode
+                city = response.data[0].city;
+                state = response.data[0].regionCode;
                 latitude = response.data[0].latitude;
                 longitude = response.data[0].longitude;
 
@@ -295,7 +296,7 @@ $(document).ready(function () {
                 var tempLo = Math.round(response.main.temp_min);
                 var currentHumidity = response.main.humidity;
                 var currentWindSpeed = Math.round(response.wind.speed);
-                
+
                 var descript = response.weather[0].description;
                 var iconId = response.weather[0].icon;
                 var fontAwesomeId = getWeatherIcon(iconId, descript);
@@ -738,13 +739,42 @@ $(document).ready(function () {
         return false;
     }
 
-    // Event listeners
+    function displayFoodPins() {
+        var newPin = $(".myPin").last().clone();
+        if ($(".myPin .pinName").first().text().trim() == "Name of Pin") {
+            $(".myPin").first().remove();
+        }
+        $(".clear").removeClass("display-none");
+        newPin.addClass("foodPin");
+        $(".clear").before(newPin);
+        $(".pinName").last().text(resName);
+        $(".pinType").last().text("Food");
+        $(".foodPin .textarea").last().val("Address: " + resAddress + " Phone Numbers: " + resPhoneNumbers);
+    }
+
+    function displayFoodPinsTab2() {
+        var newPin = $(".myPin").last().clone();
+        if ($(".myPin .pinName").first().text().trim() == "Name of Pin") {
+            $(".myPin").first().remove();
+        }
+        newPin.addClass("foodPin");
+        $(".clear").removeClass("display-none");
+        $(".clear").before(newPin);
+        $(".pinName").last().text(resNameTab2);
+        $(".pinType").last().text("Food");
+        $(".foodPin .textarea").last().val("Address: " + resAddressTab2 + " Phone Numbers: " + resPhoneNumbersTab2);
+    }
+
+
+    // Event listener
     $("#searchButton").click(searchButtonClicked);
     $("#searchButtonWelcome").click(searchButtonWelcomeClicked);
     $("#favorite-button").click(saveFavoritesClicked);
     $(".btnFav").click(favButtonClicked);
     $("#tab-1").on("click", ratingSortedDataDisplay);
     $("#tab-2").on("click", priceSortedDataDisplay);
+    $(".food-pin").on("click", displayFoodPins);
+    $(".food-pin-tab2").on("click", displayFoodPinsTab2);
 
     // Set the color of the Favorites button based on local storage
     function colorFavoriteButton() {

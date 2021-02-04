@@ -46,7 +46,7 @@
                 <div class="navbar-item">
                     <!--TOGGLE-VISABILITY-->
                     <div class="has-text-white city411TitleFont is-size-4 has-text-weight-light">
-                        <i class="fas fa-chevron-right mr-3"></i><span id="currentCityName"></span>
+                        <i class="fas fa-chevron-right mr-3 is-hidden"></i><span id="currentCityName"></span>
                     </div>
                 </div>
             </div>
@@ -124,24 +124,24 @@
                 <div class="has-text-white is-size-4 mb-2 myBold">Pins</div>
 
                 <!--(TILE LEVEL 4) Saved Pins-->
-                <div class="tile is-parent is-vertical p-1 myPinBackground mobilePaddingVertical mb-5">
+                <div class="tile is-parent is-vertical p-1 myPinBackground mobilePaddingVertical pinArea mb-5">
                     
                     <!--Pin Div Placeholder-->
-                    <div class="box p-1 box mx-1 my-1 myPrimaryBackground2 has-text-white mobilePadding">
-                        <div class="myBold">
+                    <div class="box p-1 box mx-1 my-1 myPrimaryBackground2 has-text-white mobilePadding myPin">
+                        <div class="myBold pinName">
                             Name of Pin
                         </div>
-                        <div class="mb-2">
+                        <div class="mb-2 pinType">
                             Type (Event, Food)
                         </div>
-                        <textarea class="textarea" placeholder="User Notes"></textarea>
-                        <button class="button is-small is-rounded mt-1 p-2">
+                        <textarea class="textarea" placeholder="Notes Area"></textarea>
+                        <button class="button is-small is-rounded mt-1 p-2 notes-trash">
                             <i class="fas fa-trash"></i>
                         </button>
                     </div>
 
                     <!--Clear All Pins Button-->
-                    <button class="button is-small is-rounded is-danger m-3">Clear All</button>
+                    <button class="button is-small is-rounded is-danger m-3 clear">Clear All</button>
 
                 </div>
             </div>
@@ -389,7 +389,7 @@
                                 <div class="myBold"><span class="myRegular caption-locality">Locality</span></div>
 
                                 <!--Pin Button-->
-                                <button class="button is-small is-light has-text-right mt-2">
+                                <button class="button is-small is-light has-text-right mt-2 food-pin">
                                     <span class="has-text-grey is-rounded"><i class="fas fa-thumbtack"></i></span>
                                 </button>
 
