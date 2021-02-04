@@ -30,7 +30,7 @@
 <body class="myBackgroundImage">
 
     <!--NAVBAR-->
-    <nav class="navbar is-dark mb-0" role="navigation" aria-label="main navigation">
+    <nav id="container-navbar" class="navbar is-dark mb-0" role="navigation" aria-label="main navigation">
 
         <!--Brand in Navbar-->
         <div class="navbar-brand">
@@ -45,8 +45,9 @@
                 <!--Current City Display-->
                 <div class="navbar-item">
                     <!--TOGGLE-VISABILITY-->
-                    <div class="has-text-white city411TitleFont is-size-4 has-text-weight-light"><i
-                            class="fas fa-chevron-right mr-3"></i><span id="currentCityName"></span></div>
+                    <div class="has-text-white city411TitleFont is-size-4 has-text-weight-light">
+                        <i class="fas fa-chevron-right mr-3"></i><span id="currentCityName"></span>
+                    </div>
                 </div>
             </div>
 
@@ -97,29 +98,23 @@
     </nav>
 
     <!--FIRST TIME ARRIVAL MESSAGE-->
-    <div class="hero is-fullheight-with-navbar is-hidden">
+    <div id="container-welcome" class="hero is-fullheight-with-navbar">
         <!--TOGGLE-VISABILITY-->
         <div class="hero-body myHeroImageWelcome">
-            <div class="container">
-                <div class="card m-5 has-text-centered myWelcomeCardBackground">
-                    <header class="card-header">
-                        <p class="card-header-title is-centered is-size-4">
-                            Welcome to City 411!
-                        </p>
-                    </header>
-                    <div class="card-content">
-                        <div class="content is-size-5">
-                            Going somewhere? Lets get the 411. Search a city to get started.
-                        </div>
-                    </div>
-                </div>
+            <div class="container myWelcomeBorderBackground">
+                <form class="control has-icons-right m-5 has-text-centered">
+                    <input id="searchedCityInputWelcome" class=" myBold input is-large is-size-4 has-text-centered has-text-grey myWelcomeInputBackground" type="text" placeholder="Search A City to Start">
+                    <button id="searchButtonWelcome" class="icon is-right  button is-ghost">
+                        <i class="fas fa-search has-text-link mySearchIconDashboard"></i>
+                    </button>
+                </form>
             </div>
         </div>
     </div>
 
 
     <!--(TILE LEVEL 1) MAIN TILES CONTAINER-->
-    <div class="tile is-ancestor mt-2 mx-1">
+    <div id="container-tiles" class="tile is-ancestor mt-2 mx-1 is-hidden">
 
         <!--(TILE LEVEL 2) PINS PER CITY CONTAINER-->
         <div class="tile is-parent is-vertical">
@@ -452,6 +447,7 @@
 
                                 <a class="myRegular">Sunova at The Music Room</a>
                             </div>
+                        </div>
                     </div>
                 </div>
             </div>
