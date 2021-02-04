@@ -24,6 +24,9 @@ $(document).ready(function () {
     var latitude;
     var longitude;
     var apiZomato = "af93c63cd1563820706beeacaa127e33";
+    var aFavorites = [];
+    displayFavorites();
+
 
     // Define Functons
     function searchButtonClicked(e) {
@@ -44,14 +47,23 @@ $(document).ready(function () {
     }
 
     // Search Button Welcome Screen
-    function searchButtonWelcomeClicked() {
-        // Clear search box
-        $("#searchedCityInputWelcome").val(" ");
-        searchClicked = true;
-        searchClickedReferCost = true;
+    function searchButtonWelcomeClicked(e) {
+        e.preventDefault();
+        // If input has value grab value, else do nothing
+        if ($("#searchedCityInputWelcome").val() !== "") {
+            var input = $("#searchedCityInputWelcome").val();
+            clearInterval(timeInterval);
+            searchClicked = true;
+            searchClickedReferCost = true;
 
-        // Go to data page
-        window.location.href = "./pages/city411dashboard.html";
+            // clear search box
+            $("#searchedCityInputWelcome").val("");
+
+            // Call functions here
+            callFunctions(input);
+        }
+
+
     }
 
     // Call all functions here
@@ -74,23 +86,25 @@ $(document).ready(function () {
         };
 
         $.ajax(settings).done(function (response) {
+
             // If the search returns city data... then call the API's else alert the user
             if (response.data.length > 0) {
-                // Show/Hide Appropriate containers
-                $("#container-welcome").attr("class", "hero is-fullheight-with-navbar is-hidden")
-                $("#container-tiles").attr("class", "tile is-ancestor mt-2 mx-1")
+                // Show/Hide Appropriate containers/elements upon search
+                $("#container-welcome").attr("class", "hero is-fullheight-with-navbar is-hidden");
+                $("#container-tiles").attr("class", "tile is-ancestor mt-2 mx-1");
+                $(".fa-chevron-right").removeClass("is-hidden");
 
                 // Set City Info
-                city = response.data[0].city
-                state = response.data[0].regionCode
+                city = response.data[0].city;
+                state = response.data[0].regionCode;
                 latitude = response.data[0].latitude;
                 longitude = response.data[0].longitude;
 
                 // Display City & State
                 $("#currentCityName").text(city + ", " + state);
-                // Grab lat/lon coords of search
+                colorFavoriteButton();
 
-                // Run Functions with City Info from GEO City
+                // Grab lat/lon coords of search
                 displayFoodDataRated(latitude, longitude);
                 displayFoodDataSortedPriceOrder(latitude, longitude);
                 displayWeather(city);
@@ -99,12 +113,6 @@ $(document).ready(function () {
             } else {
                 alert("City could not be found! Please try again...");
             }
-
-
-
-
-
-
         });
     }
 
@@ -130,7 +138,7 @@ $(document).ready(function () {
                 $(".food").empty();
                 $(".food").append(infoContent);
             }
-        }); //end of $.ajax call
+        });
     }
 
     // Display Rated Food Data
@@ -270,7 +278,7 @@ $(document).ready(function () {
                 url: queryURL,
                 method: "GET",
                 error: function (err) {
-                    console.log("getCurrentWeather(): AJAX Error");
+                    console.log("getCurrentWeather(): AJAX Error: " + err);
                 }
             }).then(function (response) {
                 // Grab location then call other functions based on location
@@ -288,12 +296,10 @@ $(document).ready(function () {
                 var tempLo = Math.round(response.main.temp_min);
                 var currentHumidity = response.main.humidity;
                 var currentWindSpeed = Math.round(response.wind.speed);
+
                 var descript = response.weather[0].description;
-
-
                 var iconId = response.weather[0].icon;
                 var fontAwesomeId = getWeatherIcon(iconId, descript);
-
 
                 // Update elements on page
                 $("#current-icon").attr("class", fontAwesomeId + " mt-2");
@@ -305,7 +311,6 @@ $(document).ready(function () {
         }
         // display Forecast
         function displayForecastWeather(x, y) {
-            // Example URL: api.openweathermap.org/data/2.5/forecast?q={city name}&appid={API key}
             var units = "&units=imperial"
             var queryURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + x + "&lon=" + y + "&exclude=current,minutely,hourly,alerts" + units + "&appid=653447e5538dcc45b8534eb1e5c601c3";
 
@@ -338,8 +343,6 @@ $(document).ready(function () {
                     var divDay = $("<div>").attr("class", "tile is-child is-vertical p-1")
                     var divDate = $("<div>").attr("class", "myBold").text(dayShort);
 
-
-
                     var divHiLo = $("<div>").attr("class", "mb-1").text(" | ");
                     var iUp = $("<i>").attr("class", "fas fa-arrow-up");
                     var sUp = $("<span>").text(" " + hi);
@@ -355,8 +358,6 @@ $(document).ready(function () {
                     divDay.append(divDate, iFACond, divHiLo, iWd, sWd);
 
                     $("#weather-forecast").append(divDay);
-
-
                 }
             });
         }
@@ -488,13 +489,9 @@ $(document).ready(function () {
                         // Append all elements to daydiv then to tile div
                         dayDiv.append(dayTitle, dayIcon, dayHighDiv, dayLowDiv)
                         $("#historic-week-div").append(dayDiv);
-
                     });
-
-
-                }); //[TESTING] Comment this line for testing
+                });
             }
-
 
             function getHistoricCurrentMonth(month, key, start, end) {
                 var queryURL = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/" + location + "/" + start + "/" + end + "?unitGroup=us&key=" + key + "&include=obs"
@@ -551,7 +548,6 @@ $(document).ready(function () {
                         Obj[aConditionsUsed[i]] = sFinalConcat.match(re).length;
                     }
 
-
                     // Push object into array and sort descending to grab first 
                     var sortable = [];
                     for (var condition in Obj) {
@@ -560,7 +556,6 @@ $(document).ready(function () {
                     sortable.sort(function (a, b) {
                         return b[1] - a[1];
                     });
-
 
                     // Final Values to display:
                     var mostlyCondition = sortable[0][0];
@@ -635,7 +630,7 @@ $(document).ready(function () {
             }
 
             // Snow
-            if (id.match(/50/)) {
+            if (id.match(/13/)) {
                 return "fas fa-snowflake";
             }
 
@@ -676,18 +671,17 @@ $(document).ready(function () {
 
 
                 // If there are events then do something.. else show message there are no upcoming events in the next 2 weeks
+                var eventContainer = $("#" + type + "-div");
+                $(eventContainer).empty();
+                // Setup the parent music container
+                var divTitle = $("<div>").attr("class", "myBold has-text-centered").text(type.charAt(0).toUpperCase() + type.slice(1));
+                var hr = $("<hr>").attr("class", "my-2");
+                // Append the Setup elements
+                $(eventContainer).append(divTitle, hr);
                 if (aEvents) {
 
                     var totalEvents = response.page.totalElements;
-                    var eventContainer = $("#" + type + "-div");
-                    $(eventContainer).empty();
 
-                    // Setup the parent music container
-                    var divTitle = $("<div>").attr("class", "myBold has-text-centered").text(type.charAt(0).toUpperCase() + type.slice(1));
-                    var hr = $("<hr>").attr("class", "my-2");
-
-                    // Append the Setup elements
-                    $(eventContainer).append(divTitle, hr);
 
                     // Loop thru the events > create elements > append to approprite divs
                     for (let i = 0;
@@ -713,9 +707,10 @@ $(document).ready(function () {
                         $(eventContainer).append(divEvent);
                     }
                 } else {
-                    console.log("No events listed at this time...");
+                    // No events available to list...
+                    var divEvent = $("<div>").attr("class", "myBold is-size-6 py-1").text("No available events at this time...")
+                    $(eventContainer).append(divEvent);
                 }
-
             },
             error: function (xhr, status, err) {
                 // This time, we do not end up here!
@@ -773,9 +768,78 @@ $(document).ready(function () {
 
     // Event listener
     $("#searchButton").click(searchButtonClicked);
-    $("#searchedCityButtonWelcome").click(searchButtonWelcomeClicked);
+    $("#searchButtonWelcome").click(searchButtonWelcomeClicked);
+    $("#favorite-button").click(saveFavoritesClicked);
+    $(".btnFav").click(favButtonClicked);
     $("#tab-1").on("click", ratingSortedDataDisplay);
     $("#tab-2").on("click", priceSortedDataDisplay);
     $(".food-pin").on("click", displayFoodPins);
     $(".food-pin-tab2").on("click", displayFoodPinsTab2);
+
+    // Set the color of the Favorites button based on local storage
+    function colorFavoriteButton() {
+        // Grab the text from current City Div
+        var city = $("#currentCityName").text();
+        if (aFavorites.indexOf(city) !== -1) {
+
+            $("#favorite-button").addClass("is-info");
+            $("#favorite-button").removeClass("is-light");
+
+        } else {
+            $("#favorite-button").addClass("is-light");
+            $("#favorite-button").removeClass("is-info");
+        }
+    }
+    // Display local storage in favorites tab
+    function displayFavorites() {
+
+        var listFavorites = $("#favorites-list");
+        // Empty contents to rebuild list
+        listFavorites.empty();
+
+        // If localstorage exists & has data.. do something.. else nothing..
+        if (localStorage.getItem("favorites")) {
+
+            // Handle for the list element
+            var listFavorites = $("#favorites-list");
+
+            aFavorites = JSON.parse(localStorage.getItem("favorites"));
+
+            // Loop thru the array and append
+            aFavorites.forEach(function (i) {
+                var linkCity = $("<a>").attr("class", "navbar-item btnFav").text(i)
+                listFavorites.append(linkCity);
+            });
+        }
+    }
+    // Save/Remove from local storage
+    function saveFavoritesClicked(e) {
+        e.preventDefault();
+        // Grab the text from current City Div
+        var city = $("#currentCityName").text();
+
+        // If text is not blank then proceed to favorite logic... else do not
+        if (city !== "") {
+
+            // Save to local storage
+            if (aFavorites.indexOf(city) === -1) {
+                // Set favorite to Array
+
+                aFavorites.push(city);
+                localStorage.setItem("favorites", JSON.stringify(aFavorites));
+            } else {
+
+                aFavorites = aFavorites.filter(item => item !== city)
+                localStorage.setItem("favorites", JSON.stringify(aFavorites));
+
+            }
+        }
+        displayFavorites();
+        colorFavoriteButton();
+    }
+    function favButtonClicked(e) {
+        e.preventDefault();
+        // Call the first ajax query search with the name of the favorite
+        getLatLon($(this).text().split(",")[0]);
+    }
 });
