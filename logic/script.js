@@ -15,6 +15,7 @@ $(document).ready(function () {
     var longitude;
     var apiZomato = "af93c63cd1563820706beeacaa127e33";
     var aFavorites = [];
+    displayFavorites();
 
 
     // Define Functons
@@ -578,19 +579,21 @@ $(document).ready(function () {
     $("#searchedCityButtonWelcome").click(searchButtonWelcomeClicked);
     $("#favorite-button").click(saveFavorites);
 
-
-
-
-
-    displayFavorites();
+    function colorFavoriteButton(e) {
+        e.preventDefault();
+        // Grab the text from current City Div
+        var city = $("#currentCityName").text();
+    }
 
     function displayFavorites() {
+        var listFavorites = $("#favorites-list");
+        // Empty contents to rebuild list
+        listFavorites.empty();
+
         // If localstorage exists & has data.. do something.. else nothing..
         if (localStorage.getItem("favorites")) {
             console.log("Has Storage");
 
-            // Empty contents to rebuild list
-            listFavorites.empty();
 
             // Handle for the list element
             var listFavorites = $("#favorites-list");
@@ -607,31 +610,24 @@ $(document).ready(function () {
         }
     }
 
-
     function saveFavorites(e) {
         e.preventDefault();
-
         // Grab the text from current City Div
         var city = $("#currentCityName").text();
 
         // If text is not blank then proceed to favorite logic... else do not
         if (city !== "") {
             console.log("City Text has a value");
-
             // Save to local storage
             if (aFavorites.indexOf(city) === -1) {
                 // Set favorite to Array
+
                 aFavorites.push(city);
                 localStorage.setItem("favorites", JSON.stringify(aFavorites));
             }
-
-            displayFavorites();
-
         } else {
             console.log("RAAR");
         }
-
+        displayFavorites();
     }
-
-
 });
