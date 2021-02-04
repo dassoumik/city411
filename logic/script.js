@@ -81,7 +81,7 @@ $(document).ready(function () {
                 // Run Functions with City Info from GEO City
                 displayFoodDataRated(latitude, longitude);
                 // displayFoodDataByCost(latitude, longitude);
-                displayWeather(city);
+                // displayWeather(city);
                 displayLocalEvents("music", city);
                 displayLocalEvents("sport", city);
             } else {

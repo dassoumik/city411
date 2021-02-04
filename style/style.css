@@ -79,6 +79,15 @@
         background-attachment: fixed;
     }
 
+    
+    .backgroundInherit {
+        background-color: inherit;
+    }
+
+    .display-none {
+        display: none;
+    }
+
     .city411WeatherCardTitles {
         font-size: 20px;
     }
@@ -92,6 +101,10 @@
         border: none; /* Remove borders */
         color: white; /* White text */
         cursor: pointer; /* Mouse pointer on hover */
+    }
+
+    .border-0 {
+        border-radius: 0;
     }
     
 
