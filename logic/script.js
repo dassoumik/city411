@@ -53,6 +53,7 @@ $(document).ready(function () {
         if ($("#searchedCityInputWelcome").val() !== "") {
             var input = $("#searchedCityInputWelcome").val();
             clearInterval(timeInterval);
+            clearInterval(timeIntervalCost);
             searchClicked = true;
             searchClickedReferCost = true;
 
@@ -151,10 +152,10 @@ $(document).ready(function () {
             $(".card-select .caption-cuisines").text("");
             $(".card-select .caption-avg-cost").text("");
             $(".card-select .caption-locality").text("");
-            $(".card-select .food-image").attr("src", "https://via.placeholder.com/200");
+            $(".card-select .food-image").attr("src", "https://media-exp1.licdn.com/dms/image/C510BAQGX8Xa4pZ2nUg/company-logo_200_200/0/1519933770484?e=2159024400&v=beta&t=vXcZ2GLPOB_MJKfDpwVI2ZwhMyc4LZ78E2A2lS2KAgE");
         }
         if (data.restaurants[i].restaurant.thumb == "") {
-            $(".card-select .food-image").attr("src", "https://via.placeholder.com/200");
+            $(".card-select .food-image").attr("src", "https://media-exp1.licdn.com/dms/image/C510BAQGX8Xa4pZ2nUg/company-logo_200_200/0/1519933770484?e=2159024400&v=beta&t=vXcZ2GLPOB_MJKfDpwVI2ZwhMyc4LZ78E2A2lS2KAgE");
         } else {
             $(".card-select .food-image").attr("src", data.restaurants[i].restaurant.thumb);
         }
@@ -173,7 +174,7 @@ $(document).ready(function () {
                 i = i - i;
             }
             if (data.restaurants[i].restaurant.thumb == "") {
-                $(".card-select .food-image").attr("src", "https://via.placeholder.com/200");
+                $(".card-select .food-image").attr("src", "https://media-exp1.licdn.com/dms/image/C510BAQGX8Xa4pZ2nUg/company-logo_200_200/0/1519933770484?e=2159024400&v=beta&t=vXcZ2GLPOB_MJKfDpwVI2ZwhMyc4LZ78E2A2lS2KAgE");
             } else {
                 $(".card-select .food-image").attr("src", data.restaurants[i].restaurant.thumb);
             }
@@ -223,10 +224,10 @@ $(document).ready(function () {
             $(".card-select-tab2 .caption-cuisines").text("");
             $(".card-select-tab2 .caption-avg-cost").text("");
             $(".card-select-tab2 .caption-locality").text("");
-            $(".card-select-tab2 .food-image").attr("src", "https://via.placeholder.com/200");
+            $(".card-select-tab2 .food-image").attr("src", "https://media-exp1.licdn.com/dms/image/C510BAQGX8Xa4pZ2nUg/company-logo_200_200/0/1519933770484?e=2159024400&v=beta&t=vXcZ2GLPOB_MJKfDpwVI2ZwhMyc4LZ78E2A2lS2KAgE");
         }
         if (dataCost.restaurants[j].restaurant.thumb == "") {
-            $(".card-select-tab2 .food-image").attr("src", "https://via.placeholder.com/200");
+            $(".card-select-tab2 .food-image").attr("src", "https://media-exp1.licdn.com/dms/image/C510BAQGX8Xa4pZ2nUg/company-logo_200_200/0/1519933770484?e=2159024400&v=beta&t=vXcZ2GLPOB_MJKfDpwVI2ZwhMyc4LZ78E2A2lS2KAgE");
         } else {
             $(".card-select-tab2 .food-image").attr("src", dataCost.restaurants[j].restaurant.thumb);
         }
@@ -245,7 +246,7 @@ $(document).ready(function () {
                 j = j - j;
             }
             if (dataCost.restaurants[j].restaurant.thumb == "") {
-                $(".card-select-tab2 .food-image").attr("src", "https://via.placeholder.com/200");
+                $(".card-select-tab2 .food-image").attr("src", "https://media-exp1.licdn.com/dms/image/C510BAQGX8Xa4pZ2nUg/company-logo_200_200/0/1519933770484?e=2159024400&v=beta&t=vXcZ2GLPOB_MJKfDpwVI2ZwhMyc4LZ78E2A2lS2KAgE");
             } else {
                 $(".card-select-tab2 .food-image").attr("src", dataCost.restaurants[j].restaurant.thumb);
             }
@@ -765,17 +766,17 @@ $(document).ready(function () {
         $(".foodPin .textarea").last().val("Address: " + resAddressTab2 + " Phone Numbers: " + resPhoneNumbersTab2);
     }
 
-
-    // Event listener
-    $("#searchButton").click(searchButtonClicked);
-    $("#searchButtonWelcome").click(searchButtonWelcomeClicked);
-    $("#favorite-button").click(saveFavoritesClicked);
-    $(".btnFav").click(favButtonClicked);
-    $("#tab-1").on("click", ratingSortedDataDisplay);
-    $("#tab-2").on("click", priceSortedDataDisplay);
-    $(".food-pin").on("click", displayFoodPins);
-    $(".food-pin-tab2").on("click", displayFoodPinsTab2);
-
+    function deleteSelectedNotes() {
+        if ((document).querySelectorAll(".myPin").length === 1) {
+            $(".myPin").clone().prependTo(".pinArea");
+            $(this).closest("div").remove();
+            $(".pinName").last().text("Name of Pin");
+            $(".pinType").last().text("Type (Event, Food)");
+            $(".foodPin .textarea").last().val("");
+        } else {
+            $(this).closest("div").remove();
+        }
+    }
     // Set the color of the Favorites button based on local storage
     function colorFavoriteButton() {
         // Grab the text from current City Div
@@ -790,6 +791,7 @@ $(document).ready(function () {
             $("#favorite-button").removeClass("is-info");
         }
     }
+
     // Display local storage in favorites tab
     function displayFavorites() {
 
@@ -842,4 +844,16 @@ $(document).ready(function () {
         // Call the first ajax query search with the name of the favorite
         getLatLon($(this).text().split(",")[0]);
     }
+
+    // Event listener
+    $("#searchButton").click(searchButtonClicked);
+    $("#searchButtonWelcome").click(searchButtonWelcomeClicked);
+    $("#favorite-button").click(saveFavoritesClicked);
+    $(".btnFav").click(favButtonClicked);
+    $("#tab-1").on("click", ratingSortedDataDisplay);
+    $("#tab-2").on("click", priceSortedDataDisplay);
+    $(".food-pin").on("click", displayFoodPins);
+    $(".food-pin-tab2").on("click", displayFoodPinsTab2);
+    $(document).on("click", ".notes-trash", deleteSelectedNotes);
+
 });
