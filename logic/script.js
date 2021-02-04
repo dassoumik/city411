@@ -64,7 +64,7 @@ $(document).ready(function () {
         };
 
         $.ajax(settings).done(function (response) {
-  
+
             // If the search returns city data... then call the API's else alert the user
             if (response.data.length > 0) {
                 // Show/Hide Appropriate containers
@@ -634,7 +634,7 @@ $(document).ready(function () {
 
                 aFavorites = aFavorites.filter(item => item !== city)
                 localStorage.setItem("favorites", JSON.stringify(aFavorites));
-           
+
             }
         }
         displayFavorites();
