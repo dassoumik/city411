@@ -98,7 +98,7 @@
     </nav>
 
     <!--FIRST TIME ARRIVAL MESSAGE-->
-    <div id="container-welcome" class="hero is-fullheight-with-navbar">
+    <div id="container-welcome" class="hero is-fullheight-with-navbar is-hidden">
         <!--TOGGLE-VISABILITY-->
         <div class="hero-body myHeroImageWelcome">
             <div class="container myWelcomeBorderBackground">
@@ -114,7 +114,7 @@
 
 
     <!--(TILE LEVEL 1) MAIN TILES CONTAINER-->
-    <div id="container-tiles" class="tile is-ancestor mt-2 mx-1 is-hidden">
+    <div id="container-tiles" class="tile is-ancestor mt-2 mx-1 ">
 
         <!--(TILE LEVEL 2) PINS PER CITY CONTAINER-->
         <div class="tile is-parent is-vertical">
@@ -125,24 +125,23 @@
 
                 <!--(TILE LEVEL 4) Saved Pins-->
                 <div class="tile is-parent is-vertical p-1 myPinBackground mobilePaddingVertical mb-5">
+                    
+                    <!--Pin Div Placeholder-->
                     <div class="box p-1 box mx-1 my-1 myPrimaryBackground2 has-text-white mobilePadding">
-                        <div class="myBold">Name of Pin</div>
-                        <div class="mb-2">Type (Event, Food)</div>
+                        <div class="myBold">
+                            Name of Pin
+                        </div>
+                        <div class="mb-2">
+                            Type (Event, Food)
+                        </div>
                         <textarea class="textarea" placeholder="User Notes"></textarea>
-                    </div>
-                    <div class="box p-1 box mx-1 my-1 myPrimaryBackground2 has-text-white">
-                        <div class="myBold">Name of Pin</div>
-                        <div class="mb-2">Type (Event, Food)</div>
-                        <textarea class="textarea" placeholder="User Notes"></textarea>
-                    </div>
-                    <div class="box p-1 box mx-1 my-1 myPrimaryBackground2 has-text-white">
-                        <div class="myBold">Name of Pin</div>
-                        <div class="mb-2">Type (Event, Food)</div>
-                        <textarea class="textarea" placeholder="User Notes"></textarea>
+                        <button class="button is-small is-rounded mt-1 p-2">
+                            <i class="fas fa-trash"></i>
+                        </button>
                     </div>
 
-                    <!--Clear Pins Button-->
-                    <button class="button is-danger m-3">Clear</button>
+                    <!--Clear All Pins Button-->
+                    <button class="button is-small is-rounded is-danger m-3">Clear All</button>
 
                 </div>
             </div>
