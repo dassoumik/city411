@@ -33,7 +33,7 @@ $(document).ready(function () {
             var input = $("#searchedCityInput").val();
             clearInterval(timeInterval);
             searchClicked = true;
-            searchClickedReferCost =true;
+            searchClickedReferCost = true;
 
             // clear search box
             $("#searchedCityInput").val("");
@@ -155,7 +155,7 @@ $(document).ready(function () {
         $(".card-select .caption-avg-cost").text("$ " + data.restaurants[i].restaurant.average_cost_for_two + " (2 persons)");
         $(".card-select .caption-locality").text(data.restaurants[i].restaurant.location.locality);
         resAddress = data.restaurants[i].restaurant.location.address + " zip: " + data.restaurants[i].restaurant.location.zipcode;
-        resPhoneNumbers = data.restaurants[i].restaurant.phone_numbers; 
+        resPhoneNumbers = data.restaurants[i].restaurant.phone_numbers;
         resName = data.restaurants[i].restaurant.name;
         timeInterval = setInterval(function () {
             if (i < 20) {
@@ -174,7 +174,7 @@ $(document).ready(function () {
             $(".card-select .caption-avg-cost").text("$ " + data.restaurants[i].restaurant.average_cost_for_two + " (2 persons)");
             $(".card-select .caption-locality").text(data.restaurants[i].restaurant.location.locality);
             resAddress = data.restaurants[i].restaurant.location.address + " zip: " + data.restaurants[i].restaurant.location.zipcode;
-            resPhoneNumbers = data.restaurants[i].restaurant.phone_numbers;  
+            resPhoneNumbers = data.restaurants[i].restaurant.phone_numbers;
             resName = data.restaurants[i].restaurant.name;
         }, 5000);
     }
@@ -744,6 +744,31 @@ $(document).ready(function () {
         return false;
     }
 
+    function displayFoodPins() {
+        var newPin = $(".myPin").last().clone();
+        if ($(".myPin .pinName").first().text().trim() == "Name of Pin") {
+            $(".myPin").first().remove();
+        }
+        $(".clear").removeClass("display-none");
+        newPin.addClass("foodPin");
+        $(".clear").before(newPin);
+        $(".pinName").last().text(resName);
+        $(".pinType").last().text("Food");
+        $(".foodPin .textarea").last().val("Address: " + resAddress + " Phone Numbers: " + resPhoneNumbers);
+    }
+
+    function displayFoodPinsTab2() {
+        var newPin = $(".myPin").last().clone();
+        if ($(".myPin .pinName").first().text().trim() == "Name of Pin") {
+            $(".myPin").first().remove();
+        }
+        newPin.addClass("foodPin");
+        $(".clear").removeClass("display-none");
+        $(".clear").before(newPin);
+        $(".pinName").last().text(resNameTab2);
+        $(".pinType").last().text("Food");
+        $(".foodPin .textarea").last().val("Address: " + resAddressTab2 + " Phone Numbers: " + resPhoneNumbersTab2);
+    }
 
 
     // Event listener
@@ -751,5 +776,6 @@ $(document).ready(function () {
     $("#searchedCityButtonWelcome").click(searchButtonWelcomeClicked);
     $("#tab-1").on("click", ratingSortedDataDisplay);
     $("#tab-2").on("click", priceSortedDataDisplay);
-
+    $(".food-pin").on("click", displayFoodPins);
+    $(".food-pin-tab2").on("click", displayFoodPinsTab2);
 });
