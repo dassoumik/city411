@@ -33,7 +33,7 @@ $(document).ready(function () {
             var input = $("#searchedCityInput").val();
             clearInterval(timeInterval);
             searchClicked = true;
-            searchClickedReferCost =true;
+            searchClickedReferCost = true;
 
             // clear search box
             $("#searchedCityInput").val("");
@@ -93,7 +93,7 @@ $(document).ready(function () {
                 // Run Functions with City Info from GEO City
                 displayFoodDataRated(latitude, longitude);
                 displayFoodDataSortedPriceOrder(latitude, longitude);
-                // displayWeather(city);
+                displayWeather(city);
                 displayLocalEvents("music", city);
                 displayLocalEvents("sport", city);
             } else {
@@ -155,7 +155,7 @@ $(document).ready(function () {
         $(".card-select .caption-avg-cost").text("$ " + data.restaurants[i].restaurant.average_cost_for_two + " (2 persons)");
         $(".card-select .caption-locality").text(data.restaurants[i].restaurant.location.locality);
         resAddress = data.restaurants[i].restaurant.location.address + " zip: " + data.restaurants[i].restaurant.location.zipcode;
-        resPhoneNumbers = data.restaurants[i].restaurant.phone_numbers; 
+        resPhoneNumbers = data.restaurants[i].restaurant.phone_numbers;
         resName = data.restaurants[i].restaurant.name;
         timeInterval = setInterval(function () {
             if (i < 20) {
@@ -174,7 +174,7 @@ $(document).ready(function () {
             $(".card-select .caption-avg-cost").text("$ " + data.restaurants[i].restaurant.average_cost_for_two + " (2 persons)");
             $(".card-select .caption-locality").text(data.restaurants[i].restaurant.location.locality);
             resAddress = data.restaurants[i].restaurant.location.address + " zip: " + data.restaurants[i].restaurant.location.zipcode;
-            resPhoneNumbers = data.restaurants[i].restaurant.phone_numbers;  
+            resPhoneNumbers = data.restaurants[i].restaurant.phone_numbers;
             resName = data.restaurants[i].restaurant.name;
         }, 5000);
     }
@@ -745,13 +745,10 @@ $(document).ready(function () {
     }
 
     function displayFoodPins() {
-        console.log("myPinClicked");
         var newPin = $(".myPin").last().clone();
         if ($(".myPin .pinName").first().text().trim() == "Name of Pin") {
             $(".myPin").first().remove();
         }
-        console.log(newPin);
-        // newPin.removeClass("display-none", "myPin");
         $(".clear").removeClass("display-none");
         newPin.addClass("foodPin");
         $(".clear").before(newPin);
@@ -765,8 +762,6 @@ $(document).ready(function () {
         if ($(".myPin .pinName").first().text().trim() == "Name of Pin") {
             $(".myPin").first().remove();
         }
-        // newPin.removeClass("display-none myPin");
-        // newPin.appendTo(".pinArea");
         newPin.addClass("foodPin");
         $(".clear").removeClass("display-none");
         $(".clear").before(newPin);
