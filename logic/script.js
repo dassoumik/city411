@@ -298,8 +298,6 @@ $(document).ready(function () {
                 
                 var descript = response.weather[0].description;
                 var iconId = response.weather[0].icon;
-
-                console.log(descript+" "+iconId);
                 var fontAwesomeId = getWeatherIcon(iconId, descript);
 
                 // Update elements on page
