@@ -4,16 +4,20 @@
         padding: 0;
         margin: 0;
     }
+
     html{
         height: 100%;
     }
+
     body{
         min-height: 100%;
     }
+
     a {
         color:palegreen;
         font-weight: bold;
     }
+<<<<<<< HEAD
     /* Style buttons */
 
     .btnPin {
@@ -22,6 +26,8 @@
         color: white; /* White text */
         cursor: pointer; /* Mouse pointer on hover */
     }
+=======
+>>>>>>> bce88f9c81c9d4b04f4347cca6ccdbff1005961f
 
     .city411Brand {
         font-family: 'Orbitron', sans-serif;
@@ -40,8 +46,17 @@
         font-weight: normal;
     }
 
- 
-/*Dashboard Page Classes*/
+/*Welcome View Classes*/
+
+    .myWelcomeBorderBackground {
+        background-color: rgba(255, 255, 255, 0.089);
+    }
+
+    .myWelcomeInputBackground {
+        background-color: rgba(255, 255, 255, 0.411);
+    }
+
+/*Dashboard View Classes*/
 
     .myBackgroundImage {
         background-image: url("https://eastwood.nyc3.cdn.digitaloceanspaces.com/divisions/iStock-1019413572_web.jpg");
@@ -49,10 +64,6 @@
         background-position: center center;
         background-repeat: no-repeat;
         background-attachment: fixed;
-    }
-
-    .myWelcomeCardBackground {
-        background-color: rgba(255, 255, 255, 0.815);
     }
 
     .myPinBackground {
@@ -79,6 +90,15 @@
         background-attachment: fixed;
     }
 
+    
+    .backgroundInherit {
+        background-color: inherit;
+    }
+
+    .display-none {
+        display: none;
+    }
+
     .city411WeatherCardTitles {
         font-size: 20px;
     }
@@ -86,6 +106,18 @@
     .mySearchIconDashboard {
         pointer-events: initial;
     }
+
+    .btnPin {
+        
+        border: none; /* Remove borders */
+        color: white; /* White text */
+        cursor: pointer; /* Mouse pointer on hover */
+    }
+
+    .border-0 {
+        border-radius: 0;
+    }
+    
 
 /* Weather Dashboard Classes */
     #historic-day-0 {

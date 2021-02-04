@@ -45,8 +45,9 @@
                 <!--Current City Display-->
                 <div class="navbar-item">
                     <!--TOGGLE-VISABILITY-->
-                    <div class="has-text-white city411TitleFont is-size-4 has-text-weight-light"><i
-                            class="fas fa-chevron-right mr-3"></i><span id="currentCityName"></span></div>
+                    <div class="has-text-white city411TitleFont is-size-4 has-text-weight-light">
+                        <i class="fas fa-chevron-right mr-3"></i><span id="currentCityName"></span>
+                    </div>
                 </div>
             </div>
 
@@ -97,29 +98,23 @@
     </nav>
 
     <!--FIRST TIME ARRIVAL MESSAGE-->
-    <div id="container-welcome" class="hero is-fullheight-with-navbar">
+    <div id="container-welcome" class="hero is-fullheight-with-navbar is-hidden">
         <!--TOGGLE-VISABILITY-->
         <div class="hero-body myHeroImageWelcome">
-            <div class="container">
-                <div class="card m-5 has-text-centered myWelcomeCardBackground">
-                    <header class="card-header">
-                        <p class="card-header-title is-centered is-size-4">
-                            Welcome to City 411!
-                        </p>
-                    </header>
-                    <div class="card-content">
-                        <div class="content is-size-5">
-                            Going somewhere? Lets get the 411. Search a city to get started.
-                        </div>
-                    </div>
-                </div>
+            <div class="container myWelcomeBorderBackground">
+                <form class="control has-icons-right m-5 has-text-centered">
+                    <input id="searchedCityInputWelcome" class=" myBold input is-large is-size-4 has-text-centered has-text-grey myWelcomeInputBackground" type="text" placeholder="Search A City to Start">
+                    <button id="searchButtonWelcome" class="icon is-right  button is-ghost">
+                        <i class="fas fa-search has-text-link mySearchIconDashboard"></i>
+                    </button>
+                </form>
             </div>
         </div>
     </div>
 
 
     <!--(TILE LEVEL 1) MAIN TILES CONTAINER-->
-    <div id="container-tiles" class="tile is-ancestor mt-2 mx-1 is-hidden">
+    <div id="container-tiles" class="tile is-ancestor mt-2 mx-1 ">
 
         <!--(TILE LEVEL 2) PINS PER CITY CONTAINER-->
         <div class="tile is-parent is-vertical">
@@ -130,24 +125,23 @@
 
                 <!--(TILE LEVEL 4) Saved Pins-->
                 <div class="tile is-parent is-vertical p-1 myPinBackground mobilePaddingVertical mb-5">
+                    
+                    <!--Pin Div Placeholder-->
                     <div class="box p-1 box mx-1 my-1 myPrimaryBackground2 has-text-white mobilePadding">
-                        <div class="myBold">Name of Pin</div>
-                        <div class="mb-2">Type (Event, Food)</div>
+                        <div class="myBold">
+                            Name of Pin
+                        </div>
+                        <div class="mb-2">
+                            Type (Event, Food)
+                        </div>
                         <textarea class="textarea" placeholder="User Notes"></textarea>
-                    </div>
-                    <div class="box p-1 box mx-1 my-1 myPrimaryBackground2 has-text-white">
-                        <div class="myBold">Name of Pin</div>
-                        <div class="mb-2">Type (Event, Food)</div>
-                        <textarea class="textarea" placeholder="User Notes"></textarea>
-                    </div>
-                    <div class="box p-1 box mx-1 my-1 myPrimaryBackground2 has-text-white">
-                        <div class="myBold">Name of Pin</div>
-                        <div class="mb-2">Type (Event, Food)</div>
-                        <textarea class="textarea" placeholder="User Notes"></textarea>
+                        <button class="button is-small is-rounded mt-1 p-2">
+                            <i class="fas fa-trash"></i>
+                        </button>
                     </div>
 
-                    <!--Clear Pins Button-->
-                    <button class="button is-danger m-3">Clear</button>
+                    <!--Clear All Pins Button-->
+                    <button class="button is-small is-rounded is-danger m-3">Clear All</button>
 
                 </div>
             </div>
@@ -357,35 +351,71 @@
             </div>
 
             <!--(TILE LEVEL 3) FOOD & ENTERTAINMENT CONTAINER TILE-->
-            <div class="tile is-parent is-horizontal px-0">
+            <div class="tile is-parent is-horizontal m-0 px-0">
 
                 <!--(TILE LEVEL 4) FOOD TILE-->
-                <div class="tile is-parent is-vertical mb-0 px-1 has-text-centered food">
+                <div class="tile is-parent is-vertical m-0 has-text-centered food">
                     <!--Food Header-->
-                    <div class="has-text-white is-size-4 mb-2 myBold">Food</div>
+                    <div class="has-text-white is-size-4 m-0 myBold">Food</div>
 
                     <!--Food Image and Description-->
-                    <div class="tile is-child  is-vertical myPrimaryBackground has-text-white p-1 py-3 card-select">
-                        <!-- Restaurant Name -->
-                        <div class="myBold"><span class="myRegular caption-name">Food Type</span></div>
-                        <!--Image-->
-                        <img class="food-image" src="https://via.placeholder.com/200" alt="Placeholder image"
-                            class="mb-2">
+                    <div class="tile is-child  is-vertical  has-text-white pt-2 border-0 card-select tabs-with-content">
+                        <div class="tabs is-media tile is-child notification myPrimaryBackground border-0 is-vertical m-0 p-3 py-3">
+                            <div class="container">
+                                <ul>
+                                   <li id="active-type-1" class="is-active">
+                                    <a style="text-decoration: none;">
+                                        <span id="tab-1" class="has-text-white">Top Rated</span>
+                                    </a>
+                        
+                                   </li>
+                                   <li id="active-type-2">
+                                    <a style="text-decoration: none;">
+                                      <span id="tab-2" class="has-text-white">Sorted on Price</span>
+                                    </a>
+                                   </li>
+                                </ul>  
+                            <div id="rated" class="tile is-child card-select pl-3 backgroundInherit notification is-vertical text-black p-1">
 
-                        <!--Description-->
-                        <div class="myBold"><span class="myRegular caption-cuisines">Food Type</span></div>
-                        <div class="myBold"><span class="myRegular caption-avg-cost">Avg Cost</span></div>
-                        <div class="myBold"><span class="myRegular caption-locality">Locality</span></div>
+                                <!-- Restaurant Name -->
+                                <div class="myBold"><span class="myRegular caption-name">Food Type</span></div>
+                                <!--Image-->
+                                <img class="food-image" src="https://via.placeholder.com/200" alt="Placeholder image"
+                                    class="mb-2">
 
-                        <!--Pin Button-->
-                        <button class="button is-small is-light has-text-right mt-2">
-                            <span class="has-text-grey is-rounded"><i class="fas fa-thumbtack"></i></span>
-                        </button>
+                                <!--Description-->
+                                <div class="myBold"><span class="myRegular caption-cuisines">Food Type</span></div>
+                                <div class="myBold"><span class="myRegular caption-avg-cost">Avg Cost</span></div>
+                                <div class="myBold"><span class="myRegular caption-locality">Locality</span></div>
 
+                                <!--Pin Button-->
+                                <button class="button is-small is-light has-text-right mt-2">
+                                    <span class="has-text-grey is-rounded"><i class="fas fa-thumbtack"></i></span>
+                                </button>
+
+                            </div>
+                            <div id="price" class="tile is-child card-select-tab2 pl-3 backgroundInherit display-none notification is-vertical text-black p-1">
+
+                                <!-- Restaurant Name -->
+                                <div class="myBold"><span class="myRegular caption-name">Food Type</span></div>
+                                <!--Image-->
+                                <img class="food-image" src="https://via.placeholder.com/200" alt="Placeholder image" class="mb-2">
+
+                                <!--Description-->
+                                <div class="myBold"><span class="myRegular caption-cuisines">Food Type</span></div>
+                                <div class="myBold"><span class="myRegular caption-avg-cost">Avg Cost</span></div>
+                                <div class="myBold"><span class="myRegular caption-locality">Locality</span></div>
+
+                                <!--Pin Button-->
+                                <button class="button is-small is-light has-text-right food-pin-tab2 mt-2"> 
+                                    <span class = "has-text-grey is-rounded"><i class="fas fa-thumbtack"></i></span>
+                                </button>
+                            </div>                            
+                        </div>
                     </div>
-
                 </div>
-
+            </div>
+        <!-- </div>     -->
                 <!--(TILE LEVEL 4) ENTERTAINMENT-->
                 <div class="tile is-parent is-vertical">
                     <div class="has-text-white is-size-4 mb-2 myBold has-text-centered">Entertainment</div>
@@ -453,7 +483,7 @@
 
                                 <a class="myRegular">Sunova at The Music Room</a>
                             </div>
-                        </div>
+                      </div>
                     </div>
                 </div>
             </div>

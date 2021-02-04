@@ -7,8 +7,18 @@ $(document).ready(function () {
     var lat;
     var lon;
     var i = 0;
-    var address;
-    var phoneNumbers;
+    var j = 0;
+    var dataStored;
+    var dataCostStored;
+    var resAddress;
+    var resPhoneNumbers;
+    var resName;
+    var resAddressTab2;
+    var resPhoneNumbersTab2;
+    var resNameTab2;
+    var tab2Clicked = false;
+    var timeIntervalCost;
+    var searchClickedReferCost;
     var searchClicked;
     var timeInterval;
     var latitude;
@@ -26,6 +36,7 @@ $(document).ready(function () {
             var input = $("#searchedCityInput").val();
             clearInterval(timeInterval);
             searchClicked = true;
+            searchClickedReferCost = true;
 
             // clear search box
             $("#searchedCityInput").val("");
@@ -39,6 +50,8 @@ $(document).ready(function () {
     function searchButtonWelcomeClicked() {
         // Clear search box
         $("#searchedCityInputWelcome").val(" ");
+        searchClicked = true;
+        searchClickedReferCost = true;
 
         // Go to data page
         window.location.href = "./pages/city411dashboard.html";
@@ -83,20 +96,13 @@ $(document).ready(function () {
 
                 // Grab lat/lon coords of search
                 displayFoodDataRated(latitude, longitude);
-                // Run Functions with City Info from GEO City
-                // displayFoodDataByCost(latitude, longitude);
+                displayFoodDataSortedPriceOrder(latitude, longitude);
                 displayWeather(city);
                 displayLocalEvents("music", city);
                 displayLocalEvents("sport", city);
             } else {
                 alert("City could not be found! Please try again...");
             }
-
-
-
-
-
-
         });
     }
 
@@ -122,12 +128,13 @@ $(document).ready(function () {
                 $(".food").empty();
                 $(".food").append(infoContent);
             }
-        });//end of $.ajax call
+        });
     }
 
     // Display Rated Food Data
     function parseZomatoData(data) {
         if (searchClicked) {
+            dataStored = data;
             i = 0;
             searchClicked = false;
             $(".card-select .caption-name").text("");
@@ -145,8 +152,9 @@ $(document).ready(function () {
         $(".card-select .caption-cuisines").text(data.restaurants[i].restaurant.cuisines);
         $(".card-select .caption-avg-cost").text("$ " + data.restaurants[i].restaurant.average_cost_for_two + " (2 persons)");
         $(".card-select .caption-locality").text(data.restaurants[i].restaurant.location.locality);
-        address = data.restaurants[i].restaurant.location.address;
-        phoneNumbers = data.restaurants[i].restaurant.phone_numbers;
+        resAddress = data.restaurants[i].restaurant.location.address + " zip: " + data.restaurants[i].restaurant.location.zipcode;
+        resPhoneNumbers = data.restaurants[i].restaurant.phone_numbers;
+        resName = data.restaurants[i].restaurant.name;
         timeInterval = setInterval(function () {
             if (i < 20) {
                 i++;
@@ -163,8 +171,81 @@ $(document).ready(function () {
             $(".card-select .caption-cuisines").text(data.restaurants[i].restaurant.cuisines);
             $(".card-select .caption-avg-cost").text("$ " + data.restaurants[i].restaurant.average_cost_for_two + " (2 persons)");
             $(".card-select .caption-locality").text(data.restaurants[i].restaurant.location.locality);
-            address = data.restaurants[i].restaurant.location.address;
-            phoneNumbers = data.restaurants[i].restaurant.phone_numbers;
+            resAddress = data.restaurants[i].restaurant.location.address + " zip: " + data.restaurants[i].restaurant.location.zipcode;
+            resPhoneNumbers = data.restaurants[i].restaurant.phone_numbers;
+            resName = data.restaurants[i].restaurant.name;
+        }, 5000);
+    }
+
+    // Initiate API call to zomato for data sorted price fetch
+    function displayFoodDataSortedPriceOrder(latitude, longitude) {
+
+        var urlZomato = "https://developers.zomato.com/api/v2.1/search?cuisines=1,5,25,27,40,100,161,227" + "&lon=" + longitude + "&lat=" + latitude + "&count=20&sort=cost";
+
+        $.ajax({
+            method: "GET",
+            crossDomain: true,
+            url: urlZomato,
+            dataType: "json",
+            async: true,
+            headers: {
+                "user-key": apiZomato
+            },
+            success: function (dataCost) {
+                parseZomatoDataSortedPriceOrder(dataCost);
+            },
+            error: function () {
+                var infoContent = "<div>Sorry, data is not coming through. Refresh and try again.</div>";
+                $(".food").empty();
+                $(".food").append(infoContent);
+            }
+        }); //end of $.ajax call
+    }
+
+    // Display Food Data Sorted on Price
+    function parseZomatoDataSortedPriceOrder(dataCost) {
+        tab2Clicked = false;
+        if (searchClickedReferCost) {
+            dataCostStored = dataCost;
+            j = 0;
+            searchClickedReferCost = false;
+            $(".card-select-tab2 .caption-name").text("");
+            $(".card-select-tab2 .caption-cuisines").text("");
+            $(".card-select-tab2 .caption-avg-cost").text("");
+            $(".card-select-tab2 .caption-locality").text("");
+            $(".card-select-tab2 .food-image").attr("src", "https://via.placeholder.com/200");
+        }
+        if (dataCost.restaurants[j].restaurant.thumb == "") {
+            $(".card-select-tab2 .food-image").attr("src", "https://via.placeholder.com/200");
+        } else {
+            $(".card-select-tab2 .food-image").attr("src", dataCost.restaurants[j].restaurant.thumb);
+        }
+        $(".card-select-tab2 .caption-name").text(dataCost.restaurants[j].restaurant.name);
+        $(".card-select-tab2 .caption-cuisines").text(dataCost.restaurants[j].restaurant.cuisines);
+        $(".card-select-tab2 .caption-avg-cost").text("$ " + dataCost.restaurants[j].restaurant.average_cost_for_two + " (2 persons)");
+        $(".card-select-tab2 .caption-locality").text(dataCost.restaurants[j].restaurant.location.locality);
+        resAddressTab2 = dataCost.restaurants[j].restaurant.location.address + " zip: " + dataCost.restaurants[j].restaurant.location.zipcode;
+        resPhoneNumbersTab2 = dataCost.restaurants[j].restaurant.phone_numbers;
+        resNameTab2 = dataCost.restaurants[j].restaurant.name;
+        timeIntervalCost = setInterval(function () {
+            if (j < 20) {
+                j++;
+            }
+            if (j > 19) {
+                j = j - j;
+            }
+            if (dataCost.restaurants[j].restaurant.thumb == "") {
+                $(".card-select-tab2 .food-image").attr("src", "https://via.placeholder.com/200");
+            } else {
+                $(".card-select-tab2 .food-image").attr("src", dataCost.restaurants[j].restaurant.thumb);
+            }
+            $(".card-select-tab2 .caption-name").text(dataCost.restaurants[j].restaurant.name);
+            $(".card-select-tab2 .caption-cuisines").text(dataCost.restaurants[j].restaurant.cuisines);
+            $(".card-select-tab2 .caption-avg-cost").text("$ " + dataCost.restaurants[j].restaurant.average_cost_for_two + " (2 persons)");
+            $(".card-select-tab2 .caption-locality").text(dataCost.restaurants[j].restaurant.location.locality);
+            resAddressTab2 = dataCost.restaurants[j].restaurant.location.address + " zip: " + dataCost.restaurants[j].restaurant.location.zipcode;
+            resPhoneNumbersTab2 = dataCost.restaurants[j].restaurant.phone_numbers;
+            resNameTab2 = dataCost.restaurants[j].restaurant.name;
         }, 5000);
     }
 
@@ -176,7 +257,7 @@ $(document).ready(function () {
 
         // Call All Weather Functions
         displayCurrentWeather();
-        // displayHistoricWeather();
+        displayHistoricWeather();
 
         // Current Data
         function displayCurrentWeather() {
@@ -274,32 +355,58 @@ $(document).ready(function () {
         // Historic Data
         function displayHistoricWeather() {
             // Define the date ranges to use in query and create correct syntax string for query
-            var oneYearAgo = currentDate.minus({ year: 1 })
+            var oneYearAgo = currentDate.minus({
+                year: 1
+            })
             var oneYearAgoFormatted = oneYearAgo.c.year + "-" + oneYearAgo.c.month + "-" + oneYearAgo.c.day;
 
             // a year ago, 5 days 
-            var oneYearAgoWeek = currentDate.minus({ year: 1 }).plus({ days: 6 });
+            var oneYearAgoWeek = currentDate.minus({
+                year: 1
+            }).plus({
+                days: 6
+            });
             var oneYearAgoWeekFormatted = oneYearAgoWeek.c.year + "-" + oneYearAgoWeek.c.month + "-" + oneYearAgoWeek.c.day;
 
             // a year ago, start date of current month
-            var oneYearAgoMonthStart = currentDate.minus({ year: 1 }).startOf('month')
+            var oneYearAgoMonthStart = currentDate.minus({
+                year: 1
+            }).startOf('month')
             var oneYearAgoMonthStartFormatted = oneYearAgoMonthStart.c.year + "-" + oneYearAgoMonthStart.c.month + "-" + oneYearAgoMonthStart.c.day;
             // a year ago, end date of current month
-            var oneYearAgoMonthEnd = currentDate.minus({ year: 1 }).endOf('month');
+            var oneYearAgoMonthEnd = currentDate.minus({
+                year: 1
+            }).endOf('month');
             var oneYearAgoMonthEndFormatted = oneYearAgoMonthEnd.c.year + "-" + oneYearAgoMonthEnd.c.month + "-" + oneYearAgoMonthEnd.c.day;
 
             // a year ago, start date of next  month
-            var oneYearAgoTwoMonthsStart = currentDate.minus({ year: 1 }).plus({ month: 1 }).startOf('month');
+            var oneYearAgoTwoMonthsStart = currentDate.minus({
+                year: 1
+            }).plus({
+                month: 1
+            }).startOf('month');
             var oneYearAgoTwoMonthsStartFormatted = oneYearAgoTwoMonthsStart.c.year + "-" + oneYearAgoTwoMonthsStart.c.month + "-" + oneYearAgoTwoMonthsStart.c.day;
             // a year ago, end date of next  month
-            var oneYearAgoTwoMonthsEnd = currentDate.minus({ year: 1 }).plus({ month: 1 }).endOf('month');
+            var oneYearAgoTwoMonthsEnd = currentDate.minus({
+                year: 1
+            }).plus({
+                month: 1
+            }).endOf('month');
             var oneYearAgoTwoMonthsEndFormatted = oneYearAgoTwoMonthsEnd.c.year + "-" + oneYearAgoTwoMonthsEnd.c.month + "-" + oneYearAgoTwoMonthsEnd.c.day;
 
             // a year ago, start date of next next month
-            var oneYearAgoThreeMonthsStart = currentDate.minus({ year: 1 }).plus({ month: 2 }).startOf('month');
+            var oneYearAgoThreeMonthsStart = currentDate.minus({
+                year: 1
+            }).plus({
+                month: 2
+            }).startOf('month');
             var oneYearAgoThreeMonthsStartFormatted = oneYearAgoThreeMonthsStart.c.year + "-" + oneYearAgoThreeMonthsStart.c.month + "-" + oneYearAgoThreeMonthsStart.c.day;
             // a year ago, end date of next next month
-            var oneYearAgoThreeMonthsEnd = currentDate.minus({ year: 1 }).plus({ month: 2 }).endOf('month');
+            var oneYearAgoThreeMonthsEnd = currentDate.minus({
+                year: 1
+            }).plus({
+                month: 2
+            }).endOf('month');
             var oneYearAgoThreeMonthsEndFormatted = oneYearAgoThreeMonthsEnd.c.year + "-" + oneYearAgoThreeMonthsEnd.c.month + "-" + oneYearAgoThreeMonthsEnd.c.day;
 
             getHistoricWeek("Q5Z5S9QT8FD8UJKCGYBURUXX8");
@@ -346,15 +453,25 @@ $(document).ready(function () {
                         var dayTitle = $("<div>").attr("class", "myBold").text(dateTime.fromSeconds(historicDayEpoch).weekdayShort);
 
                         // Create ICON element based on ICON TEXT variable from response
-                        if (historicDayIcon === "rain") { var dayIcon = $("<i>").attr("class", "fas fa-cloud-showers-heavy my-2 is-size-4"); }
-                        else if (historicDayIcon === "fog") { var dayIcon = $("<i>").attr("class", "fas fa-smog my-2 is-size-4"); }
-                        else if (historicDayIcon === "wind") { var dayIcon = $("<i>").attr("class", "fas fa-wind my-2 is-size-4"); }
-                        else if (historicDayIcon === "cloudy") { var dayIcon = $("<i>").attr("class", "fas fa-cloud my-2 is-size-4"); }
-                        else if (historicDayIcon === "partly-cloudy-day") { var dayIcon = $("<i>").attr("class", "fas fa-cloud-sun my-2 is-size-4"); }
-                        else if (historicDayIcon === "partly-cloudy-night") { var dayIcon = $("<i>").attr("class", "fas fa-cloud-moon my-2 is-size-4"); }
-                        else if (historicDayIcon === "clear-day") { var dayIcon = $("<i>").attr("class", "fas fa-sun my-2 is-size-4"); }
-                        else if (historicDayIcon === "clear-night") { var dayIcon = $("<i>").attr("class", "fas fa-moon my-2 is-size-4"); }
-                        else { var dayIcon = $("<i>").attr("class", "fas fa-question my-2 is-size-4"); }
+                        if (historicDayIcon === "rain") {
+                            var dayIcon = $("<i>").attr("class", "fas fa-cloud-showers-heavy my-2 is-size-4");
+                        } else if (historicDayIcon === "fog") {
+                            var dayIcon = $("<i>").attr("class", "fas fa-smog my-2 is-size-4");
+                        } else if (historicDayIcon === "wind") {
+                            var dayIcon = $("<i>").attr("class", "fas fa-wind my-2 is-size-4");
+                        } else if (historicDayIcon === "cloudy") {
+                            var dayIcon = $("<i>").attr("class", "fas fa-cloud my-2 is-size-4");
+                        } else if (historicDayIcon === "partly-cloudy-day") {
+                            var dayIcon = $("<i>").attr("class", "fas fa-cloud-sun my-2 is-size-4");
+                        } else if (historicDayIcon === "partly-cloudy-night") {
+                            var dayIcon = $("<i>").attr("class", "fas fa-cloud-moon my-2 is-size-4");
+                        } else if (historicDayIcon === "clear-day") {
+                            var dayIcon = $("<i>").attr("class", "fas fa-sun my-2 is-size-4");
+                        } else if (historicDayIcon === "clear-night") {
+                            var dayIcon = $("<i>").attr("class", "fas fa-moon my-2 is-size-4");
+                        } else {
+                            var dayIcon = $("<i>").attr("class", "fas fa-question my-2 is-size-4");
+                        }
 
                         var dayHighDiv = $("<div>").text("Hi: " + historicDayTempmax + "°F");
                         var dayLowDiv = $("<div>").text("Lo: " + historicDayTempmin + "°F");
@@ -363,13 +480,9 @@ $(document).ready(function () {
                         // Append all elements to daydiv then to tile div
                         dayDiv.append(dayTitle, dayIcon, dayHighDiv, dayLowDiv)
                         $("#historic-week-div").append(dayDiv);
-
                     });
-
-
-                }); //[TESTING] Comment this line for testing
+                });
             }
-
 
             function getHistoricCurrentMonth(month, key, start, end) {
                 var queryURL = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/" + location + "/" + start + "/" + end + "?unitGroup=us&key=" + key + "&include=obs"
@@ -426,7 +539,6 @@ $(document).ready(function () {
                         Obj[aConditionsUsed[i]] = sFinalConcat.match(re).length;
                     }
 
-
                     // Push object into array and sort descending to grab first 
                     var sortable = [];
                     for (var condition in Obj) {
@@ -435,7 +547,6 @@ $(document).ready(function () {
                     sortable.sort(function (a, b) {
                         return b[1] - a[1];
                     });
-
 
                     // Final Values to display:
                     var mostlyCondition = sortable[0][0];
@@ -448,9 +559,11 @@ $(document).ready(function () {
                     // Create elements
                     if (month === "current") {
                         var hcmTitleDiv = $("<div>").attr("class", "is-size-6 myBold").text(oneYearAgo.monthLong);
+                    } else if (month === "next") {
+                        var hcmTitleDiv = $("<div>").attr("class", "is-size-6 myBold").text(oneYearAgoTwoMonthsStart.monthLong);
+                    } else if (month === "nextnext") {
+                        var hcmTitleDiv = $("<div>").attr("class", "is-size-6 myBold").text(oneYearAgoThreeMonthsStart.monthLong);
                     }
-                    else if (month === "next") { var hcmTitleDiv = $("<div>").attr("class", "is-size-6 myBold").text(oneYearAgoTwoMonthsStart.monthLong); }
-                    else if (month === "nextnext") { var hcmTitleDiv = $("<div>").attr("class", "is-size-6 myBold").text(oneYearAgoThreeMonthsStart.monthLong); }
                     var mostlyCondDiv = $("<div>").text("Mostly " + mostlyCondition);
                     var avgHiDiv = $("<div>").text("Hi average - " + avgHi);
                     var avgLoDiv = $("<div>").text("Lo average - " + avgLo);
@@ -469,28 +582,48 @@ $(document).ready(function () {
             // If the icon is for daytime, return day icon, else return night icon
 
             // Clear sky
-            if (id === "01d") { return "fas fa-sun"; }
-            if (id === "01n") { return "fas fa-moon"; }
+            if (id === "01d") {
+                return "fas fa-sun";
+            }
+            if (id === "01n") {
+                return "fas fa-moon";
+            }
 
             // few clouds
-            if (id === "02d") { return "fas fa-cloud-sun"; }
-            if (id === "02n") { return "fas fa-cloud-moon"; }
+            if (id === "02d") {
+                return "fas fa-cloud-sun";
+            }
+            if (id === "02n") {
+                return "fas fa-cloud-moon";
+            }
 
             // scattered clouds & broken clouds
-            if (id.match(/03/) || id.match(/04/)) { return "fas fa-cloud"; }
+            if (id.match(/03/) || id.match(/04/)) {
+                return "fas fa-cloud";
+            }
 
             // shower rain
-            if (id.match(/09/)) { return "fas fa-cloud-showers-heavy"; }
+            if (id.match(/09/)) {
+                return "fas fa-cloud-showers-heavy";
+            }
 
             // Rain
-            if (id.match(/10d/)) { return "fas fa-cloud-sun-rain"; }
-            if (id.match(/10n/)) { return "fas fa-cloud-moon-rain"; }
+            if (id.match(/10d/)) {
+                return "fas fa-cloud-sun-rain";
+            }
+            if (id.match(/10n/)) {
+                return "fas fa-cloud-moon-rain";
+            }
 
             // Thunderstorm
-            if (id.match(/11/)) { return "fas fa-bolt"; }
+            if (id.match(/11/)) {
+                return "fas fa-bolt";
+            }
 
             // Snow
-            if (id.match(/50/)) { return "fas fa-snowflake"; }
+            if (id.match(/50/)) {
+                return "fas fa-snowflake";
+            }
 
             // Other
             if (id.match(/50/)) {
@@ -511,7 +644,9 @@ $(document).ready(function () {
 
         var startDate = localTime.toISODate();
         var startTime = localTime.toISO().split("T")[1].split(".")[0];
-        var endDate = localTime.plus({ week: 2 }).toISODate();
+        var endDate = localTime.plus({
+            week: 2
+        }).toISODate();
         var endTime = "23:59:59"
         var query = "https://app.ticketmaster.com/discovery/v2/events?apikey=3XcemfxRjBsVA2szubVBECOW6GJHcyol&keyword=" + type + "&locale=*&startDateTime=" + startDate + "T" + startTime + "Z&endDateTime=" + endDate + "T" + endTime + "Z&city=" + city
 
@@ -539,12 +674,9 @@ $(document).ready(function () {
                     var totalEvents = response.page.totalElements;
 
 
-
-
-
-
                     // Loop thru the events > create elements > append to approprite divs
-                    for (let i = 0; (i < totalEvents && i < 5); i++) {
+                    for (let i = 0;
+                        (i < totalEvents && i < 5); i++) {
 
                         var thisEvent = aEvents.events[i];
 
@@ -555,7 +687,11 @@ $(document).ready(function () {
                         var divEvent = $("<div>").attr("class", "myBold is-size-6 py-1");
                         var iPin = $("<i>").attr("class", "has-text-grey is-rounded fas fa-thumbtack btnPin");
                         var urlEvent = thisEvent.url;
-                        var linkEvent = $("<a>").text(" " + name.slice(0, 60) + "...").attr({ href: urlEvent, target: "_blank", syle: "text-decoration: none;" });
+                        var linkEvent = $("<a>").text(" " + name.slice(0, 60) + "...").attr({
+                            href: urlEvent,
+                            target: "_blank",
+                            syle: "text-decoration: none;"
+                        });
 
                         // Append the event elements
                         divEvent.append(iPin, linkEvent);
@@ -573,11 +709,34 @@ $(document).ready(function () {
         });
     }
 
-    // Event listener
+    function ratingSortedDataDisplay() {
+        $("#rated").removeClass("display-none");
+        $("#active-type-2").removeClass("is-active");
+        $("#active-type-1").addClass("is-active");
+        $("#price").addClass("display-none");
+        clearInterval(timeIntervalCost);
+        parseZomatoData(dataStored);
+        return false;
+    }
+
+    function priceSortedDataDisplay() {
+        $("#price").removeClass("display-none");
+        $("#active-type-1").removeClass("is-active");
+        $("#active-type-2").addClass("is-active");
+        $("#rated").addClass("display-none");
+        tab2Clicked = true;
+        clearInterval(timeInterval);
+        parseZomatoDataSortedPriceOrder(dataCostStored);
+        return false;
+    }
+
+    // Event listeners
     $("#searchButton").click(searchButtonClicked);
     $("#searchedCityButtonWelcome").click(searchButtonWelcomeClicked);
     $("#favorite-button").click(saveFavoritesClicked);
     $(".btnFav").click(favButtonClicked);
+    $("#tab-1").on("click", ratingSortedDataDisplay);
+    $("#tab-2").on("click", priceSortedDataDisplay);
 
     // Set the color of the Favorites button based on local storage
     function colorFavoriteButton() {
