@@ -277,7 +277,7 @@ $(document).ready(function () {
                 url: queryURL,
                 method: "GET",
                 error: function (err) {
-                    console.log("getCurrentWeather(): AJAX Error");
+                    console.log("getCurrentWeather(): AJAX Error: "+err);
                 }
             }).then(function (response) {
                 // Grab location then call other functions based on location
