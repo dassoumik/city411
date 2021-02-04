@@ -47,14 +47,23 @@ $(document).ready(function () {
     }
 
     // Search Button Welcome Screen
-    function searchButtonWelcomeClicked() {
-        // Clear search box
-        $("#searchedCityInputWelcome").val(" ");
-        searchClicked = true;
-        searchClickedReferCost = true;
+    function searchButtonWelcomeClicked(e) {
+        e.preventDefault();
+        // If input has value grab value, else do nothing
+        if ($("#searchedCityInputWelcome").val() !== "") {
+            var input = $("#searchedCityInputWelcome").val();
+            clearInterval(timeInterval);
+            searchClicked = true;
+            searchClickedReferCost = true;
 
-        // Go to data page
-        window.location.href = "./pages/city411dashboard.html";
+            // clear search box
+            $("#searchedCityInputWelcome").val("");
+
+            // Call functions here
+            callFunctions(input);
+        }
+
+
     }
 
     // Call all functions here
@@ -257,7 +266,7 @@ $(document).ready(function () {
 
         // Call All Weather Functions
         displayCurrentWeather();
-        displayHistoricWeather();
+        // displayHistoricWeather();
 
         // Current Data
         function displayCurrentWeather() {
@@ -732,7 +741,7 @@ $(document).ready(function () {
 
     // Event listeners
     $("#searchButton").click(searchButtonClicked);
-    $("#searchedCityButtonWelcome").click(searchButtonWelcomeClicked);
+    $("#searchButtonWelcome").click(searchButtonWelcomeClicked);
     $("#favorite-button").click(saveFavoritesClicked);
     $(".btnFav").click(favButtonClicked);
     $("#tab-1").on("click", ratingSortedDataDisplay);

@@ -17,17 +17,13 @@
         color:palegreen;
         font-weight: bold;
     }
-<<<<<<< HEAD
     /* Style buttons */
-
     .btnPin {
         
         border: none; /* Remove borders */
         color: white; /* White text */
         cursor: pointer; /* Mouse pointer on hover */
     }
-=======
->>>>>>> bce88f9c81c9d4b04f4347cca6ccdbff1005961f
 
     .city411Brand {
         font-family: 'Orbitron', sans-serif;
