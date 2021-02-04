@@ -64,7 +64,7 @@ $(document).ready(function () {
         };
 
         $.ajax(settings).done(function (response) {
-            console.log(response);
+  
             // If the search returns city data... then call the API's else alert the user
             if (response.data.length > 0) {
                 // Show/Hide Appropriate containers
@@ -533,18 +533,21 @@ $(document).ready(function () {
 
 
                 // If there are events then do something.. else show message there are no upcoming events in the next 2 weeks
+                var eventContainer = $("#" + type + "-div");
+                $(eventContainer).empty();
+                // Setup the parent music container
+                var divTitle = $("<div>").attr("class", "myBold has-text-centered").text(type.charAt(0).toUpperCase() + type.slice(1));
+                var hr = $("<hr>").attr("class", "my-2");
+                // Append the Setup elements
+                $(eventContainer).append(divTitle, hr);
                 if (aEvents) {
 
                     var totalEvents = response.page.totalElements;
-                    var eventContainer = $("#" + type + "-div");
-                    $(eventContainer).empty();
 
-                    // Setup the parent music container
-                    var divTitle = $("<div>").attr("class", "myBold has-text-centered").text(type.charAt(0).toUpperCase() + type.slice(1));
-                    var hr = $("<hr>").attr("class", "my-2");
 
-                    // Append the Setup elements
-                    $(eventContainer).append(divTitle, hr);
+
+
+
 
                     // Loop thru the events > create elements > append to approprite divs
                     for (let i = 0; (i < totalEvents && i < 5); i++) {
@@ -565,9 +568,10 @@ $(document).ready(function () {
                         $(eventContainer).append(divEvent);
                     }
                 } else {
-                    console.log("No events listed at this time...");
+                    // No events available to list...
+                    var divEvent = $("<div>").attr("class", "myBold is-size-6 py-1").text("No available events at this time...")
+                    $(eventContainer).append(divEvent);
                 }
-
             },
             error: function (xhr, status, err) {
                 // This time, we do not end up here!
@@ -579,13 +583,14 @@ $(document).ready(function () {
     $("#searchButton").click(searchButtonClicked);
     $("#searchedCityButtonWelcome").click(searchButtonWelcomeClicked);
     $("#favorite-button").click(saveFavoritesClicked);
+    $(".btnFav").click(favButtonClicked);
 
     // Set the color of the Favorites button based on local storage
     function colorFavoriteButton() {
         // Grab the text from current City Div
         var city = $("#currentCityName").text();
         if (aFavorites.indexOf(city) !== -1) {
-            console.log("City EXISTS iN ARRAY");
+
             $("#favorite-button").addClass("is-info");
             $("#favorite-button").removeClass("is-light");
 
@@ -596,15 +601,13 @@ $(document).ready(function () {
     }
     // Display local storage in favorites tab
     function displayFavorites() {
-        console.log("Entered displayFavorites()");
+
         var listFavorites = $("#favorites-list");
         // Empty contents to rebuild list
         listFavorites.empty();
 
         // If localstorage exists & has data.. do something.. else nothing..
         if (localStorage.getItem("favorites")) {
-            console.log("Has Storage");
-
 
             // Handle for the list element
             var listFavorites = $("#favorites-list");
@@ -613,11 +616,9 @@ $(document).ready(function () {
 
             // Loop thru the array and append
             aFavorites.forEach(function (i) {
-                var linkCity = $("<a>").attr("class", "navbar-item").text(i)
+                var linkCity = $("<a>").attr("class", "navbar-item btnFav").text(i)
                 listFavorites.append(linkCity);
             });
-        } else {
-            console.log("No storage");
         }
     }
     // Save/Remove from local storage
@@ -628,7 +629,7 @@ $(document).ready(function () {
 
         // If text is not blank then proceed to favorite logic... else do not
         if (city !== "") {
-            console.log("City Text has a value");
+
             // Save to local storage
             if (aFavorites.indexOf(city) === -1) {
                 // Set favorite to Array
@@ -636,13 +637,18 @@ $(document).ready(function () {
                 aFavorites.push(city);
                 localStorage.setItem("favorites", JSON.stringify(aFavorites));
             } else {
-                console.log("RAAR");
+
                 aFavorites = aFavorites.filter(item => item !== city)
                 localStorage.setItem("favorites", JSON.stringify(aFavorites));
-                console.log(aFavorites);
+           
             }
         }
         displayFavorites();
         colorFavoriteButton();
+    }
+    function favButtonClicked(e) {
+        e.preventDefault();
+        // Call the first ajax query search with the name of the favorite
+        getLatLon($(this).text().split(",")[0]);
     }
 });
