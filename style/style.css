@@ -17,6 +17,13 @@
         color:palegreen;
         font-weight: bold;
     }
+    /* Style buttons */
+    .btnPin {
+        
+        border: none; /* Remove borders */
+        color: white; /* White text */
+        cursor: pointer; /* Mouse pointer on hover */
+    }
 
     .city411Brand {
         font-family: 'Orbitron', sans-serif;
