@@ -17,14 +17,7 @@
         color:palegreen;
         font-weight: bold;
     }
-    /* Style buttons */
-    .btnPin {
-        
-        border: none; /* Remove borders */
-        color: white; /* White text */
-        cursor: pointer; /* Mouse pointer on hover */
-    }
-
+ 
     .city411Brand {
         font-family: 'Orbitron', sans-serif;
         font-size: 26px;
@@ -54,6 +47,12 @@
 
 /*Dashboard View Classes*/
 
+    .btnPin {
+        border:none; /* Remove borders */
+        color:white; /* White text */
+        cursor: pointer; /* Mouse pointer on hover */
+    }
+
     .myBackgroundImage {
         background-image: url("https://eastwood.nyc3.cdn.digitaloceanspaces.com/divisions/iStock-1019413572_web.jpg");
         background-size: cover;
@@ -61,53 +60,40 @@
         background-repeat: no-repeat;
         background-attachment: fixed;
     }
-
-    .myPinBackground {
+    .myPinColumnBackground {
         background-color: #4a4a4a79;
     }
 
+     .myPinCardBackground {
+        background-color: #4a4a4a7e;
+    }
+
     .myWeatherBackground {
-        background-color: #3298dcbe;
-    }
-
-    .myPrimaryBackground {
-        background-color: #00d1b2c2;
-    }
-
-    .myPrimaryBackground2 {
-        background-color: #00d1b257;
-    }
-
-    .myWeatherTodayBackground {
-        background-image: url("https://webstockreview.net/images/clipart-png-rain-4.jpg");
-        background-size: cover;
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-    }
-
-    
-    .backgroundInherit {
-        background-color: inherit;
-    }
-
-    .display-none {
-        display: none;
+        background-color: #095d96be;
     }
 
     .city411WeatherCardTitles {
         font-size: 20px;
     }
 
-    .mySearchIconDashboard {
-        pointer-events: initial;
+    .myFoodEnterntainmentBackground {
+         background-color: #095d96be; 
     }
 
-    .btnPin {
-        
-        border: none; /* Remove borders */
-        color: white; /* White text */
-        cursor: pointer; /* Mouse pointer on hover */
+    .borderIMG {
+        border: 5px white;
+    }
+
+    .display-none {
+        display: none;
+    }
+
+    .backgroundInherit {
+        background-color: inherit;
+    }
+
+    .mySearchIconDashboard {
+        pointer-events: initial;
     }
 
     .border-0 {
@@ -120,9 +106,3 @@
         border: greenyellow solid 1px;
     }
 
-/*Media Queries For Mobile Responsive Finish*/
-
-    @media only screen and (max-width: 768px) {
-      
-      
-    }
