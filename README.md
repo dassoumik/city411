@@ -8,7 +8,8 @@
 To be filled out by team
 
 ## Team Contributors 💎
-* <img src="./images/md/github.png" alt="github logo" width="20"/>[ Ryan Johnson ]()|
+* <img src="./images/md/github.png" alt="github logo" width="20"/>[ Ryan Johnson ]()
+* <img src="./images/md/github.png" alt="github logo" width="20"/>[ Soumik Das ](https://github.com/dassoumik)
 * <img src="./images/md/github.png" alt="github logo" width="20"/>[ Brandon Haley ](https://github.com/Kyle7286)
     
 ## Takeaways 🥡
