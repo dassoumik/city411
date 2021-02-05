@@ -36,6 +36,7 @@ $(document).ready(function () {
         if ($("#searchedCityInput").val() !== "") {
             var input = $("#searchedCityInput").val();
             clearInterval(timeInterval);
+            clearInterval(timeIntervalCost);
             searchClicked = true;
             searchClickedReferCost = true;
 
@@ -162,6 +163,7 @@ $(document).ready(function () {
                 "user-key": apiZomato
             },
             success: function (data) {
+                dataStored = data;
                 parseZomatoData(data);
             },
             error: function () {
@@ -233,6 +235,7 @@ $(document).ready(function () {
                 "user-key": apiZomato
             },
             success: function (dataCost) {
+                dataCostStored = dataCost;
                 parseZomatoDataSortedPriceOrder(dataCost);
             },
             error: function () {
@@ -245,9 +248,10 @@ $(document).ready(function () {
 
     // Display Food Data Sorted on Price
     function parseZomatoDataSortedPriceOrder(dataCost) {
+        if (tab2Clicked) {
         tab2Clicked = false;
         if (searchClickedReferCost) {
-            dataCostStored = dataCost;
+            // dataCostStored = dataCost;
             j = 0;
             searchClickedReferCost = false;
             $(".card-select-tab2 .caption-name").text("");
@@ -288,6 +292,7 @@ $(document).ready(function () {
             resPhoneNumbersTab2 = dataCost.restaurants[j].restaurant.phone_numbers;
             resNameTab2 = dataCost.restaurants[j].restaurant.name;
         }, 5000);
+    }
     }
 
     // Display Weather which contains all the weather functions
@@ -872,9 +877,33 @@ $(document).ready(function () {
     }
     function favButtonClicked(e) {
         e.preventDefault();
+        clearInterval(timeInterval);
+        clearInterval(timeIntervalCost);
+        searchClicked = true;
+        searchClickedReferCost = true;
         // Call the first ajax query search with the name of the favorite
         getLatLon($(this).text().split(",")[0]);
     }
+
+    function clearAllPins() {
+        numberOfNotes = document.querySelectorAll(".myPin").length;
+        if ((document).querySelectorAll(".myPin").length === 1){
+            console.log("in  1st loop");
+            $(".pinName").last().text("Name of Pin");
+              $(".pinType").last().text("Type (Event, Food)");
+              $(".foodPin .textarea").last().val("");
+        } else {
+          (document).querySelectorAll(".myPin").forEach(function(item, index) {
+            if (index  === (numberOfNotes - 1)) {
+                $(".pinName").last().text("Name of Pin");
+                $(".pinType").last().text("Type (Event, Food)");
+                $(".foodPin .textarea").last().val(""); 
+            } else { 
+              $(".myPin").last().remove();
+            }
+          });
+        }
+      }
 
     // Event listener
     $("#searchButton").click(searchButtonClicked);
@@ -886,5 +915,6 @@ $(document).ready(function () {
     $(".food-pin").on("click", displayFoodPins);
     $(".food-pin-tab2").on("click", displayFoodPinsTab2);
     $(document).on("click", ".notes-trash", deleteSelectedNotes);
+    $(".clear").on("click", clearAllPins);
 
 });
