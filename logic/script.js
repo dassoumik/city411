@@ -855,27 +855,20 @@ $(document).ready(function () {
     }
 
     function clearAllPins() {
-        console.log(document.querySelectorAll(".myPin"));
-        console.log((document).querySelectorAll(".myPin").length);
         numberOfNotes = document.querySelectorAll(".myPin").length;
         if ((document).querySelectorAll(".myPin").length === 1){
             console.log("in  1st loop");
-            // $(".myPin").clone().prependTo(".pinArea");
-            // $(this).closest("div").remove();
             $(".pinName").last().text("Name of Pin");
               $(".pinType").last().text("Type (Event, Food)");
               $(".foodPin .textarea").last().val("");
         } else {
           (document).querySelectorAll(".myPin").forEach(function(item, index) {
-              console.log("in 2nd loop");
             if (index  === (numberOfNotes - 1)) {
-                console.log("in 3rd loop");
                 $(".pinName").last().text("Name of Pin");
                 $(".pinType").last().text("Type (Event, Food)");
                 $(".foodPin .textarea").last().val(""); 
             } else { 
               $(".myPin").last().remove();
-              console.log("in 4th loop");
             }
           });
         }
