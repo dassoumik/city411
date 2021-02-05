@@ -27,7 +27,6 @@ $(document).ready(function () {
     var aFavorites = [];
     displayFavorites();
 
-
     // Define Functons
     function searchButtonClicked(e) {
         e.preventDefault();
@@ -95,6 +94,8 @@ $(document).ready(function () {
                 $("#container-welcome").attr("class", "hero is-fullheight-with-navbar is-hidden");
                 $("#container-tiles").attr("class", "tile is-ancestor mt-2 mx-1");
                 $(".fa-chevron-right").removeClass("is-hidden");
+                $("#mini-search-div").removeClass("is-hidden");
+                $("#favorite-button").removeClass("is-hidden");
 
                 // Set City Info
                 city = response.data[0].city;
@@ -105,6 +106,7 @@ $(document).ready(function () {
                 // Display City & State
                 $("#currentCityName").text(city + ", " + state);
                 colorFavoriteButton();
+                getBackgroundImage(city + ", " + state + " city");
 
                 // Grab lat/lon coords of search
                 displayFoodDataRated(latitude, longitude);
@@ -116,6 +118,32 @@ $(document).ready(function () {
                 alert("City could not be found! Please try again...");
             }
         });
+    }
+
+    function getBackgroundImage(search) {
+        // var search = city
+        var queryURL = "https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=c9c9edd7ec327c97883f82fd905e9521&text=" + search + "&sort=relevance&has_geo=1&format=json&nojsoncallback=1media=photos"
+
+        $.ajax({
+            url: queryURL,
+            method: "GET",
+            error: function (err) {
+                console.log("getBackgroundImage(): AJAX Error: " + err);
+            }
+        }).then(function (response) {
+            var currentPhoto = response.photos.photo[(Math.floor((Math.random() * 1) + 1))];
+
+            var id = currentPhoto.id;
+            var serverid = currentPhoto.server
+            var secret = currentPhoto.secret
+
+            imageURL = "https://live.staticflickr.com/" + serverid + "/" + id + "_" + secret + "_b.jpg"
+
+            // window.open(imageURL, "_blank");
+            $(".myBackgroundImage").css("background-image", "url(" + imageURL + ")");
+
+        });
+
     }
 
     // Initiate API call to zomato
@@ -219,35 +247,16 @@ $(document).ready(function () {
     // Display Food Data Sorted on Price
     function parseZomatoDataSortedPriceOrder(dataCost) {
         if (tab2Clicked) {
-        tab2Clicked = false;
-        if (searchClickedReferCost) {
-            // dataCostStored = dataCost;
-            j = 0;
-            searchClickedReferCost = false;
-            $(".card-select-tab2 .caption-name").text("");
-            $(".card-select-tab2 .caption-cuisines").text("");
-            $(".card-select-tab2 .caption-avg-cost").text("");
-            $(".card-select-tab2 .caption-locality").text("");
-            $(".card-select-tab2 .food-image").attr("src", "https://media-exp1.licdn.com/dms/image/C510BAQGX8Xa4pZ2nUg/company-logo_200_200/0/1519933770484?e=2159024400&v=beta&t=vXcZ2GLPOB_MJKfDpwVI2ZwhMyc4LZ78E2A2lS2KAgE");
-        }
-        if (dataCost.restaurants[j].restaurant.thumb == "") {
-            $(".card-select-tab2 .food-image").attr("src", "https://media-exp1.licdn.com/dms/image/C510BAQGX8Xa4pZ2nUg/company-logo_200_200/0/1519933770484?e=2159024400&v=beta&t=vXcZ2GLPOB_MJKfDpwVI2ZwhMyc4LZ78E2A2lS2KAgE");
-        } else {
-            $(".card-select-tab2 .food-image").attr("src", dataCost.restaurants[j].restaurant.thumb);
-        }
-        $(".card-select-tab2 .caption-name").text(dataCost.restaurants[j].restaurant.name);
-        $(".card-select-tab2 .caption-cuisines").text(dataCost.restaurants[j].restaurant.cuisines);
-        $(".card-select-tab2 .caption-avg-cost").text("$ " + dataCost.restaurants[j].restaurant.average_cost_for_two + " (2 persons)");
-        $(".card-select-tab2 .caption-locality").text(dataCost.restaurants[j].restaurant.location.locality);
-        resAddressTab2 = dataCost.restaurants[j].restaurant.location.address + " zip: " + dataCost.restaurants[j].restaurant.location.zipcode;
-        resPhoneNumbersTab2 = dataCost.restaurants[j].restaurant.phone_numbers;
-        resNameTab2 = dataCost.restaurants[j].restaurant.name;
-        timeIntervalCost = setInterval(function () {
-            if (j < 20) {
-                j++;
-            }
-            if (j > 19) {
-                j = j - j;
+            tab2Clicked = false;
+            if (searchClickedReferCost) {
+                // dataCostStored = dataCost;
+                j = 0;
+                searchClickedReferCost = false;
+                $(".card-select-tab2 .caption-name").text("");
+                $(".card-select-tab2 .caption-cuisines").text("");
+                $(".card-select-tab2 .caption-avg-cost").text("");
+                $(".card-select-tab2 .caption-locality").text("");
+                $(".card-select-tab2 .food-image").attr("src", "https://media-exp1.licdn.com/dms/image/C510BAQGX8Xa4pZ2nUg/company-logo_200_200/0/1519933770484?e=2159024400&v=beta&t=vXcZ2GLPOB_MJKfDpwVI2ZwhMyc4LZ78E2A2lS2KAgE");
             }
             if (dataCost.restaurants[j].restaurant.thumb == "") {
                 $(".card-select-tab2 .food-image").attr("src", "https://media-exp1.licdn.com/dms/image/C510BAQGX8Xa4pZ2nUg/company-logo_200_200/0/1519933770484?e=2159024400&v=beta&t=vXcZ2GLPOB_MJKfDpwVI2ZwhMyc4LZ78E2A2lS2KAgE");
@@ -261,8 +270,27 @@ $(document).ready(function () {
             resAddressTab2 = dataCost.restaurants[j].restaurant.location.address + " zip: " + dataCost.restaurants[j].restaurant.location.zipcode;
             resPhoneNumbersTab2 = dataCost.restaurants[j].restaurant.phone_numbers;
             resNameTab2 = dataCost.restaurants[j].restaurant.name;
-        }, 5000);
-    }
+            timeIntervalCost = setInterval(function () {
+                if (j < 20) {
+                    j++;
+                }
+                if (j > 19) {
+                    j = j - j;
+                }
+                if (dataCost.restaurants[j].restaurant.thumb == "") {
+                    $(".card-select-tab2 .food-image").attr("src", "https://media-exp1.licdn.com/dms/image/C510BAQGX8Xa4pZ2nUg/company-logo_200_200/0/1519933770484?e=2159024400&v=beta&t=vXcZ2GLPOB_MJKfDpwVI2ZwhMyc4LZ78E2A2lS2KAgE");
+                } else {
+                    $(".card-select-tab2 .food-image").attr("src", dataCost.restaurants[j].restaurant.thumb);
+                }
+                $(".card-select-tab2 .caption-name").text(dataCost.restaurants[j].restaurant.name);
+                $(".card-select-tab2 .caption-cuisines").text(dataCost.restaurants[j].restaurant.cuisines);
+                $(".card-select-tab2 .caption-avg-cost").text("$ " + dataCost.restaurants[j].restaurant.average_cost_for_two + " (2 persons)");
+                $(".card-select-tab2 .caption-locality").text(dataCost.restaurants[j].restaurant.location.locality);
+                resAddressTab2 = dataCost.restaurants[j].restaurant.location.address + " zip: " + dataCost.restaurants[j].restaurant.location.zipcode;
+                resPhoneNumbersTab2 = dataCost.restaurants[j].restaurant.phone_numbers;
+                resNameTab2 = dataCost.restaurants[j].restaurant.name;
+            }, 5000);
+        }
     }
 
     // Display Weather which contains all the weather functions
@@ -273,7 +301,7 @@ $(document).ready(function () {
 
         // Call All Weather Functions
         displayCurrentWeather();
-        // displayHistoricWeather();
+        displayHistoricWeather();
 
         // Current Data
         function displayCurrentWeather() {
@@ -309,7 +337,7 @@ $(document).ready(function () {
 
                 // Update elements on page
                 $("#current-icon").attr("class", fontAwesomeId + " mt-2");
-                $("#current-temp").text(" " + tempCurrent + " ");
+                $("#current-temp").text(" " + tempCurrent + "°F");
                 $("#current-wind").text(" " + currentWindSpeed);
                 $("#current-humidity").text(" " + currentHumidity);
 
@@ -587,7 +615,7 @@ $(document).ready(function () {
                     $("#" + month).append(hcmTitleDiv, mostlyCondDiv, avgHiDiv, avgLoDiv)
 
 
-                }); // Uncomment this for prod
+                });
             }
 
 
@@ -700,7 +728,9 @@ $(document).ready(function () {
 
                         // Create the elements
                         var divEvent = $("<div>").attr("class", "myBold is-size-6 py-1");
-                        var iPin = $("<i>").attr("class", "has-text-grey is-rounded fas fa-thumbtack btnPin");
+                        var btnPin = $("<button>").attr("class", "button is-small is-rounded p-2");
+                        var iPin = $("<i>").attr("class", "has-text-grey is-rounded fas fa-thumbtack btn");
+                        btnPin.prepend(iPin);
                         var urlEvent = thisEvent.url;
                         var linkEvent = $("<a>").text(" " + name.slice(0, 60) + "...").attr({
                             href: urlEvent,
@@ -709,7 +739,7 @@ $(document).ready(function () {
                         });
 
                         // Append the event elements
-                        divEvent.append(iPin, linkEvent);
+                        divEvent.append(btnPin, linkEvent);
                         $(eventContainer).append(divEvent);
                     }
                 } else {
@@ -796,7 +826,6 @@ $(document).ready(function () {
             $("#favorite-button").removeClass("is-info");
         }
     }
-
     // Display local storage in favorites tab
     function displayFavorites() {
 
@@ -818,6 +847,7 @@ $(document).ready(function () {
                 listFavorites.append(linkCity);
             });
         }
+        $(".btnFav").click(favButtonClicked);
     }
     // Save/Remove from local storage
     function saveFavoritesClicked(e) {
@@ -856,23 +886,23 @@ $(document).ready(function () {
 
     function clearAllPins() {
         numberOfNotes = document.querySelectorAll(".myPin").length;
-        if ((document).querySelectorAll(".myPin").length === 1){
+        if ((document).querySelectorAll(".myPin").length === 1) {
             console.log("in  1st loop");
             $(".pinName").last().text("Name of Pin");
-              $(".pinType").last().text("Type (Event, Food)");
-              $(".foodPin .textarea").last().val("");
+            $(".pinType").last().text("Type (Event, Food)");
+            $(".foodPin .textarea").last().val("");
         } else {
-          (document).querySelectorAll(".myPin").forEach(function(item, index) {
-            if (index  === (numberOfNotes - 1)) {
-                $(".pinName").last().text("Name of Pin");
-                $(".pinType").last().text("Type (Event, Food)");
-                $(".foodPin .textarea").last().val(""); 
-            } else { 
-              $(".myPin").last().remove();
-            }
-          });
+            (document).querySelectorAll(".myPin").forEach(function (item, index) {
+                if (index === (numberOfNotes - 1)) {
+                    $(".pinName").last().text("Name of Pin");
+                    $(".pinType").last().text("Type (Event, Food)");
+                    $(".foodPin .textarea").last().val("");
+                } else {
+                    $(".myPin").last().remove();
+                }
+            });
         }
-      }
+    }
 
     // Event listener
     $("#searchButton").click(searchButtonClicked);
