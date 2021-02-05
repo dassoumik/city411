@@ -105,7 +105,7 @@ $(document).ready(function () {
                 // Display City & State
                 $("#currentCityName").text(city + ", " + state);
                 colorFavoriteButton();
-                getBackgroundImage(city + ", " + state + " city")
+                // getBackgroundImage(city + ", " + state + " city")
 
                 // Grab lat/lon coords of search
                 displayFoodDataRated(latitude, longitude);
@@ -130,23 +130,20 @@ $(document).ready(function () {
                 console.log("getBackgroundImage(): AJAX Error: " + err);
             }
         }).then(function (response) {
-            console.log(response.photos.photo);
             var currentPhoto = response.photos.photo[(Math.floor((Math.random() * 2) + 1))];
 
             var id = currentPhoto.id;
             var serverid = currentPhoto.server
             var secret = currentPhoto.secret
 
-            console.log(id + " " + serverid + " " + secret);
             imageURL = "https://live.staticflickr.com/" + serverid + "/" + id + "_" + secret + "_b.jpg"
-            console.log(imageURL);
+
             // window.open(imageURL, "_blank");
             $(".myBackgroundImage").css("background-image", "url(" + imageURL + ")");
 
         });
 
     }
-
 
     // Initiate API call to zomato
     function displayFoodDataRated(latitude, longitude) {
@@ -299,7 +296,7 @@ $(document).ready(function () {
 
         // Call All Weather Functions
         displayCurrentWeather();
-        // displayHistoricWeather();
+        displayHistoricWeather();
 
         // Current Data
         function displayCurrentWeather() {
@@ -873,7 +870,6 @@ $(document).ready(function () {
     }
     function favButtonClicked(e) {
         e.preventDefault();
-        console.log("Clicked favorite");
         // Call the first ajax query search with the name of the favorite
         getLatLon($(this).text().split(",")[0]);
     }
