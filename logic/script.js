@@ -95,6 +95,8 @@ $(document).ready(function () {
                 $("#container-welcome").attr("class", "hero is-fullheight-with-navbar is-hidden");
                 $("#container-tiles").attr("class", "tile is-ancestor mt-2 mx-1");
                 $(".fa-chevron-right").removeClass("is-hidden");
+                $("#mini-search-div").removeClass("is-hidden");
+                $("#favorite-button").removeClass("is-hidden");
 
                 // Set City Info
                 city = response.data[0].city;
@@ -296,7 +298,7 @@ $(document).ready(function () {
 
         // Call All Weather Functions
         displayCurrentWeather();
-        displayHistoricWeather();
+        // displayHistoricWeather();
 
         // Current Data
         function displayCurrentWeather() {
@@ -610,7 +612,7 @@ $(document).ready(function () {
                     $("#" + month).append(hcmTitleDiv, mostlyCondDiv, avgHiDiv, avgLoDiv)
 
 
-                }); // Uncomment this for prod
+                });
             }
 
 
