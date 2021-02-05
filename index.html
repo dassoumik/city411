@@ -98,7 +98,7 @@
     </nav>
 
     <!--FIRST TIME ARRIVAL MESSAGE-->
-    <div id="container-welcome" class="hero is-fullheight-with-navbar">
+    <div id="container-welcome" class="hero is-fullheight-with-navbar is-hidden">
         <!--TOGGLE-VISABILITY-->
         <div class="hero-body myHeroImageWelcome">
             <div class="container myWelcomeBorderBackground">
@@ -114,7 +114,7 @@
 
 
     <!--(TILE LEVEL 1) MAIN TILES CONTAINER-->
-    <div id="container-tiles" class="tile is-ancestor mt-2 mx-1 is-hidden">
+    <div id="container-tiles" class="tile is-ancestor mt-2 mx-1">
 
         <!--(TILE LEVEL 2) PINS PER CITY CONTAINER-->
         <div class="tile is-parent is-vertical">
@@ -124,10 +124,10 @@
                 <div class="has-text-white is-size-4 mb-2 myBold">Pins</div>
 
                 <!--(TILE LEVEL 4) Saved Pins-->
-                <div class="tile is-parent is-vertical p-1 myPinBackground mobilePaddingVertical pinArea mb-5">
+                <div class="tile is-parent is-vertical p-1 myPinColumnBackground mobilePaddingVertical pinArea mb-5">
                     
                     <!--Pin Div Placeholder-->
-                    <div class="box p-1 box mx-1 my-1 myPrimaryBackground2 has-text-white mobilePadding myPin">
+                    <div class="box p-1 box mx-1 my-1 myPinCardBackground has-text-white mobilePadding myPin">
                         <div class="myBold pinName">
                             Name of Pin
                         </div>
@@ -168,16 +168,21 @@
                                 <i id="current-icon" class="fas fa-cloud-sun mt-2" style="font-size: 100px;"></i>
                             </div>
 
-                            <!--Current Weather Info-->
-                            <div class="tile is-child is-vertical p-1 py-3">
-                                <div class="is-size-1 mb-2"> <i class="fas fa-temperature-high"></i><span
-                                        id="current-temp"> 43 </span></div>
-                                <div id="current-additional" class="has-text-centered">
-                                    <i class="fas fa-wind"></i> <span id="current-wind">--</span> | <i
-                                        class="fas fa-tint"> </i><span id="current-humidity"> --</span>
+                            <div class = "tile is-child">
+                                <div class="is-size-1 mb-2 mt-3"> 
+                                    <span id="current-temp" style="font-size: 68px;"> 43°F</span>
                                 </div>
                             </div>
 
+                            <!--Current Weather Info-->
+                            <div class="tile is-child is-vertical p-1 py-3">
+                                <div class="has-text-centered is-size-3 mb-1">
+                                    <i class="fas fa-wind"></i> <span id="current-wind" class = "ml-1">--</span>
+                                </div>
+                                <div class="is-size-3">
+                                     <i class="fas fa-tint ml-1"></i> <span id="current-humidity" class = "ml-2">--</span>
+                                </div>
+                            </div>
                         </div>
 
                     </div>
@@ -360,68 +365,61 @@
 
                     <!--Food Image and Description-->
                     <div class="tile is-child  is-vertical  has-text-white pt-2 border-0 card-select tabs-with-content">
-                        <div class="tabs is-media tile is-child notification myPrimaryBackground border-0 is-vertical m-0 p-3 py-3">
-                            <div class="container">
+                        <div class="tabs is-media tile is-child notification myFoodEnterntainmentBackground border-0 is-vertical m-0 p-3 py-3">
+                            <div class="tile is-vertical">
                                 <ul>
-                                   <li id="active-type-1" class="is-active">
-                                    <a style="text-decoration: none;">
-                                        <span id="tab-1" class="has-text-white">Top Rated</span>
-                                    </a>
-                        
-                                   </li>
-                                   <li id="active-type-2">
-                                    <a style="text-decoration: none;">
-                                      <span id="tab-2" class="has-text-white">Sorted on Price</span>
-                                    </a>
-                                   </li>
-                                </ul>  
-                            <div id="rated" class="tile is-child card-select pl-3 backgroundInherit notification is-vertical text-black p-1">
-
-                                <!-- Restaurant Name -->
-                                <div class="myBold"><span class="myRegular caption-name">Food Type</span></div>
-                                <!--Image-->
-                                <img class="food-image" src="https://via.placeholder.com/200" alt="Placeholder image"
-                                    class="mb-2">
-
-                                <!--Description-->
-                                <div class="myBold"><span class="myRegular caption-cuisines">Food Type</span></div>
-                                <div class="myBold"><span class="myRegular caption-avg-cost">Avg Cost</span></div>
-                                <div class="myBold"><span class="myRegular caption-locality">Locality</span></div>
-
-                                <!--Pin Button-->
-                                <button class="button is-small is-light has-text-right mt-2 food-pin">
-                                    <span class="has-text-grey is-rounded"><i class="fas fa-thumbtack"></i></span>
-                                </button>
-
+                                    <li id="active-type-1" class="is-active">
+                                        <a style="text-decoration: none;">
+                                            <span id="tab-1" class="has-text-white">Top Rated</span>
+                                        </a>
+                                    </li>
+     
+                                    <li id="active-type-2">
+                                        <a style="text-decoration: none;">
+                                            <span id="tab-2" class="has-text-white">Sorted on Price</span>
+                                        </a>
+                                    </li>
+                                </ul> 
+                                <div id="rated" class="tile is-child card-select pl-3 backgroundInherit notification is-vertical text-black p-1">
+                                    <!-- Restaurant Name -->
+                                    <div class="myBold mb-1"><span class="caption-name">Food Type</span></div>
+                                    <!--Image-->
+                                    <img class="food-image" src="https://via.placeholder.com/200" alt="Placeholder image"
+                                        class="mb-2">
+                                    <!--Description-->
+                                    <div class="myBold"><span class="myRegular caption-cuisines">Food Type</span></div>
+                                    <div class="myBold"><span class="myRegular caption-avg-cost">Avg Cost</span></div>
+                                    <div class="myBold"><span class="myRegular caption-locality">Locality</span></div>
+                                    <!--Pin Button-->
+                                    <button class=" button is-small px-2 py-0 mt-1 is-white food-pin  ">
+                                            <span class="has-text-grey"><i class="has-text-grey is-rounded fas fa-thumbtack is-size-6"></i></span>
+                                    </button>
+                                </div>
+                                <div id="price" class="tile is-child card-select-tab2 pl-3 backgroundInherit display-none notification is-vertical text-black p-1">
+                                    <!-- Restaurant Name -->
+                                    <div class="myBold mb-1"><span class="caption-name">Food Type</span></div>
+                                    <!--Image-->
+                                    <img class="food-image" src="https://via.placeholder.com/200" alt="Placeholder image" class="mb-2">
+                                    <!--Description-->
+                                    <div class="myBold"><span class="myRegular caption-cuisines">Food Type</span></div>
+                                    <div class="myBold"><span class="myRegular caption-avg-cost">Avg Cost</span></div>
+                                    <div class="myBold"><span class="myRegular caption-locality">Locality</span></div>
+                                    <!--Pin Button-->
+                                    <button class="button is-small px-2 py-0 mt-1 is-white food-pin-tab2"> 
+                                        <span class="has-text-grey"><i class="has-text-grey is-rounded fas fa-thumbtack is-size-6"></i></span>
+                                    </button>
+                                </div>
                             </div>
-                            <div id="price" class="tile is-child card-select-tab2 pl-3 backgroundInherit display-none notification is-vertical text-black p-1">
-
-                                <!-- Restaurant Name -->
-                                <div class="myBold"><span class="myRegular caption-name">Food Type</span></div>
-                                <!--Image-->
-                                <img class="food-image" src="https://via.placeholder.com/200" alt="Placeholder image" class="mb-2">
-
-                                <!--Description-->
-                                <div class="myBold"><span class="myRegular caption-cuisines">Food Type</span></div>
-                                <div class="myBold"><span class="myRegular caption-avg-cost">Avg Cost</span></div>
-                                <div class="myBold"><span class="myRegular caption-locality">Locality</span></div>
-
-                                <!--Pin Button-->
-                                <button class="button is-small is-light has-text-right food-pin-tab2 mt-2"> 
-                                    <span class = "has-text-grey is-rounded"><i class="fas fa-thumbtack"></i></span>
-                                </button>
-                            </div>                            
                         </div>
                     </div>
                 </div>
-            </div>
         <!-- </div>     -->
                 <!--(TILE LEVEL 4) ENTERTAINMENT-->
                 <div class="tile is-parent is-vertical">
                     <div class="has-text-white is-size-4 mb-2 myBold has-text-centered">Entertainment</div>
 
                     <!--Entertainment List-->
-                    <div class="tile is-child is-vertical myPrimaryBackground has-text-white p-3">
+                    <div class="tile is-child is-vertical myFoodEnterntainmentBackground has-text-white p-3">
 
                         <!--Music-->
                         <div id="music-div" class="mb-3">
