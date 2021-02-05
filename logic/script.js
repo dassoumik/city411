@@ -334,7 +334,7 @@ $(document).ready(function () {
 
                 // Update elements on page
                 $("#current-icon").attr("class", fontAwesomeId + " mt-2");
-                $("#current-temp").text(" " + tempCurrent + " ");
+                $("#current-temp").text(" " + tempCurrent + "°F");
                 $("#current-wind").text(" " + currentWindSpeed);
                 $("#current-humidity").text(" " + currentHumidity);
 
