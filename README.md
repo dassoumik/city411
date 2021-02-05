@@ -4,20 +4,29 @@
 * Github: https://github.com/dassoumik/city411
 * Website: https://dassoumik.github.io/city411/
 
+* <img src="./images/md/github.png" alt="github logo" width="15"/>[ Ryan Johnson ](https://github.com/wryanj)| <img src="./images/md/github.png" alt="github logo" width="15"/>[ Soumik Das ](https://github.com/Kyle7286)| <img src="./images/md/github.png" alt="github logo" width="15"/>[ Brandon Haley ](https://github.com/Kyle7286)
+
 ## About/Purpose ❔
 To be filled out by team
 
+##How to Use
+
 ## Team Contributors 💎
-* <img src="./images/md/github.png" alt="github logo" width="20"/>[ Ryan Johnson ]()|
-* <img src="./images/md/github.png" alt="github logo" width="20"/>[ Brandon Haley ](https://github.com/Kyle7286)
+
+
     
 ## Takeaways 🥡
 To be filled out by team
 
-## Technologies Used 📡
-To be filled out by team
+## Built With📡
+* Bulma
+* JQUERY
+* TicketMaster API
+* Zomato API
+* openWeather API
+* visualcrossing API
 
-##How to Use
+
 
 
 
