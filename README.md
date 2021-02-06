@@ -27,7 +27,7 @@ The purpose of this app is to provide a consolidated informational dashboard for
 * geoCityDb API
 
 ## Screenshot/Gif
-![Gif](./assets/images/md/city411.gif)
+![Gif](./images/md/city411.gif)
 
 
 
