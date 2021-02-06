@@ -21,3 +21,4 @@
                 $("#historicLargeTile").removeClass("p-0");
             }
         }
+*/
