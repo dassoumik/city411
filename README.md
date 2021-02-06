@@ -21,6 +21,7 @@ The purpose of this app is to provide a consolidated informational dashboard for
 ## Technology Used 📡
 * Bulma
 * JQUERY
+* Luxon.js
 * TicketMaster API
 * Zomato API
 * openWeather API
