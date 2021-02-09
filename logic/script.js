@@ -111,9 +111,9 @@ $(document).ready(function () {
                 // Grab lat/lon coords of search
                 displayFoodDataRated(latitude, longitude);
                 displayFoodDataSortedPriceOrder(latitude, longitude);
-                displayWeather(city);
-                displayLocalEvents("music", city);
-                displayLocalEvents("sport", city);
+                // displayWeather(city);
+                // displayLocalEvents("music", city);
+                // displayLocalEvents("sport", city);
             } else {
                 alert("City could not be found! Please try again...");
             }
@@ -904,6 +904,69 @@ $(document).ready(function () {
         }
     }
 
+    function enterHoverState () {
+        if ($(this).parent()[0].id === "rated") {
+           clearInterval(timeInterval);
+        }   
+        else if ($(this).parent()[0].id === "price") {
+           clearInterval(timeIntervalCost);   
+        }   
+    }
+
+    function exitHoverState () {
+        if ($(this).parent()[0].id === "rated") {
+            i++;
+            parseZomatoData(dataStored);
+        } else if ($(this).parent()[0].id === "price") {
+            j++;
+            tab2Clicked = true;
+            parseZomatoDataSortedPriceOrder(dataCostStored);
+        }
+        return false;    
+    }
+
+    function fetchPrevFoodDetail () {
+        if ($(this).parent()[0].id === "rated-button") {
+            if (i>0) {
+                i--;
+            } else {
+                i = 19;
+            }
+            clearInterval(timeInterval);
+            parseZomatoData(dataStored);
+        } else if ($(this).parent()[0].id === "price-button") {
+            if (j>0) {
+                j--;
+            } else {
+                j = 19;
+            }
+            tab2Clicked = true;
+            clearInterval(timeIntervalCost);
+            parseZomatoDataSortedPriceOrder(dataCostStored);
+        }
+    }
+
+    function fetchNextFoodDetail () {
+        if ($(this).parent()[0].id === "rated-button") {
+            if (i<19) {
+                i++;
+            } else {
+                i = 0;
+            }
+            clearInterval(timeInterval);
+            parseZomatoData(dataStored);
+        } else if ($(this).parent()[0].id === "price-button") {
+            if (j<19) {
+                j++;
+            } else {
+                j = 0;
+            }
+            tab2Clicked = true;
+            clearInterval(timeIntervalCost);
+            parseZomatoDataSortedPriceOrder(dataCostStored);
+        }
+    }
+
     // Event listener
     $("#searchButton").click(searchButtonClicked);
     $("#searchButtonWelcome").click(searchButtonWelcomeClicked);
@@ -915,5 +978,9 @@ $(document).ready(function () {
     $(".food-pin-tab2").on("click", displayFoodPinsTab2);
     $(document).on("click", ".notes-trash", deleteSelectedNotes);
     $(".clear").on("click", clearAllPins);
+    $(".food-image").hover(enterHoverState, exitHoverState);
+    $(".left-food-button").on("click", fetchPrevFoodDetail);
+    $(".right-food-button").on("click", fetchNextFoodDetail);
+
 
 });
