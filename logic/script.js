@@ -905,19 +905,19 @@ $(document).ready(function () {
     }
 
     function enterHoverState () {
-        if ($(this).parent()[0].id === "rated") {
+        if ($(this).parent()[0].id === "rated-button") {
            clearInterval(timeInterval);
         }   
-        else if ($(this).parent()[0].id === "price") {
+        else if ($(this).parent()[0].id === "price-button") {
            clearInterval(timeIntervalCost);   
         }   
     }
 
     function exitHoverState () {
-        if ($(this).parent()[0].id === "rated") {
+        if ($(this).parent()[0].id === "rated-button") {
             i++;
             parseZomatoData(dataStored);
-        } else if ($(this).parent()[0].id === "price") {
+        } else if ($(this).parent()[0].id === "price-button") {
             j++;
             tab2Clicked = true;
             parseZomatoDataSortedPriceOrder(dataCostStored);
