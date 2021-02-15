@@ -5,7 +5,7 @@
 * Website: https://dassoumik.github.io/city411/
 * Presentation: https://docs.google.com/presentation/d/1ECV9Plyo1-d9YphNpQMKWJ7IFLy_8qkgziL7m_w-PCo/edit?usp=sharing
 
-* <img src="./images/md/github.png" alt="github logo" width="15"/>[ Ryan Johnson ](https://github.com/wryanj)| <img src="./images/md/github.png" alt="github logo" width="15"/>[ Soumik Das ](https://github.com/Kyle7286)| <img src="./images/md/github.png" alt="github logo" width="15"/>[ Brandon Haley ](https://github.com/Kyle7286)
+* <img src="./images/md/github.png" alt="github logo" width="15"/>[ Ryan Johnson ](https://github.com/wryanj)| <img src="./images/md/github.png" alt="github logo" width="15"/>[ Soumik Das ](https://github.com/dassoumik)| <img src="./images/md/github.png" alt="github logo" width="15"/>[ Brandon Haley ](https://github.com/Kyle7286)
 
 ## About/Purpose ❔
 The purpose of this app is to provide a consolidated informational dashboard for a vacationer or traveler in which they can make informed and quick decisions without having to navigate multiple websites.
