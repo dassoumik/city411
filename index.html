@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="./style/style.css">
     <!--Page Title-->
     <title>411 Dashboard</title>
-    <link rel="shortcut icon" type="image/jpg" href="./images/favicon4.png"/>
+    <link rel="shortcut icon" type="image/jpg" href="./images/favicon4.png" />
 
 </head>
 
@@ -86,7 +86,7 @@
                 </div>
 
                 <!--Searchbar in Navbar-->
-                <div id="mini-search-div" class="field level-left mb-0 mr-4 is-hidden"> 
+                <div id="mini-search-div" class="field level-left mb-0 mr-4 is-hidden">
                     <form class="control has-icons-left has-icons-right">
                         <input id="searchedCityInput" class="input" type="text" placeholder="Search A City!">
                         <button id="searchButton" class="icon is-right button is-ghost">
@@ -99,7 +99,7 @@
     </nav>
 
     <!--FIRST TIME ARRIVAL MESSAGE-->
-    <div id="container-welcome" class="hero is-fullheight-with-navbar"> 
+    <div id="container-welcome" class="hero is-fullheight-with-navbar">
         <!--TOGGLE-VISABILITY-->
         <div class="hero-body myHeroImageWelcome">
             <div class="container myWelcomeBorderBackground">
@@ -117,7 +117,7 @@
 
 
     <!--(TILE LEVEL 1) MAIN TILES CONTAINER-->
-    <div id="container-tiles" class="tile is-ancestor mt-2 mx-1 is-hidden"> 
+    <div id="container-tiles" class="tile is-ancestor mt-2 mx-1 is-hidden">
 
         <!--(TILE LEVEL 2) PINS PER CITY CONTAINER-->
         <div class="tile is-parent is-vertical">
@@ -388,8 +388,15 @@
                                     <!-- Restaurant Name -->
                                     <div class="myBold mb-1"><span class="caption-name">Food Type</span></div>
                                     <!--Image-->
-                                    <img class="food-image" src="https://via.placeholder.com/200"
-                                        alt="Placeholder image" class="mb-2">
+                                    <div id="rated-button" class="is-inline">
+                                        <button class="button icon is-ghost left-food-button mt-6 pt-6" style="outline: 0; border: 0; box-shadow: none;"><strong><span
+                                                    class="has-text-white is-size-6">&lt;</span></strong></button>
+                                        <img class="food-image" src="https://via.placeholder.com/200"
+                                            alt="Placeholder image" class="mb-2">
+                                        <button class="button icon is-ghost right-food-button mt-6 pt-6" style="outline: 0; border: 0; box-shadow: none;"><strong><span
+                                                    class="has-text-white is-size-6">&gt;</span></strong></button>
+                                    </div>
+
                                     <!--Description-->
                                     <div class="myBold"><span class="myRegular caption-cuisines">Food Type</span></div>
                                     <div class="myBold"><span class="myRegular caption-avg-cost">Avg Cost</span></div>
@@ -405,14 +412,21 @@
                                     <!-- Restaurant Name -->
                                     <div class="myBold mb-1"><span class="caption-name">Food Type</span></div>
                                     <!--Image-->
-                                    <img class="food-image" src="https://via.placeholder.com/200"
-                                        alt="Placeholder image" class="mb-2">
+                                    <div id="price-button" class="is-inline">
+                                        <button class="button icon is-ghost left-food-button mt-6 pt-6" style="outline: 0; border: 0; box-shadow: none;"><strong><span
+                                                    class="has-text-white is-size-6">&lt;</span></strong></button>
+                                        <img class="food-image" src="https://via.placeholder.com/200"
+                                            alt="Placeholder image" class="mb-2">
+                                        <button class="button icon is-ghost right-food-button mt-6 pt-6" style="outline: 0; border: 0; box-shadow: none;"><strong><span
+                                                    class="has-text-white is-size-6">&gt;</span></strong></button>
+                                    </div>
                                     <!--Description-->
                                     <div class="myBold"><span class="myRegular caption-cuisines">Food Type</span></div>
                                     <div class="myBold"><span class="myRegular caption-avg-cost">Avg Cost</span></div>
                                     <div class="myBold"><span class="myRegular caption-locality">Locality</span></div>
                                     <!--Pin Button-->
-                                    <button class="button is-small px-2 py-0 mt-1 is-white is-rounded pt-1 food-pin-tab2">
+                                    <button
+                                        class="button is-small px-2 py-0 mt-1 is-white is-rounded pt-1 food-pin-tab2">
                                         <span class="has-text-grey"><i
                                                 class="has-text-grey is-rounded fas fa-thumbtack is-size-6"></i></span>
                                     </button>
@@ -421,7 +435,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!--(TILE LEVEL 4) ENTERTAINMENT-->
                 <div class="tile is-parent is-vertical pl-0">
                     <div class="has-text-white is-size-4 mb-2 myBold has-text-centered">Entertainment</div>
