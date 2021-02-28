@@ -111,9 +111,9 @@ $(document).ready(function () {
                 // Grab lat/lon coords of search
                 displayFoodDataRated(latitude, longitude);
                 displayFoodDataSortedPriceOrder(latitude, longitude);
-                // displayWeather(city);
-                // displayLocalEvents("music", city);
-                // displayLocalEvents("sport", city);
+                displayWeather(city);
+                displayLocalEvents("music", city);
+                displayLocalEvents("sport", city);
             } else {
                 alert("City could not be found! Please try again...");
             }
@@ -887,7 +887,6 @@ $(document).ready(function () {
     function clearAllPins() {
         numberOfNotes = document.querySelectorAll(".myPin").length;
         if ((document).querySelectorAll(".myPin").length === 1) {
-            console.log("in  1st loop");
             $(".pinName").last().text("Name of Pin");
             $(".pinType").last().text("Type (Event, Food)");
             $(".foodPin .textarea").last().val("");
